@@ -1,0 +1,8 @@
+# Python dependencies for the Databricks Apps deploy.
+# The Databricks Apps build runs `pip install -r requirements.txt` at the
+# app root (this file), pulling in the backend's own requirements.
+-r backend/requirements.txt
+
+# Used directly by backend/databricks_auth.py and backend/database.py for the
+# Databricks OAuth + Lakebase credential minting calls.
+httpx>=0.27.0

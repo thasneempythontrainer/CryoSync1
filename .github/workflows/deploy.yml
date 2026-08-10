@@ -1,0 +1,44 @@
+# Deploys CryoSync to Databricks Apps (target: prod) and starts/restarts it.
+#
+# Required GitHub repository secrets (Actions -> Settings -> Secrets):
+#   DATABRICKS_HOST          - workspace URL, e.g. https://dbc-2a25661e-3f93.cloud.databricks.com
+#   DATABRICKS_CLIENT_ID     - service principal application (client) ID
+#   DATABRICKS_CLIENT_SECRET - service principal OAuth secret
+#
+# The service principal needs: permission to create/manage apps, and CAN_MANAGE
+# on the bundle root path (see databricks.yml prod target).
+
+name: Deploy to Databricks Apps
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+concurrency:
+  group: deploy-databricks-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy CryoSync app
+    runs-on: ubuntu-latest
+    env:
+      DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+      DATABRICKS_CLIENT_ID: ${{ secrets.DATABRICKS_CLIENT_ID }}
+      DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Databricks CLI
+        uses: databricks/setup-cli@main
+
+      - name: Validate bundle
+        run: databricks bundle validate --target prod
+
+      - name: Deploy bundle
+        run: databricks bundle deploy --target prod
+
+      - name: Start / restart the app
+        run: databricks bundle run cryosync --target prod

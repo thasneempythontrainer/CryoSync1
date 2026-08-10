@@ -1,0 +1,12 @@
+CRYOSYNC
+Cold-Chain Intelligence
+
+A real-time pharmaceutical cold-chain warehouse management system (WMS) powered by AI. It tracks incoming shipments, temperature compliance, storage zones, inventory, and quality/risk status for every cold-chain product in your facility.
+
+Key Features
+✅ Databricks-Powered Kyra AI Assistant — Ask anything about shipments, inventory, and compliance in plain English, and it queries the data lake in real time
+✅ AI Action Agent — Kyra can take actions for you: start receiving, update shipment status, and create new intakes by voice or text
+✅ Voice-Activated AI Control — Hands-free operation with live voice activity feedback and auto-submit
+✅ Real-Time Shipment Tracking & Temperature Monitoring
+✅ Multi-Step Receiving Intake with Barcode Scanning
+✅ Compliance, Risk & Quality Monitoring
