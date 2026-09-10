@@ -1,0 +1,49 @@
+report_id,unit_number,cord_blood_unit_id,sample_reference,test_type,test_name,test_method,instrument,performed_by,result_value,result_unit,result_text,reference_low,reference_high,reference_text,performed_at,reviewed_by,status
+PRE-101,CBU-2025-004567,CBU-UUID-456,SAMPLE-101,CBC,Total Nucleated Cell Count (TNCC),Flow Cytometry,Sysmex XN-9000,Tech A,10.4,×10⁸,Within normal limits,7.0,15.0,7.0-15.0 ×10⁸,2026-08-25T08:30:00,Dr. Smith,completed
+PRE-102,CBU-2025-004567,CBU-UUID-456,SAMPLE-101,CBC,CD34+ Cell Count,Flow Cytometry,Sysmex XN-9000,Tech A,2.2,×10⁶,Within normal limits,0.5,5.0,0.5-5.0 ×10⁶,2026-08-25T08:30:00,Dr. Smith,completed
+PRE-103,CBU-2025-004567,CBU-UUID-456,SAMPLE-101,CBC,Viable CD34+ Cell Count (7-AAD),Flow Cytometry,BD FACSCanto,Tech A,2.0,×10⁶,Within normal limits,0.4,4.5,0.4-4.5 ×10⁶,2026-08-25T08:30:00,Dr. Smith,completed
+PRE-104,CBU-2025-004567,CBU-UUID-456,SAMPLE-101,CBC,CD34+ Viability (%),Flow Cytometry,BD FACSCanto,Tech A,90.8,%,Within normal limits,80,100,80-100 %,2026-08-25T08:30:00,Dr. Smith,completed
+PRE-105,CBU-2025-004567,CBU-UUID-456,SAMPLE-101,CBC,Total Nucleated Cell Viability (CD45+ 7-AAD-),Flow Cytometry,BD FACSCanto,Tech A,97.1,%,Within normal limits,90,100,90-100 %,2026-08-25T08:30:00,Dr. Smith,completed
+PRE-106,CBU-2025-004567,CBU-UUID-456,SAMPLE-101,CBC,Nucleated RBC (nRBC) Count,Flow Cytometry,Sysmex XN-9000,Tech A,18,/µL,Within normal limits,0,100,<100 /µL,2026-08-25T08:30:00,Dr. Smith,completed
+PRE-107,CBU-2025-004567,CBU-UUID-456,SAMPLE-101,CBC,CBC with Differential - Neutrophils,Flow Cytometry,Sysmex XN-9000,Tech A,48,%,Within normal limits,40,70,40-70 %,2026-08-25T08:30:00,Dr. Smith,completed
+PRE-108,CBU-2025-004567,CBU-UUID-456,SAMPLE-101,CBC,CBC with Differential - Lymphocytes,Flow Cytometry,Sysmex XN-9000,Tech A,39,%,Within normal limits,20,50,20-50 %,2026-08-25T08:30:00,Dr. Smith,completed
+PRE-109,CBU-2025-004567,CBU-UUID-456,SAMPLE-101,CBC,CBC with Differential - Monocytes,Flow Cytometry,Sysmex XN-9000,Tech A,7,%,Within normal limits,2,10,2-10 %,2026-08-25T08:30:00,Dr. Smith,completed
+PRE-110,CBU-2025-004567,CBU-UUID-456,SAMPLE-101,CBC,CBC with Differential - Eosinophils,Flow Cytometry,Sysmex XN-9000,Tech A,4,%,Within normal limits,1,6,1-6 %,2026-08-25T08:30:00,Dr. Smith,completed
+PRE-111,CBU-2025-004567,CBU-UUID-456,SAMPLE-101,CBC,CBC with Differential - Basophils,Flow Cytometry,Sysmex XN-9000,Tech A,2,%,Within normal limits,0,2,0-2 %,2026-08-25T08:30:00,Dr. Smith,completed
+PRE-112,CBU-2025-004567,CBU-UUID-456,SAMPLE-101,Blood Group,ABO Typing,Tube Method,Manual,Tech B,A+,,,A+,2026-08-25T09:00:00,Dr. Jones,completed
+PRE-113,CBU-2025-004567,CBU-UUID-456,SAMPLE-101,Blood Group,Rh Typing,Tube Method,Manual,Tech B,Positive,,,Positive,2026-08-25T09:00:00,Dr. Jones,completed
+PRE-114,CBU-2025-004567,CBU-UUID-456,SAMPLE-101,HLA,HLA-A Typing,SSP-PCR,Luminex,Tech C,A*01:01/A*03:01,,,A*01:01/A*03:01,2026-08-25T10:00:00,Dr. Chen,completed
+PRE-115,CBU-2025-004567,CBU-UUID-456,SAMPLE-101,HLA,HLA-B Typing,SSP-PCR,Luminex,Tech C,B*08:01/B*35:01,,,B*08:01/B*35:01,2026-08-25T10:00:00,Dr. Chen,completed
+PRE-116,CBU-2025-004567,CBU-UUID-456,SAMPLE-101,HLA,HLA-C Typing,SSP-PCR,Luminex,Tech C,C*04:01/C*07:02,,,C*04:01/C*07:02,2026-08-25T10:00:00,Dr. Chen,completed
+PRE-117,CBU-2025-004567,CBU-UUID-456,SAMPLE-101,HLA,HLA-DRB1 Typing,SSP-PCR,Luminex,Tech C,DRB1*04:01/DRB1*13:01,,,DRB1*04:01/DRB1*13:01,2026-08-25T10:00:00,Dr. Chen,completed
+PRE-118,CBU-2025-004567,CBU-UUID-456,SAMPLE-101,Hemoglobin,Hemoglobinopathy Screen,HPLC,Bio-Rad Variant,Tech D,Normal (HbA only),,,Normal,2026-08-25T11:00:00,Dr. Patel,completed
+PRE-119,CBU-2025-004567,CBU-UUID-456,SAMPLE-101,Microbiology,Bacterial Sterility Culture,BacT/ALERT 3D,BioMérieux,Tech E,Negative,Negative,Negative,2026-08-26T14:00:00,Dr. Jones,completed
+PRE-120,CBU-2025-004567,CBU-UUID-456,SAMPLE-101,Microbiology,Fungal Sterility Culture,Sabouraud Dextrose Agar,Incubator,Tech E,Negative,Negative,Negative,2026-08-28T14:00:00,Dr. Jones,completed
+PRE-121,CBU-2025-004567,CBU-UUID-456,SAMPLE-101,Microbiology,Endotoxin (LAL),Kinetic Chromogenic,Lonza PyroGene,Tech F,0.18,EU/mL,<0.5 EU/mL,0,0.5,<0.5 EU/mL,2026-08-25T12:00:00,Dr. Wilson,completed
+PRE-122,CBU-2025-004567,CBU-UUID-456,SAMPLE-101,Maternal ID,HIV-1/2 Ab/Ag,Architect,HIV Ag/Ab Combo,Tech G,Negative,Non-reactive,Non-reactive,2026-08-24T08:00:00,Dr. Martinez,completed
+PRE-123,CBU-2025-004567,CBU-UUID-456,SAMPLE-101,Maternal ID,HBV (HBsAg),Architect,HBsAg Qualitative,Tech G,Negative,Non-reactive,Non-reactive,2026-08-24T08:00:00,Dr. Martinez,completed
+PRE-124,CBU-2025-004567,CBU-UUID-456,SAMPLE-101,Maternal ID,HCV Ab,Architect,Anti-HCV,Tech G,Negative,Non-reactive,Non-reactive,2026-08-24T08:00:00,Dr. Martinez,completed
+PRE-125,CBU-2025-004567,CBU-UUID-456,SAMPLE-101,Maternal ID,Syphilis (TPA),Architect,Syphilis TPA,Tech G,Negative,Non-reactive,Non-reactive,2026-08-24T08:00:00,Dr. Martinez,completed
+PRE-126,CBU-2025-004567,CBU-UUID-456,SAMPLE-101,Maternal ID,CMV IgG/IgM,Architect,CMV IgG/IgM,Tech G,IgG Positive / IgM Negative,Non-reactive (IgM),Non-reactive (IgM),2026-08-24T08:00:00,Dr. Martinez,completed
+PRE-127,CBU-2025-004567,CBU-UUID-456,SAMPLE-101,Maternal ID,HTLV-I/II,Architect,HTLV-I/II,Tech G,Negative,Non-reactive,Non-reactive,2026-08-24T08:00:00,Dr. Martinez,completed
+POST-101,CBU-2025-004567,CBU-UUID-456,SAMPLE-101-POST,CBC,Total Nucleated Cell Count (TNCC) - Post-Processing,Flow Cytometry,Sysmex XN-9000,Tech A,9.8,×10⁸,Within normal limits,7.0,15.0,7.0-15.0 ×10⁸,2026-08-25T16:00:00,Dr. Smith,completed
+POST-102,CBU-2025-004567,CBU-UUID-456,SAMPLE-101-POST,CBC,CD34+ Cell Count - Post-Processing,Flow Cytometry,Sysmex XN-9000,Tech A,2.0,×10⁶,Within normal limits,0.5,5.0,0.5-5.0 ×10⁶,2026-08-25T16:00:00,Dr. Smith,completed
+POST-103,CBU-2025-004567,CBU-UUID-456,SAMPLE-101-POST,CBC,Viable CD34+ Cell Count - Post-Processing,Flow Cytometry,BD FACSCanto,Tech A,1.8,×10⁶,Within normal limits,0.4,4.5,0.4-4.5 ×10⁶,2026-08-25T16:00:00,Dr. Smith,completed
+POST-104,CBU-2025-004567,CBU-UUID-456,SAMPLE-101-POST,CBC,TNC Viability (CD45+ 7-AAD-) - Post-Processing,Flow Cytometry,BD FACSCanto,Tech A,95.7,%,Within normal limits,90,100,90-100 %,2026-08-25T16:00:00,Dr. Smith,completed
+POST-105,CBU-2025-004567,CBU-UUID-456,SAMPLE-101-POST,CBC,Nucleated RBC (nRBC) Count - Post-Processing,Flow Cytometry,Sysmex XN-9000,Tech A,10,/µL,Within normal limits,0,100,<100 /µL,2026-08-25T16:00:00,Dr. Smith,completed
+POST-106,CBU-2025-004567,CBU-UUID-456,SAMPLE-101-POST,Processing QC,RBC Depletion,Flow Cytometry,Sysmex XN-9000,Tech A,97.4,%,Within normal limits,95,100,>95 %,2026-08-25T16:00:00,Dr. Smith,completed
+POST-107,CBU-2025-004567,CBU-UUID-456,SAMPLE-101-POST,Processing QC,Plasma Depletion,Flow Cytometry,Sysmex XN-9000,Tech A,98.1,%,Within normal limits,95,100,>95 %,2026-08-25T16:00:00,Dr. Smith,completed
+POST-108,CBU-2025-004567,CBU-UUID-456,SAMPLE-101-POST,Processing QC,Processing Volume,Manual Measurement,Manual,Tech A,21.8,mL,Within normal limits,18,25,18-25 mL,2026-08-25T16:00:00,Dr. Smith,completed
+POST-109,CBU-2025-004567,CBU-UUID-456,SAMPLE-101-POST,Microbiology,Bacterial Sterility Culture - Post-Processing,BacT/ALERT 3D,BioMérieux,Tech E,Negative,Negative,Negative,2026-08-26T14:00:00,Dr. Jones,completed
+POST-110,CBU-2025-004567,CBU-UUID-456,SAMPLE-101-POST,Microbiology,Fungal Sterility Culture - Post-Processing,Sabouraud Dextrose Agar,Incubator,Tech E,Negative,Negative,Negative,2026-08-28T14:00:00,Dr. Jones,completed
+POST-111,CBU-2025-004567,CBU-UUID-456,SAMPLE-101-POST,Potency,CFU Assay (CFU-GM),Methylcellulose Colony Assay,Manual,Tech H,52,colonies/10⁵ cells,Within normal limits,20,200,20-200 colonies/10⁵ cells,2026-08-27T10:00:00,Dr. Wilson,completed
+POST-112,CBU-2025-004567,CBU-UUID-456,SAMPLE-101-POST,Potency,CFU Assay (CFU-GEMM),Methylcellulose Colony Assay,Manual,Tech H,15,colonies/10⁵ cells,Within normal limits,5,50,5-50 colonies/10⁵ cells,2026-08-27T10:00:00,Dr. Wilson,completed
+THAW-101,CBU-2025-004567,CBU-UUID-456,SAMPLE-101-THAW,CBC,Total Nucleated Cell Count (TNCC) - Post-Thaw,Flow Cytometry,Sysmex XN-9000,Tech A,7.6,×10⁸,Within normal limits,5.0,15.0,>5.0 ×10⁸,2026-08-30T08:00:00,Dr. Smith,completed
+THAW-102,CBU-2025-004567,CBU-UUID-456,SAMPLE-101-THAW,CBC,CD34+ Cell Count - Post-Thaw,Flow Cytometry,Sysmex XN-9000,Tech A,1.6,×10⁶,Within normal limits,0.3,5.0,>0.3 ×10⁶,2026-08-30T08:00:00,Dr. Smith,completed
+THAW-103,CBU-2025-004567,CBU-UUID-456,SAMPLE-101-THAW,CBC,Viable CD34+ Cell Count - Post-Thaw,Flow Cytometry,BD FACSCanto,Tech A,1.4,×10⁶,Within normal limits,0.2,4.0,>0.2 ×10⁶,2026-08-30T08:00:00,Dr. Smith,completed
+THAW-104,CBU-2025-004567,CBU-UUID-456,SAMPLE-101-THAW,CBC,TNC Viability (CD45+ 7-AAD-) - Post-Thaw,Flow Cytometry,BD FACSCanto,Tech A,92.6,%,Within normal limits,85,100,>85 %,2026-08-30T08:00:00,Dr. Smith,completed
+THAW-105,CBU-2025-004567,CBU-UUID-456,SAMPLE-101-THAW,Processing QC,TNC Recovery,Calculated,Manual,Tech A,77.6,%,Within normal limits,70,100,>70 %,2026-08-30T08:00:00,Dr. Smith,completed
+THAW-106,CBU-2025-004567,CBU-UUID-456,SAMPLE-101-THAW,Processing QC,CD34+ Recovery,Calculated,Manual,Tech A,79.2,%,Within normal limits,70,100,>70 %,2026-08-30T08:00:00,Dr. Smith,completed
+THAW-107,CBU-2025-004567,CBU-UUID-456,SAMPLE-101-THAW,Potency,CFU Assay (CFU-GM) - Post-Thaw,Methylcellulose Colony Assay,Manual,Tech H,36,colonies/10⁵ cells,Within normal limits,15,150,>15 colonies/10⁵ cells,2026-08-31T10:00:00,Dr. Wilson,completed
+THAW-108,CBU-2025-004567,CBU-UUID-456,SAMPLE-101-THAW,Microbiology,Bacterial Sterility Culture - Post-Thaw,BacT/ALERT 3D,BioMérieux,Tech E,Negative,Negative,Negative,2026-08-31T14:00:00,Dr. Jones,completed
+THAW-109,CBU-2025-004567,CBU-UUID-456,SAMPLE-101-THAW,Microbiology,Fungal Sterility Culture - Post-Thaw,Sabouraud Dextrose Agar,Incubator,Tech E,Negative,Negative,Negative,2026-09-02T14:00:00,Dr. Jones,completed

@@ -63,8 +63,8 @@ function ServiceStatusGrid({ services, loading }: ServiceStatusGridProps) {
                       <motion.div key={svc.name} variants={item}>
                         <div className={cn(
                           "group relative rounded-lg border border-border p-4 transition-colors hover:bg-muted/30",
-                          svc.status === "down" && "border-red-500/30 bg-red-500/5",
-                          svc.status === "degraded" && "border-amber-500/30 bg-amber-500/5",
+                          svc.status === "down" && "border-danger/30 bg-danger/5",
+                          svc.status === "degraded" && "border-warning/30 bg-warning/5",
                         )}>
                           <div className="mb-3 flex items-center justify-between">
                             <div className="flex items-center gap-2">

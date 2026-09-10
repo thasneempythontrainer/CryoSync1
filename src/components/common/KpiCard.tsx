@@ -1,4 +1,4 @@
-import { motion } from "framer-motion"
+import { useId } from "react"
 import { TrendingUp, TrendingDown, Minus } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -13,6 +13,41 @@ interface KpiCardProps {
   unit?: string
   loading?: boolean
   color?: string
+  spark?: number[]
+}
+
+function Sparkline({ data, color }: { data: number[]; color: string }) {
+  const id = useId()
+  const width = 160
+  const height = 32
+  const min = Math.min(...data)
+  const max = Math.max(...data)
+  const range = max - min || 1
+  const step = width / (data.length - 1)
+  const points = data.map(
+    (v, i) =>
+      `${(i * step).toFixed(1)},${(height - 2 - ((v - min) / range) * (height - 6)).toFixed(1)}`,
+  )
+
+  return (
+    <svg
+      width="100%"
+      height={height}
+      viewBox={`0 0 ${width} ${height}`}
+      className="block"
+      preserveAspectRatio="none"
+      aria-hidden
+    >
+      <polyline
+        points={points.join(" ")}
+        fill="none"
+        stroke={color}
+        strokeWidth={1.25}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
 }
 
 function KpiCard({
@@ -24,21 +59,18 @@ function KpiCard({
   unit,
   loading,
   color,
+  spark,
 }: KpiCardProps) {
   if (loading) {
     return (
-      <div className="card-premium relative flex flex-col gap-3 p-4">
-        <span
-          className="absolute left-0 top-0 bottom-0 w-1 rounded-r-full"
-          style={{ backgroundColor: color ?? "#22d3ee" }}
-        />
+      <div className="card-premium flex flex-col gap-2 p-3">
         <div className="flex items-center justify-between">
-          <Skeleton className="h-3 w-24" />
-          <Skeleton className="size-9 rounded-full" />
+          <Skeleton className="h-2.5 w-20" />
+          <Skeleton className="size-6 rounded" />
         </div>
-        <div className="space-y-1.5">
-          <Skeleton className="h-8 w-32" />
-          <Skeleton className="h-4 w-16" />
+        <div className="space-y-1">
+          <Skeleton className="h-6 w-24" />
+          <Skeleton className="h-3 w-12" />
         </div>
       </div>
     )
@@ -46,58 +78,50 @@ function KpiCard({
 
   const trendColor =
     trend === "up"
-      ? "text-[#34d399]"
+      ? "text-success"
       : trend === "down"
-        ? "text-red-500"
+        ? "text-danger"
         : "text-muted-foreground"
 
   return (
-    <motion.div
-      whileHover={{ y: -2 }}
-      transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      className="card-premium relative flex flex-col gap-3 p-4 cursor-default"
-    >
-      <span
-        className="absolute left-0 top-2 bottom-2 w-1 rounded-r-full"
-        style={{ backgroundColor: color ?? "#22d3ee" }}
-      />
-
+    <div className="card-premium flex flex-col gap-2 p-3 cursor-default">
       <div className="flex items-center justify-between">
-        <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-          {label}
-        </span>
+        <span className="data-label">{label}</span>
         <span
-          className={cn(
-            "flex size-9 items-center justify-center rounded-full text-white",
-            !color && "gradient-brand"
-          )}
-          style={color ? { backgroundColor: color } : undefined}
+          className="flex size-6 items-center justify-center rounded bg-muted text-muted-foreground"
+          style={color ? { backgroundColor: `${color}14`, color } : undefined}
         >
           {icon}
         </span>
       </div>
 
-      <div className="flex items-baseline gap-1.5">
-        <span className="text-[28px] font-bold leading-none tracking-tight text-foreground">
+      <div className="flex items-baseline gap-1">
+        <span className="text-xl font-semibold leading-none tracking-tight text-foreground">
           {value}
         </span>
         {unit && (
-          <span className="text-sm font-medium text-muted-foreground">{unit}</span>
+          <span className="text-[11px] font-medium text-muted-foreground">{unit}</span>
         )}
       </div>
 
       {trend !== undefined && trendPercent !== undefined && (
-        <div className={cn("flex items-center gap-1 text-sm font-semibold", trendColor)}>
-          {trend === "up" && <TrendingUp className="size-4" />}
-          {trend === "down" && <TrendingDown className="size-4" />}
-          {trend === "neutral" && <Minus className="size-3.5" />}
+        <div className={cn("flex items-center gap-1 text-[11px] font-medium", trendColor)}>
+          {trend === "up" && <TrendingUp className="size-3" />}
+          {trend === "down" && <TrendingDown className="size-3" />}
+          {trend === "neutral" && <Minus className="size-3" />}
           <span>
             {trendPercent > 0 && "+"}
             {trendPercent}%
           </span>
         </div>
       )}
-    </motion.div>
+
+      {spark && spark.length > 1 && (
+        <div className="mt-auto -mx-0.5">
+          <Sparkline data={spark} color={color ?? "oklch(0.42 0.09 185)"} />
+        </div>
+      )}
+    </div>
   )
 }
 

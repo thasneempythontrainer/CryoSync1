@@ -133,8 +133,8 @@ function ReceivingTable({ defaultStatusFilter = "" }: { defaultStatusFilter?: st
   const deleteShipment = useDeleteShipment()
   const { data: facilities } = useFacilities()
   const { can } = useAuth()
-  const canUpdateStatus = can("act:update_shipment_status")
-  const canDelete = can("act:delete_shipment")
+  const canUpdateStatus = can("act:update_cbu_status")
+  const canDelete = can("act:update_cbu_status")
 
   const shipments = data?.data ?? []
   const total = data?.total ?? 0
@@ -598,9 +598,9 @@ function ReceivingTable({ defaultStatusFilter = "" }: { defaultStatusFilter?: st
 function TempBadge({ regime }: { regime: string }) {
   const colors: Record<string, string> = {
     ambient: "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300",
-    refrigerated_2_8: "bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-400",
-    frozen_minus_20: "bg-cyan-50 text-cyan-700 dark:bg-cyan-950 dark:text-cyan-400",
-    ultra_frozen_minus_80: "bg-violet-50 text-violet-700 dark:bg-violet-950 dark:text-violet-400",
+    refrigerated_2_8: "bg-info/10 text-info",
+    frozen_minus_20: "bg-info/10 text-info",
+    ultra_frozen_minus_80: "bg-purple-500/10 text-purple-500",
     liquid_nitrogen: "bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-400",
   }
 
@@ -622,8 +622,8 @@ function TempBadge({ regime }: { regime: string }) {
 function PriorityBadge({ priority }: { priority: string }) {
   const colors: Record<string, string> = {
     standard: "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300",
-    expedited: "bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-400",
-    critical: "bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-400",
+    expedited: "bg-warning/10 text-warning",
+    critical: "bg-danger/10 text-danger",
   }
 
   return (
@@ -634,14 +634,14 @@ function PriorityBadge({ priority }: { priority: string }) {
 }
 
 const FLAG_ICONS: Record<ShipmentFlag['type'], { icon: typeof AlertTriangle; color: string }> = {
-  temperature_excursion: { icon: Thermometer, color: 'text-red-500' },
-  damaged: { icon: PackageX, color: 'text-red-500' },
-  missing_coa: { icon: FileX, color: 'text-amber-500' },
-  missing_coc: { icon: ShieldX, color: 'text-amber-500' },
+  temperature_excursion: { icon: Thermometer, color: 'text-danger' },
+  damaged: { icon: PackageX, color: 'text-danger' },
+  missing_coa: { icon: FileX, color: 'text-warning' },
+  missing_coc: { icon: ShieldX, color: 'text-warning' },
   near_expiry: { icon: AlertTriangle, color: 'text-orange-500' },
   hazardous: { icon: Skull, color: 'text-orange-500' },
   controlled_substance: { icon: AlertOctagon, color: 'text-purple-500' },
-  high_priority: { icon: AlertTriangle, color: 'text-red-500' },
+  high_priority: { icon: AlertTriangle, color: 'text-danger' },
 }
 
 function FlagIcon({ flag }: { flag: ShipmentFlag }) {
@@ -664,10 +664,10 @@ function FlagIcon({ flag }: { flag: ShipmentFlag }) {
 
 function ConditionBadge({ condition }: { condition: string }) {
   const colors: Record<string, string> = {
-    excellent: "bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400",
-    good: "bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-400",
-    fair: "bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-400",
-    damaged: "bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-400",
+    excellent: "bg-success/10 text-success",
+    good: "bg-info/10 text-info",
+    fair: "bg-warning/10 text-warning",
+    damaged: "bg-danger/10 text-danger",
   }
 
   return (

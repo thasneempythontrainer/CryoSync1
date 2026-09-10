@@ -104,12 +104,12 @@ function ShipmentDetailDrawer({ shipmentId, open, onOpenChange }: ShipmentDetail
                     label="Excursions"
                     value={
                       shipment.temperatureReadings.some((r) => r.excursion) ? (
-                        <span className="inline-flex items-center gap-1 text-red-600 dark:text-red-400">
+                        <span className="inline-flex items-center gap-1 text-danger">
                           <CircleAlert className="size-3.5" />
                           {shipment.temperatureReadings.filter((r) => r.excursion).length} recorded
                         </span>
                       ) : (
-                        <span className="text-emerald-600 dark:text-emerald-400">None</span>
+                        <span className="text-success">None</span>
                       )
                     }
                   />

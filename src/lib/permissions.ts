@@ -1,53 +1,61 @@
 import type { UserRole } from '@/types'
 
 export const ROLE_LABELS: Record<UserRole, string> = {
-  dock: 'Dock Receiving',
+  collection: 'Collection Staff',
+  processing: 'Processing Lab',
+  cs: 'Customer Service',
   qa: 'Quality Assurance',
-  supervisor: 'Supervisor',
+  admin: 'Administrator',
 }
 
 export type Permission =
-  | 'view:receiving'
-  | 'view:shipments'
+  | 'view:cbus'
+  | 'view:customers'
+  | 'view:storage'
   | 'view:compliance'
-  | 'view:risk'
+  | 'view:payments'
+  | 'view:referrals'
+  | 'view:franchisees'
+  | 'view:content'
   | 'view:report'
   | 'view:genie'
   | 'view:admin'
-  | 'act:create_shipment'
-  | 'act:update_shipment_status'
-  | 'act:delete_shipment'
-  | 'act:resolve_incident'
-  | 'act:assign_incident'
+  | 'view:transplants'
+  | 'act:create_cbu'
+  | 'act:update_cbu_status'
+  | 'act:resolve_event'
+  | 'act:assign_event'
 
 const ROLE_PERMISSIONS: Record<UserRole, Permission[]> = {
-  dock: ['view:receiving', 'view:shipments', 'view:report', 'view:genie', 'act:create_shipment', 'act:update_shipment_status'],
-  qa: ['view:shipments', 'view:compliance', 'view:risk', 'view:report', 'view:genie', 'act:resolve_incident', 'act:assign_incident'],
-  supervisor: [
-    'view:receiving',
-    'view:shipments',
-    'view:compliance',
-    'view:risk',
-    'view:report',
-    'view:genie',
-    'view:admin',
-    'act:create_shipment',
-    'act:update_shipment_status',
-    'act:delete_shipment',
-    'act:resolve_incident',
-    'act:assign_incident',
+  collection: ['view:cbus', 'view:customers', 'view:report', 'view:genie', 'act:create_cbu', 'act:update_cbu_status'],
+  processing: ['view:cbus', 'view:storage', 'view:compliance', 'view:report', 'view:genie', 'act:update_cbu_status'],
+  cs: ['view:cbus', 'view:customers', 'view:payments', 'view:referrals', 'view:content', 'view:genie'],
+  qa: ['view:cbus', 'view:compliance', 'view:storage', 'view:report', 'view:genie', 'act:resolve_event', 'act:assign_event'],
+  admin: [
+    'view:cbus', 'view:customers', 'view:storage', 'view:compliance',
+    'view:payments', 'view:referrals', 'view:franchisees', 'view:content',
+    'view:report', 'view:genie', 'view:admin', 'view:transplants',
+    'act:create_cbu', 'act:update_cbu_status', 'act:resolve_event', 'act:assign_event',
   ],
 }
 
 export function can(role: UserRole | undefined, permission: Permission): boolean {
   if (!role) return false
-  return ROLE_PERMISSIONS[role].includes(permission)
+  const perms = ROLE_PERMISSIONS[role]
+  if (!perms) return false
+  return perms.includes(permission)
 }
 
 export const PAGE_PERMISSIONS: Record<string, Permission> = {
-  '/receiving': 'view:receiving',
+  '/cbus': 'view:cbus',
+  '/customers': 'view:customers',
+  '/storage': 'view:storage',
   '/compliance': 'view:compliance',
-  '/risk': 'view:risk',
+  '/transplants': 'view:transplants',
+  '/payments': 'view:payments',
+  '/referrals': 'view:referrals',
+  '/franchisees': 'view:franchisees',
+  '/content': 'view:content',
   '/report': 'view:report',
   '/genie': 'view:genie',
   '/admin': 'view:admin',

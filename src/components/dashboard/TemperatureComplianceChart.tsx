@@ -9,6 +9,8 @@ import {
   Cell,
 } from 'recharts'
 import type { TemperatureCompliance } from '@/types'
+import { ChartCard } from './ChartCard'
+import { chartTooltipStyle, SEMANTIC_COLORS } from './chart-utils'
 
 interface TemperatureComplianceChartProps {
   data: TemperatureCompliance[]
@@ -27,8 +29,7 @@ export function TemperatureComplianceChart({ data }: TemperatureComplianceChartP
   }))
 
   return (
-    <div className="card-premium p-5">
-      <h3 className="mb-5 text-sm font-semibold text-foreground">Temperature Compliance</h3>
+    <ChartCard title="Temperature Compliance">
       <div className="h-72">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
@@ -53,14 +54,7 @@ export function TemperatureComplianceChart({ data }: TemperatureComplianceChartP
               width={140}
             />
             <Tooltip
-              contentStyle={{
-                backgroundColor: 'var(--popover)',
-                border: '1px solid var(--border)',
-                borderRadius: 'var(--radius-lg)',
-                fontSize: 12,
-                color: 'var(--popover-foreground)',
-                boxShadow: 'var(--shadow-elevated)',
-              }}
+              contentStyle={chartTooltipStyle}
               formatter={(value) => [`${value}%`, 'Compliance Rate']}
             />
             <ReferenceLine
@@ -81,10 +75,10 @@ export function TemperatureComplianceChart({ data }: TemperatureComplianceChartP
                   key={entry.category}
                   fill={
                     entry.complianceRate >= 95
-                      ? '#34d399'
+                      ? SEMANTIC_COLORS.success
                       : entry.complianceRate >= 85
-                        ? '#fbbf24'
-                        : '#ef4444'
+                        ? SEMANTIC_COLORS.warning
+                        : SEMANTIC_COLORS.danger
                   }
                   fillOpacity={0.85}
                 />
@@ -93,6 +87,6 @@ export function TemperatureComplianceChart({ data }: TemperatureComplianceChartP
           </BarChart>
         </ResponsiveContainer>
       </div>
-    </div>
+    </ChartCard>
   )
 }

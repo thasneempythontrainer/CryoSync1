@@ -8,6 +8,8 @@ import {
   Legend,
 } from 'recharts'
 import type { ShipmentTrend } from '@/types'
+import { ChartCard } from './ChartCard'
+import { chartTooltipStyle, axisTick, SEMANTIC_COLORS } from './chart-utils'
 
 interface ShipmentTrendChartProps {
   data: ShipmentTrend[]
@@ -15,14 +17,13 @@ interface ShipmentTrendChartProps {
 
 export function ShipmentTrendChart({ data }: ShipmentTrendChartProps) {
   return (
-    <div className="card-premium p-5">
-      <h3 className="mb-5 text-sm font-semibold text-foreground">Shipment Trends</h3>
+    <ChartCard title="Shipment Trends" subtitle="Daily intake volume by status">
       <div className="h-72">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data} margin={{ top: 8, right: 8, bottom: 8, left: -16 }}>
             <XAxis
               dataKey="date"
-              tick={{ fontSize: 11, fill: 'var(--muted-foreground)' }}
+              tick={axisTick}
               tickLine={false}
               axisLine={false}
               tickFormatter={(v) => {
@@ -31,20 +32,13 @@ export function ShipmentTrendChart({ data }: ShipmentTrendChartProps) {
               }}
             />
             <YAxis
-              tick={{ fontSize: 11, fill: 'var(--muted-foreground)' }}
+              tick={axisTick}
               tickLine={false}
               axisLine={false}
               allowDecimals={false}
             />
             <Tooltip
-              contentStyle={{
-                backgroundColor: 'var(--popover)',
-                border: '1px solid var(--border)',
-                borderRadius: 'var(--radius-lg)',
-                fontSize: 12,
-                color: 'var(--popover-foreground)',
-                boxShadow: 'var(--shadow-elevated)',
-              }}
+              contentStyle={chartTooltipStyle}
               labelFormatter={(label) => {
                 if (!label) return ''
                 const d = new Date(label as string)
@@ -59,33 +53,33 @@ export function ShipmentTrendChart({ data }: ShipmentTrendChartProps) {
             <Line
               type="monotone"
               dataKey="received"
-              stroke="#22d3ee"
+              stroke={SEMANTIC_COLORS.primary}
               strokeWidth={2.5}
               dot={false}
-              activeDot={{ r: 5, fill: '#22d3ee', strokeWidth: 0 }}
+              activeDot={{ r: 5, fill: SEMANTIC_COLORS.primary, strokeWidth: 0 }}
               name="Received"
             />
             <Line
               type="monotone"
               dataKey="quarantined"
-              stroke="#f59e0b"
+              stroke={SEMANTIC_COLORS.warning}
               strokeWidth={2}
               dot={false}
-              activeDot={{ r: 4, fill: '#f59e0b', strokeWidth: 0 }}
+              activeDot={{ r: 4, fill: SEMANTIC_COLORS.warning, strokeWidth: 0 }}
               name="Quarantined"
             />
             <Line
               type="monotone"
               dataKey="rejected"
-              stroke="#ef4444"
+              stroke={SEMANTIC_COLORS.danger}
               strokeWidth={2}
               dot={false}
-              activeDot={{ r: 4, fill: '#ef4444', strokeWidth: 0 }}
+              activeDot={{ r: 4, fill: SEMANTIC_COLORS.danger, strokeWidth: 0 }}
               name="Rejected"
             />
           </LineChart>
         </ResponsiveContainer>
       </div>
-    </div>
+    </ChartCard>
   )
 }

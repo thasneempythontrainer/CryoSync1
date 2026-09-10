@@ -60,11 +60,14 @@ export {
   createConversation,
   saveAgentContext,
   deleteConversation,
+  askGenie,
+  resetGenieThread,
   useConversations,
   useConversation,
   useCreateConversation,
   useDeleteConversation,
 } from './genie-service'
+export type { GenieAskResult } from './genie-service'
 
 export {
   getSystemHealth,
@@ -94,10 +97,49 @@ export type {
   ResolveOpenIncidentsResult,
 } from './ai-service'
 
+export {
+  extractFormData,
+  compareExtractModes,
+  stageReceivingPrefill,
+  EXTRACT_PREFILL_KEY,
+} from './extract-service'
+export type {
+  ExtractedField,
+  ExtractedSection,
+  ExtractFormParams,
+  ExtractFormResult,
+  ExtractModeComparison,
+  ModeValueDifference,
+} from './extract-service'
+
+export { getCbuDetails, getCbuUnits } from './cbu-service'
+export type { CbuDetails, CbuDetailsPayment } from './cbu-service'
+
 export { agentChat, runAgentTurn } from './agent-service'
 export { allAgentTools, toHandlerDefinitions } from './agent-tools'
 export type { AgentToolsDeps } from './agent-tools'
 
 export { login, fetchMe, logout } from './auth-service'
+
+export {
+  getLabReports,
+  getLabReport,
+  getLabReportBatches,
+  uploadLabReports,
+  previewLabReports,
+  confirmLabReports,
+} from './lab-report-service'
+export type {
+  LabReport,
+  LabReportListResult,
+  LabReportFilters,
+  ImportBatch,
+  ImportBatchListResult,
+  UploadResult,
+  UploadError,
+  PreviewRecord,
+  PreviewResult,
+  ConfirmPayload,
+} from './lab-report-service'
 
 

@@ -1,175 +1,64 @@
-import { useState, useCallback } from 'react'
-import { motion } from 'framer-motion'
-import { RefreshCw, Download } from 'lucide-react'
+import { useMemo, useState } from 'react'
+import { Download, RefreshCw } from 'lucide-react'
 
-import { useDashboardData, useFacilities } from '@/services'
-import { PageHeader, LoadingState, ErrorState, FilterBar } from '@/components/common'
-import type { FilterDef } from '@/components/common'
+import { useDashboardData } from '@/services'
+import { ErrorState, LoadingState } from '@/components/common'
 import { Button } from '@/components/ui/button'
-import { useAuth } from '@/hooks'
-
-import { KpiGrid } from '@/components/dashboard'
-import { ShipmentTrendChart } from '@/components/dashboard'
-import { TemperatureComplianceChart } from '@/components/dashboard'
-import { SupplierPerformanceTable } from '@/components/dashboard'
-import { InventoryDistributionChart } from '@/components/dashboard'
-import { ActivityFeed } from '@/components/dashboard'
-import { ExpiryTimelineChart } from '@/components/dashboard'
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.07 },
-  },
-}
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { type: 'spring' as const, stiffness: 200, damping: 24 },
-  },
-}
+import { StemCyteCommandSurface } from '@/components/dashboard/StemCyteCommandSurface'
+import type { DashboardFilters } from '@/services/dashboard-service'
 
 export default function DashboardPage() {
-  const [filters, setFilters] = useState<Record<string, string>>({})
-  const { data: facilities } = useFacilities()
-  const { role } = useAuth()
+  const [filters, setFilters] = useState<DashboardFilters>({})
+  const filterGroups = useMemo(() => [
+    { key: 'facility', label: 'Branch', options: [{ value: 'mumbai', label: 'Mumbai Processing Lab' }, { value: 'delhi', label: 'Delhi Collection Center' }, { value: 'bangalore', label: 'Bangalore Storage Facility' }] },
+    { key: 'region', label: 'Region', options: ['North', 'South', 'East', 'West'].map((value) => ({ value, label: value })) },
+    { key: 'dateRange', label: 'Window', options: [{ value: '7', label: 'Last 7 days' }, { value: '30', label: 'Last 30 days' }, { value: '90', label: 'Last 90 days' }, { value: '365', label: 'Last year' }] },
+    { key: 'custodyStage', label: 'Custody stage', options: ['Collection', 'Receiving', 'Processing', 'Testing', 'Cryostorage', 'Release'].map((value) => ({ value, label: value })) },
+    { key: 'collectionStatus', label: 'Collection state', options: ['Scheduled', 'Collected', 'Received', 'Exception'].map((value) => ({ value, label: value })) },
+    { key: 'qualityState', label: 'Quality state', options: ['Within limits', 'Under review', 'Critical'].map((value) => ({ value, label: value })) },
+    { key: 'testReport', label: 'Test report', options: ['Missing', 'Pending review', 'Approved', 'Rejected'].map((value) => ({ value, label: value })) },
+    { key: 'storageRegime', label: 'Storage regime', options: ['Liquid nitrogen', '-80°C', '-20°C', '2–8°C'].map((value) => ({ value, label: value })) },
+    { key: 'priority', label: 'Priority', options: ['Standard', 'Expedited', 'Critical'].map((value) => ({ value, label: value })) },
+    { key: 'releaseStatus', label: 'Release status', options: ['Not requested', 'QA review', 'Ready', 'Dispatched'].map((value) => ({ value, label: value })) },
+    { key: 'referralSource', label: 'Referral source', options: ['Hospital', 'Physician', 'Maternity partner', 'Direct'].map((value) => ({ value, label: value })) },
+    { key: 'dataSource', label: 'Data source', options: ['CRM', 'ERP', 'Branch CSV', 'Telemetry'].map((value) => ({ value, label: value })) },
+    { key: 'assay', label: 'Assay', options: ['Sterility', 'Viability', 'Identity', 'Infectious disease'].map((value) => ({ value, label: value })) },
+  ] as const, [])
+  const { data, isLoading, error, refetch } = useDashboardData(filters)
 
-  const dashboardDescription =
-    role === 'dock'
-      ? 'Your receiving intake overview — arrivals, pending docks, and flagged shipments'
-      : role === 'qa'
-        ? 'Quality overview — compliance incidents, excursions, and at-risk inventory'
-        : 'Pharmaceutical cold-chain intelligence overview'
-
-  const filterDefs: FilterDef[] = [
-    {
-      key: 'facility',
-      label: 'All Facilities',
-      type: 'select',
-      options: (facilities ?? []).map((f) => ({
-        value: f.id,
-        label: f.name,
-      })),
-    },
-    {
-      key: 'dateRange',
-      label: 'Date Range',
-      type: 'select',
-      options: [
-        { value: '7', label: 'Last 7 days' },
-        { value: '30', label: 'Last 30 days' },
-        { value: '90', label: 'Last 90 days' },
-        { value: '365', label: 'Last year' },
-      ],
-    },
-  ]
-  const { data, isLoading, error, refetch } = useDashboardData({
-    facility: filters.facility || undefined,
-    dateRange: filters.dateRange || undefined,
-  })
-
-  const handleFilterChange = useCallback((key: string, value: string) => {
-    setFilters((prev) => ({ ...prev, [key]: value }))
-  }, [])
-
-  const handleReset = useCallback(() => {
-    setFilters({})
-  }, [])
-
-  const handleExport = useCallback(() => {
+  function exportSnapshot() {
+    if (!data) return
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })
     const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `dashboard-export-${new Date().toISOString().split('T')[0]}.json`
-    a.click()
+    const anchor = document.createElement('a')
+    anchor.href = url
+    anchor.download = `stemcyte-command-snapshot-${new Date().toISOString().slice(0, 10)}.json`
+    anchor.click()
     URL.revokeObjectURL(url)
-  }, [data])
-
-  if (error) {
-    return (
-      <div className="space-y-6 p-4 sm:p-6">
-        <PageHeader title="Dashboard" description={dashboardDescription} />
-        <ErrorState
-          title="Failed to load dashboard"
-          description={error instanceof Error ? error.message : 'An unexpected error occurred'}
-          onRetry={() => refetch()}
-        />
-      </div>
-    )
   }
 
   return (
-    <motion.div
-      className="space-y-6 p-4 sm:p-6"
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-    >
-      <motion.div variants={itemVariants}>
-        <PageHeader
-          title="Dashboard"
-          description={dashboardDescription}
-          actions={
-            <div className="flex items-center gap-2">
-              <Button variant="outline" size="sm" onClick={() => refetch()} disabled={isLoading}>
-                <RefreshCw className={`size-4 ${isLoading ? 'animate-spin' : ''}`} />
-                Refresh
-              </Button>
-              <Button variant="outline" size="sm" onClick={handleExport}>
-                <Download className="size-4" />
-                Export
-              </Button>
-            </div>
-          }
-        />
-      </motion.div>
-
-      <motion.div variants={itemVariants}>
-        <FilterBar
-          filters={filterDefs}
-          values={filters}
-          onChange={handleFilterChange}
-          onReset={handleReset}
-        />
-      </motion.div>
-
-      {isLoading ? (
-        <motion.div variants={itemVariants}>
-          <LoadingState />
-        </motion.div>
-      ) : data ? (
-        <>
-          <motion.div variants={itemVariants}>
-            <KpiGrid kpis={data.kpis} />
-          </motion.div>
-
-          <motion.div
-            className="grid grid-cols-1 lg:grid-cols-2 gap-6"
-            variants={itemVariants}
-          >
-            <ShipmentTrendChart data={data.shipmentTrends} />
-            <TemperatureComplianceChart data={data.temperatureCompliance} />
-          </motion.div>
-
-          <motion.div
-            className="grid grid-cols-1 lg:grid-cols-3 gap-6"
-            variants={itemVariants}
-          >
-            <SupplierPerformanceTable data={data.supplierPerformance} />
-            <InventoryDistributionChart data={data.inventoryDistribution} />
-            <ActivityFeed data={data.recentActivity} />
-          </motion.div>
-
-          <motion.div variants={itemVariants}>
-            <ExpiryTimelineChart data={data.expiryTimeline} />
-          </motion.div>
-        </>
-      ) : null}
-    </motion.div>
+    <div className="stemcyte-dashboard flex h-full flex-col overflow-hidden bg-muted">
+      <header className="flex min-h-14 shrink-0 items-center gap-3 border-b border-border/70 bg-background/90 px-4 backdrop-blur sm:px-6">
+        <div className="min-w-0 flex-1">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">StemCyte operations</p>
+          <h1 className="truncate font-heading text-lg font-semibold tracking-tight">Cell custody command center</h1>
+        </div>
+        <span className="hidden rounded-full bg-emerald-500/10 px-2 py-1 text-[10px] font-semibold text-emerald-700 md:inline-flex">Source health 98.4%</span>
+        <Button variant="ghost" size="icon-sm" onClick={() => refetch()} disabled={isLoading} title="Refresh command center"><RefreshCw className={isLoading ? 'animate-spin' : ''} /></Button>
+        <Button variant="ghost" size="icon-sm" onClick={exportSnapshot} disabled={!data} title="Export snapshot"><Download /></Button>
+      </header>
+      <div className="shrink-0 border-b border-border/70 bg-background/60 px-3 py-2 sm:px-5">
+        <div className="flex items-center gap-2 overflow-x-auto pb-1">
+          <span className="mr-1 shrink-0 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">Filters</span>
+          {filterGroups.map((group) => <select key={group.key} value={filters[group.key] ?? ''} onChange={(event) => setFilters((current) => ({ ...current, [group.key]: event.target.value || undefined }))} className="h-8 min-w-28 shrink-0 rounded-md border border-border bg-background px-2 text-[11px] text-foreground outline-none focus:border-teal-500"><option value="">{group.label}</option>{group.options.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select>)}
+          {Object.values(filters).some(Boolean) && <button type="button" onClick={() => setFilters({})} className="shrink-0 px-2 text-[11px] font-semibold text-muted-foreground hover:text-foreground">Clear all</button>}
+        </div>
+        <div className="mt-1 flex items-center gap-2 text-[10px] text-muted-foreground"><span className="size-1.5 rounded-full bg-teal-500" /> 13 dimensions available <span className="text-muted-foreground/40">|</span> Filters persist for this command view</div>
+      </div>
+      <main className="min-h-0 flex-1 overflow-auto">
+        {isLoading ? <div className="flex h-full items-center justify-center"><LoadingState title="Assembling CBU custody picture..." variant="spinner" /></div> : error ? <div className="flex h-full items-center justify-center p-8"><ErrorState title="Command center unavailable" description={error instanceof Error ? error.message : 'Unable to read StemCyte operations data.'} onRetry={() => refetch()} /></div> : data ? <StemCyteCommandSurface data={data} /> : null}
+      </main>
+    </div>
   )
 }

@@ -7,9 +7,9 @@ interface StatusBadgeProps {
 }
 
 const sizeMap = {
-  sm: { wrapper: "px-2 py-0.5 text-[10px] leading-3", dot: "size-1.5" },
-  md: { wrapper: "px-2.5 py-0.5 text-xs leading-4", dot: "size-2" },
-  lg: { wrapper: "px-3 py-1 text-sm leading-5", dot: "size-2.5" },
+  sm: { wrapper: "px-1.5 py-px text-[10px] leading-3.5", dot: "size-1" },
+  md: { wrapper: "px-2 py-0.5 text-[11px] leading-4", dot: "size-1.5" },
+  lg: { wrapper: "px-2.5 py-1 text-xs leading-5", dot: "size-2" },
 }
 
 function StatusBadge({ status, size = "md" }: StatusBadgeProps) {
@@ -19,8 +19,8 @@ function StatusBadge({ status, size = "md" }: StatusBadgeProps) {
   const s = sizeMap[size]
 
   return (
-    <span className={cn("inline-flex items-center gap-1.5 rounded-full font-medium whitespace-nowrap", s.wrapper, bgClass)}>
-      <span className={cn("inline-block rounded-full bg-current", s.dot)} />
+    <span className={cn("inline-flex items-center gap-1 rounded font-medium whitespace-nowrap", s.wrapper, bgClass)}>
+      <span className={cn("inline-block rounded-sm bg-current opacity-60", s.dot)} />
       {status.replace(/_/g, " ")}
     </span>
   )

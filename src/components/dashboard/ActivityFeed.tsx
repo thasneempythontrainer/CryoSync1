@@ -17,12 +17,12 @@ const activityConfig: Record<
   RecentActivity['type'],
   { icon: typeof Truck; color: string }
 > = {
-  shipment_received: { icon: Truck, color: 'text-cyan-400 bg-cyan-400/10' },
-  compliance_flagged: { icon: AlertTriangle, color: 'text-amber-500 bg-amber-500/10' },
-  lot_released: { icon: CheckCircle2, color: 'text-emerald-400 bg-emerald-400/10' },
-  qa_reviewed: { icon: ClipboardCheck, color: 'text-violet-500 bg-violet-500/10' },
-  deviation_resolved: { icon: FileCheck, color: 'text-cyan-500 bg-cyan-500/10' },
-  transfer_completed: { icon: ArrowRightLeft, color: 'text-rose-500 bg-rose-500/10' },
+  shipment_received: { icon: Truck, color: 'text-primary bg-primary/10' },
+  compliance_flagged: { icon: AlertTriangle, color: 'text-warning bg-warning/10' },
+  lot_released: { icon: CheckCircle2, color: 'text-success bg-success/10' },
+  qa_reviewed: { icon: ClipboardCheck, color: 'text-purple-500 bg-purple-500/10' },
+  deviation_resolved: { icon: FileCheck, color: 'text-info bg-info/10' },
+  transfer_completed: { icon: ArrowRightLeft, color: 'text-orange-500 bg-orange-500/10' },
 }
 
 function timeAgo(timestamp: string): string {
@@ -49,7 +49,7 @@ function timeAgo(timestamp: string): string {
 
 export function ActivityFeed({ data }: ActivityFeedProps) {
   return (
-    <div className="card-premium flex flex-col p-5">
+    <div className="flex flex-col rounded-lg border border-border bg-card p-5">
       <h3 className="mb-1 text-sm font-semibold text-foreground">Recent Activity</h3>
       <div className="max-h-80 overflow-y-auto -mx-5 -mb-5 mt-3">
         {data.map((activity) => {

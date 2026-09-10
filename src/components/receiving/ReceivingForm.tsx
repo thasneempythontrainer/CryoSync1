@@ -41,7 +41,7 @@ import {
   PRODUCT_CATEGORIES,
 } from "@/constants/enterprise"
 import { formatCurrency, formatCategory } from "@/utils/formatters"
-import { useCreateShipment, useFacilities, useStorageZones } from "@/services"
+import { useCreateShipment, useFacilities, useStorageZones, EXTRACT_PREFILL_KEY } from "@/services"
 import { useAuth } from "@/hooks"
 import type { Facility, Shipment, StorageZone } from "@/types"
 
@@ -161,11 +161,33 @@ function ReceivingForm({ prefillShipment }: { prefillShipment?: string }) {
   const { data: facilities } = useFacilities()
   const { data: storageZones } = useStorageZones()
   const { can } = useAuth()
-  const canCreateShipment = can("act:create_shipment")
+  const canCreateShipment = can("act:create_cbu")
+
+  const [aiPrefill] = useState(() => {
+    try {
+      const raw = sessionStorage.getItem(EXTRACT_PREFILL_KEY)
+      if (!raw) return null
+      sessionStorage.removeItem(EXTRACT_PREFILL_KEY)
+      const parsed = JSON.parse(raw)
+      return parsed && typeof parsed === "object" ? (parsed as Record<string, unknown>) : null
+    } catch {
+      return null
+    }
+  })
+
+  useEffect(() => {
+    if (aiPrefill) {
+      toast.add({
+        title: "AI extraction applied",
+        description: "Fields prefilled from AI Extract. Review before submitting.",
+        type: "success",
+      })
+    }
+  }, [aiPrefill])
 
   const form = useForm<ReceivingFormValues>({
     resolver: zodResolver(receivingSchema) as any,
-    defaultValues,
+    defaultValues: aiPrefill ? ({ ...defaultValues, ...aiPrefill } as ReceivingFormValues) : defaultValues,
     mode: "onChange",
   })
 
@@ -396,8 +418,8 @@ function ReceivingForm({ prefillShipment }: { prefillShipment?: string }) {
         <DialogTrigger />
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2 text-emerald-600">
-              <div className="flex size-8 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 dark:bg-emerald-900 dark:text-emerald-400">
+            <DialogTitle className="flex items-center gap-2 text-success">
+              <div className="flex size-8 items-center justify-center rounded-full bg-success/10 text-success">
                 <Check className="size-4" />
               </div>
               Intake Created
@@ -416,7 +438,7 @@ function ReceivingForm({ prefillShipment }: { prefillShipment?: string }) {
               <span className="text-muted-foreground">Status</span>
               <Badge
                 variant="outline"
-                className="bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-400"
+                className="bg-warning/10 text-warning"
               >
                 Receiving
               </Badge>
@@ -624,9 +646,9 @@ function ComplianceAlert({ icon: Icon, title, description, variant }: {
   variant: 'warning' | 'critical' | 'info'
 }) {
   const colors = {
-    warning: 'border-amber-200 bg-amber-50 text-amber-800 dark:border-amber-800 dark:bg-amber-950 dark:text-amber-300',
-    critical: 'border-red-200 bg-red-50 text-red-800 dark:border-red-800 dark:bg-red-950 dark:text-red-300',
-    info: 'border-blue-200 bg-blue-50 text-blue-800 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300',
+    warning: 'border-warning/30 bg-warning/10 text-warning',
+    critical: 'border-danger/30 bg-danger/10 text-danger',
+    info: 'border-info/30 bg-info/10 text-info',
   }
   return (
     <div className={`flex items-start gap-3 rounded-lg border p-3 ${colors[variant]}`}>
@@ -872,8 +894,8 @@ function StepReview({ watchedValues, facilities }: { watchedValues: ReceivingFor
       </div>
 
       {reviewFlags.length > 0 && (
-        <div className="rounded-lg border border-amber-200 bg-amber-50/50 p-4 dark:border-amber-800 dark:bg-amber-950/30">
-          <h4 className="mb-2 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-amber-700 dark:text-amber-400">
+        <div className="rounded-lg border border-border bg-card p-4">
+          <h4 className="mb-2 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-warning">
             <AlertTriangle className="size-3.5" />
             Compliance Notes
           </h4>
@@ -881,7 +903,7 @@ function StepReview({ watchedValues, facilities }: { watchedValues: ReceivingFor
             {reviewFlags.map((f, i) => (
               <li key={i} className="flex items-center gap-2 text-xs">
                 <span className={`inline-block size-1.5 rounded-full ${
-                  f.severity === 'critical' ? 'bg-red-500' : f.severity === 'warning' ? 'bg-amber-500' : 'bg-blue-500'
+                  f.severity === 'critical' ? 'bg-danger' : f.severity === 'warning' ? 'bg-warning' : 'bg-info'
                 }`} />
                 {f.label}
               </li>

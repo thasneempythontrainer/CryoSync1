@@ -8,6 +8,8 @@ import {
   useCreateConversation,
   useDeleteConversation,
   saveAgentContext,
+  askGenie,
+  resetGenieThread,
 } from "@/services"
 import {
   updateShipmentStatus,
@@ -33,6 +35,7 @@ import {
   getUsers,
   scanTemperatureIncidents,
   resolveAllOpenIncidents,
+  getCbuDetails,
 } from "@/services"
 
 import { useAgentChat, useAuth, useSpeechSynthesis, type AgentStep } from "@/hooks"
@@ -162,6 +165,9 @@ function GeniePage() {
       scanTemperatureIncidents({ facilityId, reportedBy: user?.displayName || "AI Scanner" }),
     resolveAllOpenIncidents: async (data) =>
       resolveAllOpenIncidents({ ...data, resolvedBy: user?.displayName || "AI Scanner" }),
+    askGenie,
+    genieThreadId: activeConversationId ?? undefined,
+    getCbuDetails,
   })
 
   // Voice mode: when the last input was spoken, read the agent's replies aloud
@@ -255,9 +261,10 @@ function GeniePage() {
   )
 
   const handleNewConversation = useCallback(() => {
+    if (activeConversationId) void resetGenieThread(activeConversationId)
     setActiveConversationId(null)
     reset()
-  }, [reset])
+  }, [reset, activeConversationId])
 
   const handleSelectConversation = useCallback(
     (id: string) => {
@@ -271,6 +278,7 @@ function GeniePage() {
   const handleDeleteConversation = useCallback(
     (id: string) => {
       deleteConversationMutation.mutate(id)
+      void resetGenieThread(id)
       if (id === activeConversationId) {
         setActiveConversationId(null)
         reset()
@@ -299,8 +307,8 @@ function GeniePage() {
 
   const showWelcome = steps.length === 0 && !isLoadingMessages && !isThinking
 
-  const canShipments = can('view:shipments')
-  const canUpdateStatus = can('act:update_shipment_status')
+  const canShipments = can('view:cbus')
+  const canUpdateStatus = can('act:update_cbu_status')
   const canCompliance = can('view:compliance')
   const agentQuestions = [
     ...(canUpdateStatus
@@ -356,7 +364,7 @@ function GeniePage() {
             >
               {sidebarOpen ? <X className="size-5" /> : <Menu className="size-5" />}
             </button>
-            <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary shadow-[0_0_14px_-4px_color-mix(in_oklch,var(--primary)_60%,transparent)]">
+            <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
               <AgentMark className="size-5" />
             </div>
             <div className="flex min-w-0 flex-col leading-tight">
@@ -387,11 +395,10 @@ function GeniePage() {
           <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
             <div className="mx-auto flex min-h-full w-full max-w-2xl flex-col justify-center gap-6 px-4 py-8 sm:px-6 sm:py-10">
               <div className="relative flex flex-col items-center gap-4 text-center">
-                <div aria-hidden className="pointer-events-none absolute -top-20 size-56 rounded-full bg-primary/15 blur-[100px]" />
-                <div className="relative flex size-16 items-center justify-center rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/15 to-accent/10 text-primary shadow-[0_0_30px_-8px_color-mix(in_oklch,var(--primary)_55%,transparent)]">
+                <div className="flex size-16 items-center justify-center rounded-2xl border border-primary/20 bg-primary/10 text-primary">
                   <AgentMark className="size-10" />
                 </div>
-                <div className="relative space-y-1.5">
+                <div className="space-y-1.5">
                   <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
                     {AGENT_NAV_LABEL}
                   </h1>
@@ -447,7 +454,7 @@ function GeniePage() {
                           <span className="truncate text-xs font-medium text-foreground">
                             {step.toolName}
                           </span>
-                          <span className="shrink-0 text-[11px] font-medium text-emerald-500">
+                          <span className="shrink-0 text-[11px] font-medium text-success">
                             done
                           </span>
                         </div>

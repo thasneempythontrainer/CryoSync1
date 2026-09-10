@@ -11,7 +11,7 @@ export function useAuth() {
   return useMemo(() => {
     const can = (permission: Permission) => canWithRole(role, permission)
     const roleLabel = role ? ROLE_LABELS[role] : undefined
-    const isSupervisor = role === 'supervisor'
-    return { user, role: role as UserRole | undefined, can, roleLabel, isSupervisor }
+    const isAdmin = role === 'admin'
+    return { user, role: role as UserRole | undefined, can, roleLabel, isAdmin }
   }, [user, role])
 }

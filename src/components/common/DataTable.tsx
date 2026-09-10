@@ -79,39 +79,39 @@ function DataTable({
     if (col.type === "status") {
       return <StatusBadge status={String(value ?? "")} size="sm" />
     }
-    return <span className="text-sm text-foreground">{String(value ?? "")}</span>
+    return <span className="text-xs text-foreground">{String(value ?? "")}</span>
   }
 
   return (
-    <div className={cn("flex flex-col gap-4", className)}>
-      <div className="overflow-x-auto rounded-xl border border-border">
-        <table className="w-full border-collapse text-sm">
+    <div className={cn("flex flex-col gap-3", className)}>
+      <div className="overflow-x-auto rounded border border-border">
+        <table className="w-full border-collapse text-xs">
           <thead>
-            <tr className="border-b border-border bg-muted/60">
+            <tr className="border-b border-border bg-muted/40">
               {columns.map((col) => (
                 <th
                   key={col.key}
                   style={col.width ? { width: col.width, minWidth: col.width } : undefined}
                   className={cn(
-                    "sticky top-0 z-10 h-10 px-4 text-left text-xs font-bold uppercase tracking-wider text-muted-foreground bg-muted/60",
+                    "sticky top-0 z-10 h-8 px-3 text-left text-[10px] font-semibold uppercase tracking-wider text-muted-foreground bg-muted/40",
                     col.sortable && "cursor-pointer select-none hover:text-foreground"
                   )}
                   onClick={() => {
                     if (col.sortable && onSort) onSort(col.key)
                   }}
                 >
-                  <span className="inline-flex items-center gap-1.5">
+                  <span className="inline-flex items-center gap-1">
                     {col.label}
                     {col.sortable && (
                       <>
                         {sortBy === col.key ? (
                           sortOrder === "asc" ? (
-                            <ChevronUp className="size-3.5 text-foreground" />
+                            <ChevronUp className="size-3 text-foreground" />
                           ) : (
-                            <ChevronDown className="size-3.5 text-foreground" />
+                            <ChevronDown className="size-3 text-foreground" />
                           )
                         ) : (
-                          <ChevronsUpDown className="size-3.5 text-muted-foreground/40" />
+                          <ChevronsUpDown className="size-3 text-muted-foreground/30" />
                         )}
                       </>
                     )}
@@ -128,8 +128,8 @@ function DataTable({
                   className="border-b border-border last:border-b-0"
                 >
                   {columns.map((col) => (
-                    <td key={col.key} className="px-4 py-3">
-                      <Skeleton className="h-4 w-full" />
+                    <td key={col.key} className="px-3 py-2.5">
+                      <Skeleton className="h-3.5 w-full" />
                     </td>
                   ))}
                 </tr>
@@ -138,7 +138,7 @@ function DataTable({
               <tr>
                 <td colSpan={columns.length}>
                   <EmptyState
-                    icon={<Inbox className="size-7" />}
+                    icon={<Inbox className="size-6" />}
                     title="No data found"
                     description="Try adjusting your filters or search terms."
                   />
@@ -149,14 +149,14 @@ function DataTable({
                 <tr
                   key={(row as Record<string, unknown>).id ? String((row as Record<string, unknown>).id) : i}
                   className={cn(
-                    "border-b border-border transition-colors last:border-b-0 hover:bg-primary/5",
-                    i % 2 === 1 && "bg-muted/15"
+                    "border-b border-border last:border-b-0 hover:bg-muted/30 transition-colors",
+                    i % 2 === 1 && "bg-muted/10"
                   )}
                 >
                   {columns.map((col) => (
                     <td
                       key={col.key}
-                      className="px-4 py-3"
+                      className="px-3 py-2.5"
                       style={col.width ? { width: col.width, minWidth: col.width } : undefined}
                     >
                       {renderCell(col, (row as Record<string, unknown>)[col.key], row)}
@@ -170,42 +170,38 @@ function DataTable({
       </div>
 
       {!loading && data.length > 0 && (
-        <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+        <div className="flex flex-col items-center justify-between gap-2 sm:flex-row">
+          <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
             <span className="tabular-nums">
               {startRow}&ndash;{endRow} of {total}
             </span>
-            <span className="text-border">|</span>
-            <span className="flex items-center gap-1.5">
-              Rows per page
+            <span className="text-border">·</span>
+            <span className="flex items-center gap-1">
+              Rows
               <select
                 value={pageSize}
                 onChange={(e) => {
                   const newSize = Number(e.target.value)
-                  if (onPageSizeChange) {
-                    onPageSizeChange(newSize)
-                  }
+                  if (onPageSizeChange) onPageSizeChange(newSize)
                   onPageChange(1)
                 }}
-                className="rounded-md border border-input bg-transparent px-2 py-1 text-sm text-foreground outline-none focus:border-ring focus:ring-1 focus:ring-ring"
+                className="rounded border border-border bg-transparent px-1 py-px text-[11px] text-foreground outline-none"
               >
                 {PAGE_SIZE_OPTIONS.map((size) => (
-                  <option key={size} value={size}>
-                    {size}
-                  </option>
+                  <option key={size} value={size}>{size}</option>
                 ))}
               </select>
             </span>
           </div>
 
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-0.5">
             <Button
               variant="ghost"
               size="icon-xs"
               disabled={page <= 1}
               onClick={() => onPageChange(1)}
             >
-              <ChevronsLeft className="size-4" />
+              <ChevronsLeft className="size-3.5" />
             </Button>
             <Button
               variant="ghost"
@@ -213,14 +209,14 @@ function DataTable({
               disabled={page <= 1}
               onClick={() => onPageChange(page - 1)}
             >
-              <ChevronLeft className="size-4" />
+              <ChevronLeft className="size-3.5" />
             </Button>
 
             {getPageNumbers().map((p, i) =>
               p === "..." ? (
                 <span
                   key={`ellipsis-${i}`}
-                  className="flex size-6 items-center justify-center text-xs text-muted-foreground"
+                  className="flex size-5 items-center justify-center text-[10px] text-muted-foreground"
                 >
                   ...
                 </span>
@@ -242,7 +238,7 @@ function DataTable({
               disabled={page >= totalPages}
               onClick={() => onPageChange(page + 1)}
             >
-              <ChevronRight className="size-4" />
+              <ChevronRight className="size-3.5" />
             </Button>
             <Button
               variant="ghost"
@@ -250,7 +246,7 @@ function DataTable({
               disabled={page >= totalPages}
               onClick={() => onPageChange(totalPages)}
             >
-              <ChevronsRight className="size-4" />
+              <ChevronsRight className="size-3.5" />
             </Button>
           </div>
         </div>

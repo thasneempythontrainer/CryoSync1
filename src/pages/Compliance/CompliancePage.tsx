@@ -182,19 +182,16 @@ function CompliancePage() {
       />
 
       {scanMessage && (
-        <motion.div
-          initial={{ opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.25 }}
-          className={`flex items-center gap-2 rounded-xl border px-4 py-3 text-sm ${
+        <div
+          className={`flex items-center gap-2 rounded-lg border px-4 py-3 text-sm ${
             scanMessage.isError
-              ? "border-destructive/40 bg-destructive/10 text-destructive"
-              : "border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400"
+              ? "border-danger/40 bg-danger/10 text-danger"
+              : "border-success/40 bg-success/10 text-success"
           }`}
         >
           <Radar className="size-4 shrink-0" />
           <span>{scanMessage.text}</span>
-        </motion.div>
+        </div>
       )}
 
       <ComplianceFilters
@@ -222,11 +219,7 @@ function CompliancePage() {
           onRetry={() => refetch()}
         />
       ) : (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15, duration: 0.3 }}
-        >
+        <div>
           <ComplianceDataGrid
             data={data?.data ?? []}
             total={data?.total ?? 0}
@@ -239,7 +232,7 @@ function CompliancePage() {
             sortBy={sortBy}
             sortOrder={sortOrder}
           />
-        </motion.div>
+        </div>
       )}
 
       <IncidentDetailDrawer

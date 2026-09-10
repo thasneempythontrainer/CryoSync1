@@ -5,12 +5,30 @@ import type { DashboardData, DashboardKpi, ShipmentTrend, ReceivingVolume, Tempe
 export interface DashboardFilters {
   facility?: string
   dateRange?: string
+  region?: string
+  supplier?: string
+  custodyStage?: string
+  collectionStatus?: string
+  qualityState?: string
+  testReport?: string
+  storageRegime?: string
+  priority?: string
+  releaseStatus?: string
+  referralSource?: string
+  dataSource?: string
+  assay?: string
 }
 
 export async function getDashboardData(filters?: DashboardFilters): Promise<DashboardData> {
   const params: Record<string, string> = {}
   if (filters?.facility) params.facility = filters.facility
   if (filters?.dateRange) params.dateRange = filters.dateRange
+  if (filters?.region) params.region = filters.region
+  if (filters) {
+    for (const [key, value] of Object.entries(filters)) {
+      if (value) params[key] = value
+    }
+  }
   return apiClient.get<DashboardData>('/dashboard', params)
 }
 
@@ -20,7 +38,7 @@ export async function refreshDashboard(): Promise<DashboardData> {
 
 export function useDashboardData(filters?: DashboardFilters) {
   return useQuery({
-    queryKey: ['dashboard', filters?.facility, filters?.dateRange],
+    queryKey: ['dashboard', filters],
     queryFn: () => getDashboardData(filters),
     staleTime: 30_000,
   })
@@ -28,7 +46,7 @@ export function useDashboardData(filters?: DashboardFilters) {
 
 export function useDashboardKPIs(filters?: DashboardFilters) {
   return useQuery({
-    queryKey: ['dashboard', 'kpis', filters?.facility, filters?.dateRange],
+    queryKey: ['dashboard', 'kpis', filters?.facility, filters?.dateRange, filters?.region, filters?.supplier],
     queryFn: async () => {
       const data = await getDashboardData(filters)
       return data.kpis
@@ -39,7 +57,7 @@ export function useDashboardKPIs(filters?: DashboardFilters) {
 
 export function useDashboardCharts(filters?: DashboardFilters) {
   return useQuery({
-    queryKey: ['dashboard', 'charts', filters?.facility, filters?.dateRange],
+    queryKey: ['dashboard', 'charts', filters?.facility, filters?.dateRange, filters?.region, filters?.supplier],
     queryFn: async () => {
       const data = await getDashboardData(filters)
       return {

@@ -43,7 +43,7 @@ function ComplianceFilters({ values, onChange, onReset }: ComplianceFiltersProps
   const hasActiveFilters = Object.values(values).some((v) => v !== "")
 
   return (
-    <div className="flex flex-wrap items-center gap-2 rounded-xl border border-border bg-card p-3 shadow-sm">
+    <div className="flex flex-wrap items-center gap-2 rounded-lg border border-border bg-card p-3">
       <div className="relative min-w-48">
         <Search className="pointer-events-none absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
         <input

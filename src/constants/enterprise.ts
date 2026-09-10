@@ -1,6 +1,6 @@
 export const CARRIERS = [
-  'DHL PharmaTrans', 'FedEx ColdCare', 'UPS Healthcare', 'Marken',
-  'World Courier', 'DB Schenker Pharma', 'CEVA ColdChain', 'DSV Panalpina',
+  'StemCyte Branch Courier', 'World Courier', 'DHL Medical Express',
+  'FedEx Clinical Logistics', 'Blue Dart Healthcare', 'Local Branch Transfer',
 ]
 
 export const TEMPERATURE_REGIMES = [
@@ -12,21 +12,12 @@ export const TEMPERATURE_REGIMES = [
 ]
 
 export const PRODUCT_CATEGORIES = [
-  { id: 'pcr_reagents', label: 'PCR Reagents' },
-  { id: 'dna_extraction_kits', label: 'DNA Extraction Kits' },
-  { id: 'rna_isolation_kits', label: 'RNA Isolation Kits' },
-  { id: 'elisa_kits', label: 'ELISA Kits' },
-  { id: 'diagnostic_test_kits', label: 'Diagnostic Test Kits' },
-  { id: 'cryogenic_vials', label: 'Cryogenic Vials' },
-  { id: 'cell_culture_media', label: 'Cell Culture Media' },
-  { id: 'monoclonal_antibodies', label: 'Monoclonal Antibodies' },
-  { id: 'vaccines', label: 'Vaccines' },
-  { id: 'insulin_products', label: 'Insulin Products' },
-  { id: 'blood_collection_tubes', label: 'Blood Collection Tubes' },
-  { id: 'biologics', label: 'Biologics' },
-  { id: 'laboratory_chemicals', label: 'Laboratory Chemicals' },
-  { id: 'reference_standards', label: 'Reference Standards' },
-  { id: 'cold_chain_medicines', label: 'Cold Chain Medicines' },
+  { id: 'hybrid_banking', label: 'Hybrid Cord Blood Banking' },
+  { id: 'univercell_banking', label: 'UniverCell Banking' },
+  { id: 'cord_blood_unit', label: 'Cord Blood Unit' },
+  { id: 'maternal_sample', label: 'Maternal Sample' },
+  { id: 'test_report', label: 'Laboratory Test Report' },
+  { id: 'cellular_therapy_release', label: 'Clinical Release' },
 ]
 
 export const DEVIATION_TYPES = [

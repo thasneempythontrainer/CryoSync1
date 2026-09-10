@@ -20,6 +20,9 @@ dist-ssr
 # Databricks bundle state
 .databricks/
 
+# Local AI Extract test documents
+test-documents/
+
 # Python
 __pycache__/
 *.py[cod]

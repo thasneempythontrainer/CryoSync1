@@ -32,6 +32,29 @@ export async function deleteConversation(conversationId: string): Promise<unknow
   return apiClient.delete(`/genie/conversations/${conversationId}`)
 }
 
+export interface GenieAskResult {
+  answer: string
+  sql?: string | null
+  rowCount?: number | null
+  columns: string[]
+  data: Record<string, unknown>[]
+  truncated: boolean
+  suggestedQuestions: string[]
+  genieConversationId: string
+}
+
+export async function askGenie(
+  question: string,
+  threadId?: string
+): Promise<GenieAskResult> {
+  return apiClient.post<GenieAskResult>('/genie/ask', { question, threadId })
+}
+
+export async function resetGenieThread(threadId?: string): Promise<unknown> {
+  if (!threadId) return undefined
+  return apiClient.post('/genie/ask/reset', { threadId })
+}
+
 export function useConversations() {
   return useQuery({
     queryKey: ['genie-conversations'],

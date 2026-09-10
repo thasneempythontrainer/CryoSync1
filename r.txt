@@ -2,3 +2,37 @@ design it professionally and make a html page with pdf printable with selectable
 
 data br tk
 dapif5e14fd82bc57cd9feb2e135c261cb57
+
+
+1000.45340af3458408dec9053a6c388c1aa6.b86ff3ae51081d836930e17adf547463
+
+
+{
+    "access_token": "1000.85917b5774297b4458c4464b9f88668a.68279c1ea261eec0449c8e21f91c3bbe",
+    "refresh_token": "1000.f0a6c9fc80a0bbda7ba19d97212ba280.5a7c0476c3976198b61b19a81bfaba63",
+    "scope": "ZohoCRM.modules.READ ZohoCRM.settings.READ ZohoCRM.bulk.READ",
+    "api_domain": "https://www.zohoapis.in",
+    "token_type": "Bearer",
+    "expires_in": 3600
+}
+
+{
+    "access_token": "1000.b118b73ad53ec5db571e4082aeb27947.cba028b72971f0446b3a62c12242b658",
+    "refresh_token": "1000.6a5542b4dcde5be0cf1b9807fa91b9e5.3d86efe7604d29d7c15fd51a24ce2cdc",
+    "scope": "ZohoCRM.modules.READ",
+    "api_domain": "https://www.zohoapis.in",
+    "token_type": "Bearer",
+    "expires_in": 3600
+}
+
+curl -X POST "https://accounts.zoho.in/oauth/v2/token" \
+  -d "code=YOUR_CODE" \
+  -d "client_id=YOUR_CLIENT_ID" \
+  -d "client_secret=YOUR_CLIENT_SECRET" \
+  -d "grant_type=authorization_code"
+
+
+
+1000.0HJSRQ517VA4SVE6NV2PZQ0NBW0AJV
+
+https://dbc-2a25661e-3f93.cloud.databricks.com/login/oauth/http.html?state=%7B%22nonce%22%3A%221788156231703f15rn078%22%7D&code=1000.639aa7620a781d71416bdcfc34df2174.1ffc15d310dbcbe647259c4a6169221f&location=in&accounts-server=https%3A%2F%2Faccounts.zoho.in

@@ -12,9 +12,9 @@ interface SystemHealthOverviewProps {
 }
 
 const statusConfig = {
-  healthy: { color: "bg-emerald-500", glow: "shadow-emerald-500/30", icon: CheckCircle, label: "All Systems Operational" },
-  degraded: { color: "bg-amber-500", glow: "shadow-amber-500/30", icon: AlertTriangle, label: "Degraded Performance" },
-  critical: { color: "bg-red-500", glow: "shadow-red-500/30", icon: XCircle, label: "Critical System Issues" },
+  healthy: { color: "text-success", bg: "bg-success/10", icon: CheckCircle, label: "All Systems Operational" },
+  degraded: { color: "text-warning", bg: "bg-warning/10", icon: AlertTriangle, label: "Degraded Performance" },
+  critical: { color: "text-danger", bg: "bg-danger/10", icon: XCircle, label: "Critical System Issues" },
 } as const
 
 function SystemHealthOverview({ data, loading }: SystemHealthOverviewProps) {
@@ -35,11 +35,8 @@ function SystemHealthOverview({ data, loading }: SystemHealthOverviewProps) {
           transition={{ duration: 0.4 }}
           className="flex flex-col items-center gap-4 py-6"
         >
-          <div className={cn("relative flex size-20 items-center justify-center rounded-full shadow-lg", config.glow)}>
-            <div className={cn("absolute inset-0 rounded-full opacity-20 blur-xl", config.color)} />
-            <div className={cn("relative flex size-16 items-center justify-center rounded-full", config.color)}>
-              <Icon className="size-8 text-white" />
-            </div>
+          <div className={cn("flex size-16 items-center justify-center rounded-full", config.bg)}>
+            <Icon className={cn("size-8", config.color)} />
           </div>
 
           <div className="text-center">
@@ -56,7 +53,7 @@ function SystemHealthOverview({ data, loading }: SystemHealthOverviewProps) {
                 <span className="text-xs text-muted-foreground">Active Alerts</span>
                 <span className={cn(
                   "text-sm font-semibold",
-                  data?.activeAlerts && data.activeAlerts > 0 ? "text-amber-500" : "text-emerald-500"
+                  data?.activeAlerts && data.activeAlerts > 0 ? "text-warning" : "text-success"
                 )}>
                   {loading ? "—" : data?.activeAlerts ?? 0}
                 </span>

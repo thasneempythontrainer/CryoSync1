@@ -1,59 +1,53 @@
-# Declarative Automation Bundle for CryoSync.
+# Databricks Assets Bundle for CryoSync (analytic layer).
 #
-# Deploy (creates the app + uploads source):
-#   databricks auth login --host https://dbc-2a25661e-3f93.cloud.databricks.com
-#   databricks bundle validate
-#   databricks bundle deploy
+# Deploys a scheduled Job that refreshes the Silver/Gold analytical tables that
+# back the dashboards and Databricks Genie. The CryoSync web app itself is
+# deployed by .github/workflows/deploy.yml via `databricks apps`.
 #
-# Start/restart the app on compute (required after deploy so code takes effect):
-#   databricks bundle run cryosync
-#
-# Requires Databricks CLI >= 0.239.0 and the Databricks Apps + Lakebase
-# previews enabled in the workspace. See the bundle `apps` resource reference.
+# Required GitHub secrets (see workflow): DATABRICKS_HOST, DATABRICKS_CLIENT_ID,
+# DATABRICKS_CLIENT_SECRET.
 
 bundle:
   name: cryosync
 
-# Files to exclude from the source upload (bundle sync also honours .gitignore,
-# which already excludes node_modules/, dist/ and .env). dist/ is regenerated
-# by the app deploy pipeline via `npm run build`.
-sync:
-  exclude:
-    - "**/__pycache__"
-    - "**/*.pyc"
-    - "*.pptx"
-    - "*.pptx.bak"
-    - "r.txt"
-    - "README.mdgit"
-    - "app-summary.txt"
-    - ".oxlintrc.json"
-    - "components.json"
-    - "tsconfig.tsbuildinfo"
-    - "backend/test_*.py"
+variables:
+  workspace_host:
+    description: Databricks workspace host URL
+    default: https://dbc-2a25661e-3f93.cloud.databricks.com
+  catalog:
+    description: Unity Catalog name for CryoSync data
+    default: cryosync_catalog
 
-resources:
-  apps:
-    # Key used with `databricks bundle run`; `name` is the app shown in the
-    # Databricks Apps UI.
-    cryosync:
-      name: cryosync
-      description: "CryoSync - Cold-Chain Intelligence Platform"
-      source_code_path: "."
-      # Uncomment to let all workspace users open the app:
-      # permissions:
-      #   - level: CAN_USE
-      #     group_name: users
+workspace:
+  host: ${var.workspace_host}
 
 targets:
-  dev:
-    mode: development
-    default: true
-    workspace:
-      host: https://dbc-2a25661e-3f93.cloud.databricks.com
   prod:
     mode: production
     workspace:
-      host: https://dbc-2a25661e-3f93.cloud.databricks.com
-      # Resolves to the authenticated identity's home folder, so local deploys
-      # (user) and CI deploys (service principal) each keep their own state.
-      root_path: /Workspace/Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}
+      host: ${var.workspace_host}
+      root_path: /Shared/cryosync/prod
+    resources:
+      jobs:
+        cryosync_analytics_transform:
+          name: CryoSync analytics transform (Silver/Gold)
+          # Once Bronze is seeded, UNPAUSE and it runs nightly at 02:00 UTC.
+          schedule:
+            quartz_cron_expression: "0 0 2 * * ?"
+            timezone_name: UTC
+            pause_status: PAUSED
+          tasks:
+            - task_key: transform
+              notebook_task:
+                notebook_path: /Shared/cryosync/prod/notebooks/build_silver_gold
+                source: WORKSPACE
+              job_cluster_key: shared
+          job_clusters:
+            - job_cluster_key: shared
+              new_cluster:
+                spark_version: "15.4.x-scala2.12"
+                node_type_id: i3.xlarge
+                num_workers: 1
+                data_security_mode: SINGLE_USER
+                spark_conf:
+                  spark.sql.shuffle.partitions: "4"

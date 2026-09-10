@@ -8,6 +8,8 @@ import {
   Legend,
 } from 'recharts'
 import type { ExpiryTimeline } from '@/types'
+import { chartTooltipStyle, SEMANTIC_COLORS } from './chart-utils'
+import { ChartCard } from './ChartCard'
 
 interface ExpiryTimelineChartProps {
   data: ExpiryTimeline[]
@@ -15,8 +17,7 @@ interface ExpiryTimelineChartProps {
 
 export function ExpiryTimelineChart({ data }: ExpiryTimelineChartProps) {
   return (
-    <div className="card-premium p-5">
-      <h3 className="mb-5 text-sm font-semibold text-foreground">Expiry Timeline</h3>
+    <ChartCard title="Expiry Timeline">
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={data} margin={{ top: 8, right: 8, bottom: 8, left: -16 }}>
@@ -37,14 +38,7 @@ export function ExpiryTimelineChart({ data }: ExpiryTimelineChartProps) {
               allowDecimals={false}
             />
             <Tooltip
-              contentStyle={{
-                backgroundColor: 'var(--popover)',
-                border: '1px solid var(--border)',
-                borderRadius: 'var(--radius-lg)',
-                fontSize: 12,
-                color: 'var(--popover-foreground)',
-                boxShadow: 'var(--shadow-elevated)',
-              }}
+              contentStyle={chartTooltipStyle}
               labelFormatter={(v) => {
                 const d = new Date(v + '-01')
                 return d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
@@ -67,8 +61,8 @@ export function ExpiryTimelineChart({ data }: ExpiryTimelineChartProps) {
             <Area
               type="monotone"
               dataKey="expiring"
-              stroke="#ef4444"
-              fill="#ef4444"
+              stroke={SEMANTIC_COLORS.danger}
+              fill={SEMANTIC_COLORS.danger}
               fillOpacity={0.12}
               strokeWidth={2.5}
               name="Expiring Lots"
@@ -76,6 +70,6 @@ export function ExpiryTimelineChart({ data }: ExpiryTimelineChartProps) {
           </AreaChart>
         </ResponsiveContainer>
       </div>
-    </div>
+    </ChartCard>
   )
 }

@@ -195,11 +195,11 @@ function TemperatureLoggerPanel({ shipmentId }: { shipmentId: string }) {
         <div
           className={`flex items-center gap-3 rounded-lg border px-3 py-2.5 ${
             liveExcursion
-              ? "border-red-200 bg-red-50/60 dark:border-red-900 dark:bg-red-950/30"
-              : "border-emerald-200 bg-emerald-50/60 dark:border-emerald-900 dark:bg-emerald-950/30"
+              ? "border-danger/30 bg-danger/10"
+              : "border-success/30 bg-success/10"
           }`}
         >
-          <Radio className={`size-4 animate-pulse ${liveExcursion ? "text-red-500" : "text-emerald-500"}`} />
+          <Radio className={`size-4 animate-pulse ${liveExcursion ? "text-danger" : "text-success"}`} />
           <div className="min-w-0 flex-1">
             <p className="text-sm font-semibold text-foreground">
               Live — {formatTemperature(liveTemp ?? 0)}
@@ -209,7 +209,7 @@ function TemperatureLoggerPanel({ shipmentId }: { shipmentId: string }) {
             </p>
           </div>
           {liveExcursion && (
-            <Badge variant="outline" className="border-red-200 bg-red-50 text-red-600 dark:border-red-900 dark:bg-red-950 dark:text-red-400">
+            <Badge variant="outline" className="border-danger/30 bg-danger/10 text-danger">
               <AlertTriangle className="size-3" />
               Excursion
             </Badge>
@@ -340,8 +340,8 @@ function TemperatureLoggerPanel({ shipmentId }: { shipmentId: string }) {
                   variant="outline"
                   className={
                     logger.status === "uploaded"
-                      ? "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900 dark:bg-emerald-950 dark:text-emerald-400"
-                      : "border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-900 dark:bg-blue-950 dark:text-blue-400"
+                      ? "border-success/30 bg-success/10 text-success"
+                      : "border-info/30 bg-info/10 text-info"
                   }
                 >
                   {logger.status === "uploaded" ? "Uploaded" : "Connected"}

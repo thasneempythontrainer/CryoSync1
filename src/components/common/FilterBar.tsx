@@ -33,7 +33,7 @@ function FilterBar({ filters, values, onChange, onReset, className }: FilterBarP
   return (
     <div
       className={cn(
-        "flex flex-wrap items-center gap-2 rounded-xl border border-border bg-card p-3 shadow-sm",
+        "flex flex-wrap items-center gap-2 rounded border border-border bg-card p-2",
         className
       )}
     >

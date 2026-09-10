@@ -5,15 +5,24 @@ export interface ApiClient {
   post<T>(path: string, body: unknown): Promise<T>
   put<T>(path: string, body: unknown): Promise<T>
   delete<T>(path: string): Promise<T>
+  upload<T>(path: string, body: FormData): Promise<T>
 }
 
 const API_BASE: string = (import.meta.env.VITE_API_BASE_URL as string | undefined) ?? "/api"
+
+function handleUnauthorized() {
+  useAuthStore.getState().clearSession()
+  if (window.location.pathname !== '/login') {
+    const from = encodeURIComponent(window.location.pathname + window.location.search)
+    window.location.assign(`/login?from=${from}`)
+  }
+}
 
 export class RealApiClient implements ApiClient {
   private async request<T>(path: string, init?: RequestInit): Promise<T> {
     const url = `${API_BASE}${path}`
     const headers: Record<string, string> = {}
-    if (init?.body) headers["Content-Type"] = "application/json"
+    if (init?.body && !(init.body instanceof FormData)) headers["Content-Type"] = "application/json"
 
     const token = useAuthStore.getState().token
     if (token) headers["Authorization"] = `Bearer ${token}`
@@ -25,6 +34,10 @@ export class RealApiClient implements ApiClient {
       throw new Error(
         "Unable to reach the CryoSync API. Check that the backend is running on port 8000.",
       )
+    }
+
+    if (res.status === 401 && !path.startsWith('/auth/login')) {
+      handleUnauthorized()
     }
 
     if (!res.ok) {
@@ -61,6 +74,10 @@ export class RealApiClient implements ApiClient {
 
   delete<T>(path: string): Promise<T> {
     return this.request<T>(path, { method: "DELETE" })
+  }
+
+  upload<T>(path: string, body: FormData): Promise<T> {
+    return this.request<T>(path, { method: "POST", body })
   }
 }
 

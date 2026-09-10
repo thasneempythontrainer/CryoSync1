@@ -16,21 +16,12 @@ export type TemperatureRegime =
   | 'liquid_nitrogen'
 
 export type ProductCategory =
-  | 'pcr_reagents'
-  | 'dna_extraction_kits'
-  | 'rna_isolation_kits'
-  | 'elisa_kits'
-  | 'diagnostic_test_kits'
-  | 'cryogenic_vials'
-  | 'cell_culture_media'
-  | 'monoclonal_antibodies'
-  | 'vaccines'
-  | 'insulin_products'
-  | 'blood_collection_tubes'
-  | 'biologics'
-  | 'laboratory_chemicals'
-  | 'reference_standards'
-  | 'cold_chain_medicines'
+  | 'hybrid_banking'
+  | 'univercell_banking'
+  | 'cord_blood_unit'
+  | 'maternal_sample'
+  | 'test_report'
+  | 'cellular_therapy_release'
 
 export interface TemperatureReading {
   id: string

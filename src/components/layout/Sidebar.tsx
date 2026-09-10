@@ -4,14 +4,22 @@ import { type ComponentType } from "react"
 import { NavLink } from "react-router-dom"
 import {
   LayoutDashboard,
-  PackageOpen,
+  Baby,
+  Users,
+  Database,
   ShieldCheck,
-  Settings,
-  AlertTriangle,
+  Heart,
+  CreditCard,
+  UserPlus,
+  Building2,
+  FileText,
   Siren,
+  Settings,
   ChevronLeft,
   ChevronRight,
   X,
+  Scan,
+  FileSpreadsheet,
 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -36,12 +44,20 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { label: "Receiving Intake", href: "/receiving", icon: PackageOpen },
-  { label: "Compliance & Cold Chain", href: "/compliance", icon: ShieldCheck },
-  { label: "Report Issue", href: "/report", icon: Siren },
-  { label: "Risk & Stockout", href: "/risk", icon: AlertTriangle },
+  { label: "CBU Tracking", href: "/cbus", icon: Baby },
+  { label: "Families & Care", href: "/customers", icon: Users },
+  { label: "Cryostorage", href: "/storage", icon: Database },
+  { label: "Compliance", href: "/compliance", icon: ShieldCheck },
+  { label: "Clinical Release", href: "/transplants", icon: Heart },
+  { label: "Plans & Billing", href: "/payments", icon: CreditCard },
+  { label: "Branch Network", href: "/referrals", icon: UserPlus },
+  { label: "Collection Branches", href: "/franchisees", icon: Building2 },
+  { label: "Knowledge Hub", href: "/content", icon: FileText },
+  { label: "Quality Report", href: "/report", icon: Siren },
+  { label: "AI Extract", href: "/extract", icon: Scan },
+  { label: "Lab Reports", href: "/lab-reports", icon: FileSpreadsheet },
   { label: AGENT_NAV_LABEL, href: "/genie", icon: AgentMark },
-  { label: "Admin & System Health", href: "/admin", icon: Settings },
+  { label: "Admin", href: "/admin", icon: Settings },
 ]
 
 function Sidebar() {
@@ -54,7 +70,7 @@ function Sidebar() {
   const visibleNavItems = navItems.filter((item) => canAccessPage(user?.role, item.href))
 
   const initials = user
-    ? user.displayName
+    ? (user.displayName ?? "")
         .replace(/^(Dr\.|Mr\.|Ms\.)\s+/i, "")
         .split(" ")
         .map((p) => p[0])
@@ -67,45 +83,40 @@ function Sidebar() {
     <>
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-50 flex flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground",
-          "w-64 shadow-2xl transition-transform duration-200 ease-in-out",
-          "lg:relative lg:z-10 lg:shadow-none lg:transition-[width]",
+          "fixed inset-y-0 left-0 z-50 flex flex-col border-r border-border bg-card text-foreground",
+          "transition-[width] duration-150 ease-out",
+          "lg:relative lg:z-10",
           mobileNavOpen ? "translate-x-0" : "-translate-x-full",
           "lg:translate-x-0",
-          sidebarCollapsed ? "lg:w-16" : "lg:w-64",
+          sidebarCollapsed ? "lg:w-14" : "lg:w-56",
+          "w-56",
         )}
       >
+        {/* Brand */}
         <div
           className={cn(
-            "relative flex h-18 shrink-0 items-center gap-3 border-b border-sidebar-border px-4",
-            sidebarCollapsed && "justify-center px-0",
+            "flex h-11 shrink-0 items-center border-b border-border",
+            sidebarCollapsed ? "justify-center px-0" : "gap-2.5 px-4",
           )}
         >
-          <div className="absolute inset-x-4 top-0 h-0.5 rounded-full gradient-brand shadow-[0_0_12px_rgba(56,189,248,0.8)]" />
-          <BrandMark className="size-10 shrink-0 drop-shadow-[0_0_10px_rgba(56,189,248,0.45)]" />
-
+          <BrandMark className="size-6 shrink-0" />
           {!sidebarCollapsed && (
-            <div className="flex flex-col leading-tight">
-              <span className="font-heading text-lg font-bold tracking-tight text-gradient-brand">
-                CryoSync
-              </span>
-              <span className="text-[9px] font-semibold uppercase tracking-[0.22em] text-cyan-300/90">
-                Cold-Chain Intelligence
-              </span>
-            </div>
+            <span className="font-heading text-[13px] font-semibold tracking-tight">
+              CryoSync
+            </span>
           )}
-
           <button
             type="button"
             aria-label="Close navigation"
             onClick={closeMobileNav}
-            className="absolute top-3 right-3 inline-flex size-9 items-center justify-center rounded-lg text-sidebar-foreground/60 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring lg:hidden"
+            className="ml-auto inline-flex size-7 items-center justify-center rounded text-muted-foreground transition-colors hover:bg-muted hover:text-foreground lg:hidden"
           >
-            <X className="size-5" />
+            <X className="size-3.5" />
           </button>
         </div>
 
-        <nav className="flex-1 space-y-0.5 overflow-y-auto p-3">
+        {/* Navigation */}
+        <nav className="flex-1 overflow-y-auto px-2 py-2">
           {visibleNavItems.map((item) => {
             const Icon = item.icon
 
@@ -115,20 +126,20 @@ function Sidebar() {
                 onClick={closeMobileNav}
                 className={({ isActive }) =>
                   cn(
-                    "group relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
+                    "group relative flex items-center gap-2.5 rounded px-2.5 py-1.5 text-[13px] font-medium transition-colors",
                     sidebarCollapsed && "justify-center px-2",
                     isActive
-                      ? "bg-gradient-to-r from-primary/20 to-accent/10 text-sidebar-primary shadow-[0_0_20px_-6px_color-mix(in_oklch,var(--primary)_60%,transparent)]"
-                      : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+                      ? "bg-muted text-foreground"
+                      : "text-muted-foreground hover:bg-muted/50 hover:text-foreground",
                   )
                 }
               >
                 {({ isActive }) => (
                   <>
                     {isActive && (
-                      <span className="absolute left-0 top-1/2 h-6 w-1 -translate-y-1/2 rounded-r-full bg-gradient-to-b from-cyan-300 to-violet-400 shadow-[0_0_10px_rgba(56,189,248,0.9)]" />
+                      <span className="absolute left-0 top-1/2 h-4 w-px -translate-y-1/2 bg-foreground" />
                     )}
-                    <Icon className="size-5 shrink-0" />
+                    <Icon className="size-4 shrink-0" />
                     {!sidebarCollapsed && <span>{item.label}</span>}
                   </>
                 )}
@@ -150,11 +161,12 @@ function Sidebar() {
           })}
         </nav>
 
+        {/* User */}
         {user && (
-          <div className="shrink-0 border-t border-sidebar-border p-3">
+          <div className="shrink-0 border-t border-border p-2">
             <div
               className={cn(
-                "flex items-center gap-3 rounded-lg px-3 py-2.5",
+                "flex items-center gap-2.5 rounded px-2.5 py-1.5",
                 sidebarCollapsed && "justify-center px-2",
               )}
             >
@@ -163,10 +175,10 @@ function Sidebar() {
               </Avatar>
               {!sidebarCollapsed && (
                 <div className="flex min-w-0 flex-col leading-tight">
-                  <span className="truncate text-xs font-semibold text-sidebar-foreground">
+                  <span className="truncate text-[12px] font-medium text-foreground">
                     {user.displayName}
                   </span>
-                  <span className="truncate text-[11px] font-medium text-sidebar-primary">
+                  <span className="truncate text-[10px] text-muted-foreground">
                     {ROLE_LABELS[user.role]}
                   </span>
                 </div>
@@ -175,7 +187,8 @@ function Sidebar() {
           </div>
         )}
 
-        <div className="hidden shrink-0 border-t border-sidebar-border p-3 lg:block">
+        {/* Collapse toggle */}
+        <div className="hidden shrink-0 border-t border-border p-2 lg:block">
           <Tooltip>
             <TooltipTrigger
               render={
@@ -183,19 +196,18 @@ function Sidebar() {
                   type="button"
                   onClick={toggleSidebar}
                   className={cn(
-                    "inline-flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
-                    "text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring",
+                    "inline-flex w-full items-center gap-2.5 rounded px-2.5 py-1.5 text-[12px] font-medium transition-colors",
+                    "text-muted-foreground hover:bg-muted/50 hover:text-foreground",
                     sidebarCollapsed ? "justify-center px-2" : "justify-start",
                   )}
                 />
               }
             >
               {sidebarCollapsed ? (
-                <ChevronRight className="size-5" />
+                <ChevronRight className="size-3.5" />
               ) : (
                 <>
-                  <ChevronLeft className="size-5" />
+                  <ChevronLeft className="size-3.5" />
                   <span>Collapse</span>
                 </>
               )}
@@ -209,11 +221,12 @@ function Sidebar() {
         </div>
       </aside>
 
+      {/* Mobile overlay */}
       {mobileNavOpen && (
         <div
           aria-hidden
           onClick={closeMobileNav}
-          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden"
+          className="fixed inset-0 z-40 bg-foreground/20 backdrop-blur-sm lg:hidden"
         />
       )}
     </>

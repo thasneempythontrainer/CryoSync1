@@ -34,9 +34,9 @@ const services = [
 ] as const
 
 const levelStyles: Record<string, string> = {
-  info: "bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-400",
-  warning: "bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-400",
-  error: "bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-400",
+  info: "bg-primary/10 text-primary",
+  warning: "bg-warning/10 text-warning",
+  error: "bg-danger/10 text-danger",
 }
 
 interface LogEntry {

@@ -102,7 +102,7 @@ function isPlausibleBarcode(text: string): boolean {
 
 function BarcodeScanner({ onCreateShipment }: BarcodeScannerProps) {
   const { can } = useAuth()
-  const canCreateShipment = can("act:create_shipment")
+  const canCreateShipment = can("act:create_cbu")
   const [manualBarcode, setManualBarcode] = useState("")
   const [isScanning, setIsScanning] = useState(false)
   const [scannedData, setScannedData] = useState<Shipment | null>(null)
@@ -376,7 +376,7 @@ function BarcodeScanner({ onCreateShipment }: BarcodeScannerProps) {
                   animate={{ opacity: 0 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.5 }}
-                  className="absolute inset-0 z-10 bg-emerald-400/30"
+                   className="absolute inset-0 z-10 bg-success/30"
                 />
               )}
             </AnimatePresence>
@@ -488,7 +488,7 @@ function BarcodeScanner({ onCreateShipment }: BarcodeScannerProps) {
           </Button>
 
           {!window.isSecureContext && (
-            <p className="flex items-start gap-1.5 text-xs text-amber-600 dark:text-amber-400">
+            <p className="flex items-start gap-1.5 text-xs text-warning">
               <ShieldAlert className="mt-0.5 size-3.5 shrink-0" />
               Camera preview requires HTTPS or localhost. Open the app on localhost (npm run dev) or over HTTPS to enable live scanning.
             </p>
@@ -579,7 +579,7 @@ function BarcodeScanner({ onCreateShipment }: BarcodeScannerProps) {
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <CheckCircle2 className="size-5 text-emerald-500" />
+                    <CheckCircle2 className="size-5 text-success" />
                     <span className="font-semibold text-foreground">{scannedData.shipmentNumber}</span>
                   </div>
                   <Badge className={getStatusBg(scannedData.status)}>
@@ -639,7 +639,7 @@ function BarcodeScanner({ onCreateShipment }: BarcodeScannerProps) {
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <XCircle className="size-5 text-amber-500" />
+                    <XCircle className="size-5 text-warning" />
                     <span className="font-semibold text-foreground">{lastScannedCode}</span>
                   </div>
                   <Badge variant="outline">Not in LakeBase</Badge>

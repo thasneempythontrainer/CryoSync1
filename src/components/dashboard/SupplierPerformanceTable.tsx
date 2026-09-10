@@ -10,9 +10,9 @@ function ScoreBadge({ score }: { score: number }) {
     <span
       className={cn(
         'inline-flex items-center justify-center rounded-md px-2 py-0.5 text-xs font-semibold tabular-nums',
-        score >= 90 && 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400',
-        score >= 80 && score < 90 && 'bg-amber-500/10 text-amber-600 dark:text-amber-400',
-        score < 80 && 'bg-red-500/10 text-red-600 dark:text-red-400',
+        score >= 90 && 'bg-success/10 text-success',
+        score >= 80 && score < 90 && 'bg-warning/10 text-warning',
+        score < 80 && 'bg-danger/10 text-danger',
       )}
     >
       {score}
@@ -22,7 +22,7 @@ function ScoreBadge({ score }: { score: number }) {
 
 export function SupplierPerformanceTable({ data }: SupplierPerformanceTableProps) {
   return (
-    <div className="card-premium flex flex-col p-5">
+    <div className="flex flex-col rounded-lg border border-border bg-card p-5">
       <h3 className="mb-4 text-sm font-semibold text-foreground">Supplier Performance</h3>
       <div className="max-h-80 overflow-y-auto -mx-5">
         <table className="w-full border-collapse">

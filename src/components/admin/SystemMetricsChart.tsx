@@ -15,6 +15,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Skeleton } from "@/components/ui/skeleton"
 import { type SystemMetric } from "@/types"
+import { SEMANTIC_COLORS } from "@/components/dashboard/chart-utils"
 
 interface SystemMetricsChartProps {
   services: SystemMetric[] | undefined
@@ -29,8 +30,8 @@ function buildChartData(services: SystemMetric[], metric: "latency" | "uptime") 
 }
 
 const CHART_COLORS = [
-  "#3b82f6", "#10b981", "#f59e0b", "#ef4444",
-  "#8b5cf6", "#06b6d4", "#f97316", "#ec4899",
+  SEMANTIC_COLORS.primary, SEMANTIC_COLORS.success, SEMANTIC_COLORS.warning, SEMANTIC_COLORS.danger,
+  SEMANTIC_COLORS.purple, SEMANTIC_COLORS.info, SEMANTIC_COLORS.orange, SEMANTIC_COLORS.danger,
 ]
 
 interface CustomTooltipProps {

@@ -8,12 +8,14 @@ import {
 } from 'recharts'
 import type { InventoryDistribution } from '@/types'
 import { formatCompactCurrency } from '@/utils/formatters'
+import { ChartCard } from './ChartCard'
+import { CHART_PALETTE, chartTooltipStyle } from './chart-utils'
 
 interface InventoryDistributionChartProps {
   data: InventoryDistribution[]
 }
 
-const BRAND_COLORS = ['#22d3ee', '#38bdf8', '#818cf8', '#a78bfa', '#34d399', '#f472b6']
+
 
 function labelFormatter(cat: string) {
   return cat
@@ -50,13 +52,14 @@ export function InventoryDistributionChart({ data }: InventoryDistributionChartP
   const total = data.reduce((sum, item) => sum + item.value, 0)
 
   return (
-    <div className="card-premium p-5">
-      <div className="mb-3 flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-foreground">Inventory Distribution</h3>
+    <ChartCard
+      title="Inventory Distribution"
+      badge={
         <span className="text-sm font-bold tabular-nums text-foreground">
           {formatCompactCurrency(total)}
         </span>
-      </div>
+      }
+    >
       <div className="mx-auto w-full max-w-[300px]">
         <div className="aspect-square">
           <ResponsiveContainer width="100%" height="100%">
@@ -75,18 +78,11 @@ export function InventoryDistributionChart({ data }: InventoryDistributionChartP
                 labelLine={false}
               >
                 {data.map((_, i) => (
-                  <Cell key={i} fill={BRAND_COLORS[i % BRAND_COLORS.length]} fillOpacity={0.9} />
+                  <Cell key={i} fill={CHART_PALETTE[i % CHART_PALETTE.length]} fillOpacity={0.9} />
                 ))}
               </Pie>
               <Tooltip
-                contentStyle={{
-                  backgroundColor: 'var(--popover)',
-                  border: '1px solid var(--border)',
-                  borderRadius: 'var(--radius-lg)',
-                  fontSize: 12,
-                  color: 'var(--popover-foreground)',
-                  boxShadow: 'var(--shadow-elevated)',
-                }}
+                contentStyle={chartTooltipStyle}
                 formatter={(value, name) =>
                   [formatCompactCurrency(Number(value)), labelFormatter(String(name))]
                 }
@@ -100,12 +96,12 @@ export function InventoryDistributionChart({ data }: InventoryDistributionChartP
           <div key={item.category} className="flex items-center gap-1.5">
             <span
               className="inline-block size-2.5 shrink-0 rounded-full"
-              style={{ backgroundColor: BRAND_COLORS[i % BRAND_COLORS.length] }}
+              style={{ backgroundColor: CHART_PALETTE[i % CHART_PALETTE.length] }}
             />
             <span className="text-xs text-muted-foreground">{labelFormatter(item.category)}</span>
           </div>
         ))}
       </div>
-    </div>
+    </ChartCard>
   )
 }

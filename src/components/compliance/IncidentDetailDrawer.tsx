@@ -61,7 +61,7 @@ function AuditTimeline({ entries }: { entries: AuditLogEntry[] }) {
               className={cn(
                 "flex size-6 shrink-0 items-center justify-center rounded-full border-2 bg-background",
                 i === entries.length - 1
-                  ? "border-emerald-500 text-emerald-500"
+                  ? "border-success text-success"
                   : "border-muted-foreground/30 text-muted-foreground"
               )}
             >
@@ -105,8 +105,8 @@ function InfoRow({ label, value }: { label: string; value: React.ReactNode }) {
 function IncidentDetailDrawer({ incidentId, open, onOpenChange }: IncidentDetailDrawerProps) {
   const { data: incident, isLoading, isError, refetch } = useComplianceIncident(incidentId ?? undefined)
   const { can, user } = useAuth()
-  const canResolve = can("act:resolve_incident")
-  const canAssign = can("act:assign_incident")
+  const canResolve = can("act:resolve_event")
+  const canAssign = can("act:assign_event")
   const [auditLog, setAuditLog] = useState<AuditLogEntry[]>([])
   const [auditLoading, setAuditLoading] = useState(false)
 

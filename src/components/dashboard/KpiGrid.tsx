@@ -23,16 +23,6 @@ const iconMap: Record<string, LucideIcon> = {
   activity: Activity,
 }
 
-const accentMap: Record<string, string> = {
-  shipments: 'border-l-[#22d3ee]',
-  inventory: 'border-l-[#34d399]',
-  compliance: 'border-l-[#a78bfa]',
-  quality: 'border-l-[#38bdf8]',
-  temperature: 'border-l-[#f472b6]',
-  throughput: 'border-l-[#fbbf24]',
-  default: 'border-l-primary',
-}
-
 interface KpiGridProps {
   kpis: DashboardKpi[]
 }
@@ -42,7 +32,6 @@ export function KpiGrid({ kpis }: KpiGridProps) {
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
       {kpis.map((kpi) => {
         const Icon = iconMap[kpi.icon] || Activity
-        const accent = accentMap[kpi.icon] || accentMap.default
         return (
           <KpiCard
             key={kpi.label}
@@ -52,6 +41,7 @@ export function KpiGrid({ kpis }: KpiGridProps) {
             trend={kpi.trend}
             trendPercent={kpi.trendPercent}
             icon={<Icon className="size-5" />}
+            spark={kpi.spark}
           />
         )
       })}

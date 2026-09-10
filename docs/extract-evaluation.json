@@ -1,0 +1,2793 @@
+{
+  "perDocument": {
+    "01-packing-slip-refrigerated.png": {
+      "group": "clean scan",
+      "standard": {
+        "accuracy": 1.0,
+        "correct": 14,
+        "groundTruthFields": 14,
+        "fieldsExtracted": 17,
+        "overallConfidence": 0.99,
+        "needsReview": 0,
+        "verified": 0,
+        "warnings": 0,
+        "elapsedSec": 11.5,
+        "perField": {
+          "shipmentNumber": {
+            "expected": "SHP-2026-0812",
+            "actual": "SHP-2026-0812",
+            "confidence": 1.0,
+            "evidence": "SHIPMENT NUMBER : SHP-2026-0812",
+            "correct": true
+          },
+          "carrier": {
+            "expected": "FedEx Priority",
+            "actual": "FedEx Priority",
+            "confidence": 1.0,
+            "evidence": "CARRIER : FedEx Priority",
+            "correct": true
+          },
+          "trackingNumber": {
+            "expected": "7942 3381 0021",
+            "actual": "7942 3381 0021",
+            "confidence": 1.0,
+            "evidence": "TRACKING : 7942 3381 0021",
+            "correct": true
+          },
+          "billOfLading": {
+            "expected": "BL-FX-556231",
+            "actual": "BL-FX-556231",
+            "confidence": 1.0,
+            "evidence": "BILL OF LADING : BL-FX-556231",
+            "correct": true
+          },
+          "purchaseOrderNumber": {
+            "expected": "PO-88412",
+            "actual": "PO-88412",
+            "confidence": 1.0,
+            "evidence": "PURCHASE ORDER : PO-88412",
+            "correct": true
+          },
+          "supplierName": {
+            "expected": "CryoLogix Sciences GmbH",
+            "actual": "CryoLogix Sciences GmbH",
+            "confidence": 1.0,
+            "evidence": "CryoLogix Sciences GmbH",
+            "correct": true
+          },
+          "origin": {
+            "expected": "Hamburg, Germany",
+            "actual": "Hamburg, Germany",
+            "confidence": 1.0,
+            "evidence": "ORIGIN : Hamburg, Germany",
+            "correct": true
+          },
+          "destination": {
+            "expected": "Boston, MA, United States",
+            "actual": "Boston, MA, United States",
+            "confidence": 1.0,
+            "evidence": "DESTINATION : Boston, MA, United States",
+            "correct": true
+          },
+          "temperatureRegime": {
+            "expected": "refrigerated_2_8",
+            "actual": "refrigerated_2_8",
+            "confidence": 1.0,
+            "evidence": "STORAGE REQUIREMENT: +2 C to +8 C",
+            "correct": true
+          },
+          "category": {
+            "expected": "cord_blood_unit",
+            "actual": "cord_blood_unit",
+            "confidence": 1.0,
+            "evidence": "CONTENTS - CORD BLOOD UNIT(S) FOR TRANSPLANTATION",
+            "correct": true
+          },
+          "productCount": {
+            "expected": 12,
+            "actual": 12,
+            "confidence": 1.0,
+            "evidence": "PRODUCT COUNT : 12",
+            "correct": true
+          },
+          "lotCount": {
+            "expected": 3,
+            "actual": 3,
+            "confidence": 1.0,
+            "evidence": "LOT COUNT : 3",
+            "correct": true
+          },
+          "totalValue": {
+            "expected": 48600,
+            "actual": 48600,
+            "confidence": 1.0,
+            "evidence": "DECLARED VALUE : USD 48,600.00",
+            "correct": true
+          },
+          "dangerousGoods": {
+            "expected": false,
+            "actual": false,
+            "confidence": 1.0,
+            "evidence": "DANGEROUS GOODS : NO",
+            "correct": true
+          }
+        }
+      },
+      "precision": {
+        "accuracy": 1.0,
+        "correct": 14,
+        "groundTruthFields": 14,
+        "fieldsExtracted": 17,
+        "overallConfidence": 0.99,
+        "needsReview": 0,
+        "verified": 17,
+        "warnings": 0,
+        "elapsedSec": 16.3,
+        "perField": {
+          "shipmentNumber": {
+            "expected": "SHP-2026-0812",
+            "actual": "SHP-2026-0812",
+            "confidence": 1.0,
+            "evidence": "SHIPMENT NUMBER : SHP-2026-0812",
+            "correct": true
+          },
+          "carrier": {
+            "expected": "FedEx Priority",
+            "actual": "FedEx Priority",
+            "confidence": 1.0,
+            "evidence": "CARRIER : FedEx Priority",
+            "correct": true
+          },
+          "trackingNumber": {
+            "expected": "7942 3381 0021",
+            "actual": "7942 3381 0021",
+            "confidence": 1.0,
+            "evidence": "TRACKING : 7942 3381 0021",
+            "correct": true
+          },
+          "billOfLading": {
+            "expected": "BL-FX-556231",
+            "actual": "BL-FX-556231",
+            "confidence": 1.0,
+            "evidence": "BILL OF LADING : BL-FX-556231",
+            "correct": true
+          },
+          "purchaseOrderNumber": {
+            "expected": "PO-88412",
+            "actual": "PO-88412",
+            "confidence": 1.0,
+            "evidence": "PURCHASE ORDER : PO-88412",
+            "correct": true
+          },
+          "supplierName": {
+            "expected": "CryoLogix Sciences GmbH",
+            "actual": "CryoLogix Sciences GmbH",
+            "confidence": 1.0,
+            "evidence": "CryoLogix Sciences GmbH",
+            "correct": true
+          },
+          "origin": {
+            "expected": "Hamburg, Germany",
+            "actual": "Hamburg, Germany",
+            "confidence": 1.0,
+            "evidence": "ORIGIN : Hamburg, Germany",
+            "correct": true
+          },
+          "destination": {
+            "expected": "Boston, MA, United States",
+            "actual": "Boston, MA, United States",
+            "confidence": 1.0,
+            "evidence": "DESTINATION : Boston, MA, United States",
+            "correct": true
+          },
+          "temperatureRegime": {
+            "expected": "refrigerated_2_8",
+            "actual": "refrigerated_2_8",
+            "confidence": 1.0,
+            "evidence": "STORAGE REQUIREMENT: +2 C to +8 C",
+            "correct": true
+          },
+          "category": {
+            "expected": "cord_blood_unit",
+            "actual": "cord_blood_unit",
+            "confidence": 1.0,
+            "evidence": "CONTENTS - CORD BLOOD UNIT(S) FOR TRANSPLANTATION",
+            "correct": true
+          },
+          "productCount": {
+            "expected": 12,
+            "actual": 12,
+            "confidence": 1.0,
+            "evidence": "PRODUCT COUNT : 12",
+            "correct": true
+          },
+          "lotCount": {
+            "expected": 3,
+            "actual": 3,
+            "confidence": 1.0,
+            "evidence": "LOT COUNT : 3",
+            "correct": true
+          },
+          "totalValue": {
+            "expected": 48600,
+            "actual": 48600,
+            "confidence": 1.0,
+            "evidence": "DECLARED VALUE : USD 48,600.00",
+            "correct": true
+          },
+          "dangerousGoods": {
+            "expected": false,
+            "actual": false,
+            "confidence": 1.0,
+            "evidence": "DANGEROUS GOODS : NO",
+            "correct": true
+          }
+        }
+      }
+    },
+    "02-shipping-label-express.png": {
+      "group": "clean scan",
+      "standard": {
+        "accuracy": 1.0,
+        "correct": 10,
+        "groundTruthFields": 10,
+        "fieldsExtracted": 13,
+        "overallConfidence": 1.0,
+        "needsReview": 0,
+        "verified": 0,
+        "warnings": 0,
+        "elapsedSec": 9.0,
+        "perField": {
+          "shipmentNumber": {
+            "expected": "SHP-2026-0917",
+            "actual": "SHP-2026-0917",
+            "confidence": 1.0,
+            "evidence": "SHIPMENT REF : SHP-2026-0917",
+            "correct": true
+          },
+          "carrier": {
+            "expected": "World Courier",
+            "actual": "World Courier",
+            "confidence": 1.0,
+            "evidence": "WORLD COURIER - PRIORITY EXPRESS",
+            "correct": true
+          },
+          "trackingNumber": {
+            "expected": "WB-441-99213870",
+            "actual": "WB-441-99213870",
+            "confidence": 1.0,
+            "evidence": "AWB TRACKING : WB-441-99213870",
+            "correct": true
+          },
+          "origin": {
+            "expected": "London, UK",
+            "actual": "London, UK",
+            "confidence": 1.0,
+            "evidence": "14 Long Harbour Rd, London, UK",
+            "correct": true
+          },
+          "destination": {
+            "expected": "Boston MA, USA",
+            "actual": "Boston MA, USA",
+            "confidence": 1.0,
+            "evidence": "400 Medway St, Boston MA, USA",
+            "correct": true
+          },
+          "priority": {
+            "expected": "expedited",
+            "actual": "expedited",
+            "confidence": 1.0,
+            "evidence": "SERVICE: EXPEDITED (NEXT FLIGHT OUT)",
+            "correct": true
+          },
+          "temperatureRegime": {
+            "expected": "refrigerated_2_8",
+            "actual": "refrigerated_2_8",
+            "confidence": 1.0,
+            "evidence": "TEMP: REFRIGERATED +2 TO +8 C",
+            "correct": true
+          },
+          "dangerousGoods": {
+            "expected": true,
+            "actual": true,
+            "confidence": 1.0,
+            "evidence": "DANGEROUS GOODS: UN3373 BIOLOGICAL SUBSTANCE CATEGORY B",
+            "correct": true
+          },
+          "unNumber": {
+            "expected": "UN3373",
+            "actual": "UN3373",
+            "confidence": 1.0,
+            "evidence": "DANGEROUS GOODS: UN3373 BIOLOGICAL SUBSTANCE CATEGORY B",
+            "correct": true
+          },
+          "sealNumber": {
+            "expected": "WC-99123",
+            "actual": "WC-99123",
+            "confidence": 1.0,
+            "evidence": "SEAL NUMBER: WC-99123",
+            "correct": true
+          }
+        }
+      },
+      "precision": {
+        "accuracy": 1.0,
+        "correct": 10,
+        "groundTruthFields": 10,
+        "fieldsExtracted": 12,
+        "overallConfidence": 1.0,
+        "needsReview": 0,
+        "verified": 12,
+        "warnings": 1,
+        "elapsedSec": 17.0,
+        "perField": {
+          "shipmentNumber": {
+            "expected": "SHP-2026-0917",
+            "actual": "SHP-2026-0917",
+            "confidence": 1.0,
+            "evidence": "SHIPMENT REF : SHP-2026-0917",
+            "correct": true
+          },
+          "carrier": {
+            "expected": "World Courier",
+            "actual": "World Courier",
+            "confidence": 1.0,
+            "evidence": "WORLD COURIER - PRIORITY EXPRESS",
+            "correct": true
+          },
+          "trackingNumber": {
+            "expected": "WB-441-99213870",
+            "actual": "WB-441-99213870",
+            "confidence": 1.0,
+            "evidence": "AWB TRACKING : WB-441-99213870",
+            "correct": true
+          },
+          "origin": {
+            "expected": "London, UK",
+            "actual": "London, UK",
+            "confidence": 1.0,
+            "evidence": "FROM: CellGen Ltd., 14 Long Harbour Rd, London, UK",
+            "correct": true
+          },
+          "destination": {
+            "expected": "Boston MA, USA",
+            "actual": "Boston MA, USA",
+            "confidence": 1.0,
+            "evidence": "TO : CryoSync Receiving Dock 3, 400 Medway St, Boston MA, USA",
+            "correct": true
+          },
+          "priority": {
+            "expected": "expedited",
+            "actual": "expedited",
+            "confidence": 1.0,
+            "evidence": "SERVICE: EXPEDITED (NEXT FLIGHT OUT)",
+            "correct": true
+          },
+          "temperatureRegime": {
+            "expected": "refrigerated_2_8",
+            "actual": "refrigerated_2_8",
+            "confidence": 1.0,
+            "evidence": "TEMP: REFRIGERATED +2 TO +8 C - VALIDATING SHIPPER",
+            "correct": true
+          },
+          "dangerousGoods": {
+            "expected": true,
+            "actual": true,
+            "confidence": 1.0,
+            "evidence": "DANGEROUS GOODS: UN3373 BIOLOGICAL SUBSTANCE CATEGORY B",
+            "correct": true
+          },
+          "unNumber": {
+            "expected": "UN3373",
+            "actual": "UN3373",
+            "confidence": 1.0,
+            "evidence": "DANGEROUS GOODS: UN3373 BIOLOGICAL SUBSTANCE CATEGORY B",
+            "correct": true
+          },
+          "sealNumber": {
+            "expected": "WC-99123",
+            "actual": "WC-99123",
+            "confidence": 1.0,
+            "evidence": "SEAL NUMBER: WC-99123",
+            "correct": true
+          }
+        }
+      }
+    },
+    "03-bill-of-lading-ocean.png": {
+      "group": "clean scan",
+      "standard": {
+        "accuracy": 1.0,
+        "correct": 10,
+        "groundTruthFields": 10,
+        "fieldsExtracted": 16,
+        "overallConfidence": 0.97,
+        "needsReview": 0,
+        "verified": 0,
+        "warnings": 0,
+        "elapsedSec": 10.3,
+        "perField": {
+          "billOfLading": {
+            "expected": "MAEU-2266-77810",
+            "actual": "MAEU-2266-77810",
+            "confidence": 1.0,
+            "evidence": "B/L NUMBER : MAEU-2266-77810",
+            "correct": true
+          },
+          "purchaseOrderNumber": {
+            "expected": "PO-91227",
+            "actual": "PO-91227",
+            "confidence": 1.0,
+            "evidence": "BOOKING : PO-91227",
+            "correct": true
+          },
+          "carrier": {
+            "expected": "Maersk Line",
+            "actual": "Maersk Line",
+            "confidence": 1.0,
+            "evidence": "CARRIER : Maersk Line",
+            "correct": true
+          },
+          "supplierName": {
+            "expected": "NordCell Biologics BV",
+            "actual": "NordCell Biologics BV",
+            "confidence": 1.0,
+            "evidence": "SHIPPER : NordCell Biologics BV",
+            "correct": true
+          },
+          "origin": {
+            "expected": "Rotterdam",
+            "actual": "Rotterdam",
+            "confidence": 1.0,
+            "evidence": "PORT OF LOADING : ROTTERDAM",
+            "correct": true
+          },
+          "destination": {
+            "expected": "Newark",
+            "actual": "Newark",
+            "confidence": 1.0,
+            "evidence": "PORT OF DISCHARGE : NEWARK",
+            "correct": true
+          },
+          "sealNumber": {
+            "expected": "MSK-88213",
+            "actual": "MSK-88213",
+            "confidence": 1.0,
+            "evidence": "SEAL NUMBER MSK-88213",
+            "correct": true
+          },
+          "temperatureRegime": {
+            "expected": "ultra_frozen_minus_80",
+            "actual": "ultra_frozen_minus_80",
+            "confidence": 1.0,
+            "evidence": "TEMPERATURE CONTROL: ULTRA LOW, BELOW -60 C",
+            "correct": true
+          },
+          "dangerousGoods": {
+            "expected": true,
+            "actual": true,
+            "confidence": 1.0,
+            "evidence": "DANGEROUS GOODS: YES",
+            "correct": true
+          },
+          "unNumber": {
+            "expected": "UN1845",
+            "actual": "UN1845",
+            "confidence": 1.0,
+            "evidence": "DRY ICE UN1845",
+            "correct": true
+          }
+        }
+      },
+      "precision": {
+        "accuracy": 1.0,
+        "correct": 10,
+        "groundTruthFields": 10,
+        "fieldsExtracted": 15,
+        "overallConfidence": 0.99,
+        "needsReview": 0,
+        "verified": 15,
+        "warnings": 1,
+        "elapsedSec": 16.7,
+        "perField": {
+          "billOfLading": {
+            "expected": "MAEU-2266-77810",
+            "actual": "MAEU-2266-77810",
+            "confidence": 1.0,
+            "evidence": "B/L NUMBER : MAEU-2266-77810",
+            "correct": true
+          },
+          "purchaseOrderNumber": {
+            "expected": "PO-91227",
+            "actual": "PO-91227",
+            "confidence": 1.0,
+            "evidence": "BOOKING : PO-91227",
+            "correct": true
+          },
+          "carrier": {
+            "expected": "Maersk Line",
+            "actual": "Maersk Line",
+            "confidence": 1.0,
+            "evidence": "CARRIER : Maersk Line",
+            "correct": true
+          },
+          "supplierName": {
+            "expected": "NordCell Biologics BV",
+            "actual": "NordCell Biologics BV",
+            "confidence": 1.0,
+            "evidence": "SHIPPER : NordCell Biologics BV, Waalhaven 42, Rotterdam, Netherlands",
+            "correct": true
+          },
+          "origin": {
+            "expected": "Rotterdam",
+            "actual": "Rotterdam",
+            "confidence": 1.0,
+            "evidence": "PORT OF LOADING : ROTTERDAM",
+            "correct": true
+          },
+          "destination": {
+            "expected": "Newark",
+            "actual": "Newark",
+            "confidence": 1.0,
+            "evidence": "PORT OF DISCHARGE : NEWARK",
+            "correct": true
+          },
+          "sealNumber": {
+            "expected": "MSK-88213",
+            "actual": "MSK-88213",
+            "confidence": 1.0,
+            "evidence": "SEAL NUMBER MSK-88213",
+            "correct": true
+          },
+          "temperatureRegime": {
+            "expected": "ultra_frozen_minus_80",
+            "actual": "ultra_frozen_minus_80",
+            "confidence": 1.0,
+            "evidence": "TEMPERATURE CONTROL: ULTRA LOW, BELOW -60 C",
+            "correct": true
+          },
+          "dangerousGoods": {
+            "expected": true,
+            "actual": true,
+            "confidence": 1.0,
+            "evidence": "DANGEROUS GOODS: YES",
+            "correct": true
+          },
+          "unNumber": {
+            "expected": "UN1845",
+            "actual": "UN1845",
+            "confidence": 1.0,
+            "evidence": "DRY ICE UN1845",
+            "correct": true
+          }
+        }
+      }
+    },
+    "04-coa-cord-blood.png": {
+      "group": "clean scan",
+      "standard": {
+        "accuracy": 1.0,
+        "correct": 6,
+        "groundTruthFields": 6,
+        "fieldsExtracted": 12,
+        "overallConfidence": 1.0,
+        "needsReview": 0,
+        "verified": 0,
+        "warnings": 0,
+        "elapsedSec": 9.1,
+        "perField": {
+          "shipmentNumber": {
+            "expected": "SHP-2026-1022",
+            "actual": "SHP-2026-1022",
+            "confidence": 1.0,
+            "evidence": "SHIPMENT REF : SHP-2026-1022",
+            "correct": true
+          },
+          "supplierName": {
+            "expected": "StemCore Labs",
+            "actual": "StemCore Labs",
+            "confidence": 1.0,
+            "evidence": "SUPPLIER : StemCore Labs, San Diego CA, USA",
+            "correct": true
+          },
+          "category": {
+            "expected": "cord_blood_unit",
+            "actual": "cord_blood_unit",
+            "confidence": 1.0,
+            "evidence": "PRODUCT : HemaCord Cord Blood Unit (HPC, Cord Blood)",
+            "correct": true
+          },
+          "temperatureRegime": {
+            "expected": "liquid_nitrogen",
+            "actual": "liquid_nitrogen",
+            "confidence": 1.0,
+            "evidence": "STORAGE CONDITION: LIQUID NITROGEN VAPOR PHASE, BELOW -150 C",
+            "correct": true
+          },
+          "dangerousGoods": {
+            "expected": true,
+            "actual": true,
+            "confidence": 1.0,
+            "evidence": "TRANSPORT: DRY SHIPPER, CATEGORY B, UN3373",
+            "correct": true
+          },
+          "unNumber": {
+            "expected": "UN3373",
+            "actual": "UN3373",
+            "confidence": 1.0,
+            "evidence": "TRANSPORT: DRY SHIPPER, CATEGORY B, UN3373",
+            "correct": true
+          }
+        }
+      },
+      "precision": {
+        "accuracy": 1.0,
+        "correct": 6,
+        "groundTruthFields": 6,
+        "fieldsExtracted": 11,
+        "overallConfidence": 0.99,
+        "needsReview": 0,
+        "verified": 11,
+        "warnings": 2,
+        "elapsedSec": 16.3,
+        "perField": {
+          "shipmentNumber": {
+            "expected": "SHP-2026-1022",
+            "actual": "SHP-2026-1022",
+            "confidence": 1.0,
+            "evidence": "SHIPMENT REF : SHP-2026-1022",
+            "correct": true
+          },
+          "supplierName": {
+            "expected": "StemCore Labs",
+            "actual": "StemCore Labs",
+            "confidence": 1.0,
+            "evidence": "SUPPLIER : StemCore Labs, San Diego CA, USA",
+            "correct": true
+          },
+          "category": {
+            "expected": "cord_blood_unit",
+            "actual": "cord_blood_unit",
+            "confidence": 1.0,
+            "evidence": "PRODUCT : HemaCord Cord Blood Unit (HPC, Cord Blood)",
+            "correct": true
+          },
+          "temperatureRegime": {
+            "expected": "liquid_nitrogen",
+            "actual": "liquid_nitrogen",
+            "confidence": 1.0,
+            "evidence": "STORAGE CONDITION: LIQUID NITROGEN VAPOR PHASE, BELOW -150 C",
+            "correct": true
+          },
+          "dangerousGoods": {
+            "expected": true,
+            "actual": true,
+            "confidence": 1.0,
+            "evidence": "TRANSPORT: DRY SHIPPER, CATEGORY B, UN3373",
+            "correct": true
+          },
+          "unNumber": {
+            "expected": "UN3373",
+            "actual": "UN3373",
+            "confidence": 1.0,
+            "evidence": "TRANSPORT: DRY SHIPPER, CATEGORY B, UN3373",
+            "correct": true
+          }
+        }
+      }
+    },
+    "05-packing-slip-ultrafrozen.png": {
+      "group": "clean scan",
+      "standard": {
+        "accuracy": 1.0,
+        "correct": 15,
+        "groundTruthFields": 15,
+        "fieldsExtracted": 18,
+        "overallConfidence": 0.97,
+        "needsReview": 1,
+        "verified": 0,
+        "warnings": 0,
+        "elapsedSec": 9.3,
+        "perField": {
+          "shipmentNumber": {
+            "expected": "CG-SHP-2026-0044",
+            "actual": "CG-SHP-2026-0044",
+            "confidence": 1.0,
+            "evidence": "CG-SHP-2026-0044",
+            "correct": true
+          },
+          "carrier": {
+            "expected": "UPS Worldwide Express",
+            "actual": "UPS Worldwide Express",
+            "confidence": 1.0,
+            "evidence": "UPS Worldwide Express",
+            "correct": true
+          },
+          "trackingNumber": {
+            "expected": "1Z 89X E20 03 9921 4471",
+            "actual": "1Z 89X E20 03 9921 4471",
+            "confidence": 1.0,
+            "evidence": "1Z 89X E20 03 9921 4471",
+            "correct": true
+          },
+          "billOfLading": {
+            "expected": "BL-UP-90211",
+            "actual": "BL-UP-90211",
+            "confidence": 1.0,
+            "evidence": "BL-UP-90211",
+            "correct": true
+          },
+          "purchaseOrderNumber": {
+            "expected": "PO-77810",
+            "actual": "PO-77810",
+            "confidence": 1.0,
+            "evidence": "PO-77810",
+            "correct": true
+          },
+          "supplierName": {
+            "expected": "CelGeneics Therapeutics Inc.",
+            "actual": "CelGeneics Therapeutics Inc.",
+            "confidence": 1.0,
+            "evidence": "CelGeneics Therapeutics Inc.",
+            "correct": true
+          },
+          "origin": {
+            "expected": "Basel, Switzerland",
+            "actual": "Basel, Switzerland",
+            "confidence": 1.0,
+            "evidence": "Basel, Switzerland",
+            "correct": true
+          },
+          "destination": {
+            "expected": "Boston MA USA",
+            "actual": "CryoSync Central Facility, Boston MA USA",
+            "confidence": 1.0,
+            "evidence": "CryoSync Central Facility, Boston MA USA",
+            "correct": true
+          },
+          "temperatureRegime": {
+            "expected": "ultra_frozen_minus_80",
+            "actual": "ultra_frozen_minus_80",
+            "confidence": 1.0,
+            "evidence": "ULTRA FROZEN -80 C (BELOW -60 C)",
+            "correct": true
+          },
+          "dangerousGoods": {
+            "expected": true,
+            "actual": true,
+            "confidence": 1.0,
+            "evidence": "DANGEROUS GOODS: YES - UN1845, CLASS 9",
+            "correct": true
+          },
+          "unNumber": {
+            "expected": "UN1845",
+            "actual": "UN1845",
+            "confidence": 1.0,
+            "evidence": "UN1845, CLASS 9",
+            "correct": true
+          },
+          "productCount": {
+            "expected": 6,
+            "actual": 6,
+            "confidence": 1.0,
+            "evidence": "6 VIALS",
+            "correct": true
+          },
+          "lotCount": {
+            "expected": 1,
+            "actual": 1,
+            "confidence": 1.0,
+            "evidence": "LOT COUNT: 1 (LOT CG-2026-118)",
+            "correct": true
+          },
+          "totalValue": {
+            "expected": 92000,
+            "actual": 92000,
+            "confidence": 1.0,
+            "evidence": "USD 92,000.00",
+            "correct": true
+          },
+          "priority": {
+            "expected": "critical",
+            "actual": "critical",
+            "confidence": 1.0,
+            "evidence": "CRITICAL - PATIENT SCHEDULED",
+            "correct": true
+          }
+        }
+      },
+      "precision": {
+        "accuracy": 1.0,
+        "correct": 15,
+        "groundTruthFields": 15,
+        "fieldsExtracted": 17,
+        "overallConfidence": 1.0,
+        "needsReview": 0,
+        "verified": 17,
+        "warnings": 1,
+        "elapsedSec": 17.7,
+        "perField": {
+          "shipmentNumber": {
+            "expected": "CG-SHP-2026-0044",
+            "actual": "CG-SHP-2026-0044",
+            "confidence": 1.0,
+            "evidence": "CG-SHP-2026-0044",
+            "correct": true
+          },
+          "carrier": {
+            "expected": "UPS Worldwide Express",
+            "actual": "UPS Worldwide Express",
+            "confidence": 1.0,
+            "evidence": "UPS Worldwide Express",
+            "correct": true
+          },
+          "trackingNumber": {
+            "expected": "1Z 89X E20 03 9921 4471",
+            "actual": "1Z 89X E20 03 9921 4471",
+            "confidence": 1.0,
+            "evidence": "1Z 89X E20 03 9921 4471",
+            "correct": true
+          },
+          "billOfLading": {
+            "expected": "BL-UP-90211",
+            "actual": "BL-UP-90211",
+            "confidence": 1.0,
+            "evidence": "BL-UP-90211",
+            "correct": true
+          },
+          "purchaseOrderNumber": {
+            "expected": "PO-77810",
+            "actual": "PO-77810",
+            "confidence": 1.0,
+            "evidence": "PO-77810",
+            "correct": true
+          },
+          "supplierName": {
+            "expected": "CelGeneics Therapeutics Inc.",
+            "actual": "CelGeneics Therapeutics Inc.",
+            "confidence": 1.0,
+            "evidence": "CelGeneics Therapeutics Inc.",
+            "correct": true
+          },
+          "origin": {
+            "expected": "Basel, Switzerland",
+            "actual": "Basel, Switzerland",
+            "confidence": 1.0,
+            "evidence": "Basel, Switzerland",
+            "correct": true
+          },
+          "destination": {
+            "expected": "Boston MA USA",
+            "actual": "CryoSync Central Facility, Boston MA USA",
+            "confidence": 1.0,
+            "evidence": "CryoSync Central Facility, Boston MA USA",
+            "correct": true
+          },
+          "temperatureRegime": {
+            "expected": "ultra_frozen_minus_80",
+            "actual": "ultra_frozen_minus_80",
+            "confidence": 1.0,
+            "evidence": "ULTRA FROZEN -80 C (BELOW -60 C)",
+            "correct": true
+          },
+          "dangerousGoods": {
+            "expected": true,
+            "actual": true,
+            "confidence": 1.0,
+            "evidence": "DANGEROUS GOODS: YES - UN1845, CLASS 9",
+            "correct": true
+          },
+          "unNumber": {
+            "expected": "UN1845",
+            "actual": "UN1845",
+            "confidence": 1.0,
+            "evidence": "UN1845, CLASS 9",
+            "correct": true
+          },
+          "productCount": {
+            "expected": 6,
+            "actual": 6,
+            "confidence": 1.0,
+            "evidence": "6 VIALS",
+            "correct": true
+          },
+          "lotCount": {
+            "expected": 1,
+            "actual": 1,
+            "confidence": 1.0,
+            "evidence": "LOT COUNT: 1 (LOT CG-2026-118)",
+            "correct": true
+          },
+          "totalValue": {
+            "expected": 92000,
+            "actual": 92000,
+            "confidence": 1.0,
+            "evidence": "USD 92,000.00",
+            "correct": true
+          },
+          "priority": {
+            "expected": "critical",
+            "actual": "critical",
+            "confidence": 1.0,
+            "evidence": "CRITICAL - PATIENT SCHEDULED",
+            "correct": true
+          }
+        }
+      }
+    },
+    "06-shipping-label-ln2-critical.png": {
+      "group": "clean scan",
+      "standard": {
+        "accuracy": 0.9,
+        "correct": 9,
+        "groundTruthFields": 10,
+        "fieldsExtracted": 13,
+        "overallConfidence": 1.0,
+        "needsReview": 0,
+        "verified": 0,
+        "warnings": 0,
+        "elapsedSec": 8.5,
+        "perField": {
+          "shipmentNumber": {
+            "expected": "SHP-2026-1155",
+            "actual": "SHP-2026-1155",
+            "confidence": 1.0,
+            "evidence": "SHIPMENT REF: SHP-2026-1155",
+            "correct": true
+          },
+          "carrier": {
+            "expected": "Cryoport",
+            "actual": null,
+            "confidence": 0.0,
+            "evidence": null,
+            "correct": false
+          },
+          "trackingNumber": {
+            "expected": "CYP-XP-00914471",
+            "actual": "CYP-XP-00914471",
+            "confidence": 1.0,
+            "evidence": "TRACKING : CYP-XP-00914471",
+            "correct": true
+          },
+          "origin": {
+            "expected": "Austin TX, USA",
+            "actual": "Austin TX, USA",
+            "confidence": 1.0,
+            "evidence": "Austin TX, USA",
+            "correct": true
+          },
+          "destination": {
+            "expected": "Singapore",
+            "actual": "Singapore 138573",
+            "confidence": 1.0,
+            "evidence": "CryoSync Singapore Hub, 22 Biomedical Grove, Singapore 138573",
+            "correct": true
+          },
+          "priority": {
+            "expected": "critical",
+            "actual": "critical",
+            "confidence": 1.0,
+            "evidence": "PRIORITY: CRITICAL",
+            "correct": true
+          },
+          "category": {
+            "expected": "cellular_therapy_release",
+            "actual": "cellular_therapy_release",
+            "confidence": 1.0,
+            "evidence": "CELLULAR THERAPY PRODUCT (RELEASE) FOR PATIENT INFUSION",
+            "correct": true
+          },
+          "temperatureRegime": {
+            "expected": "liquid_nitrogen",
+            "actual": "liquid_nitrogen",
+            "confidence": 1.0,
+            "evidence": "TEMPERATURE: LIQUID NITROGEN VAPOR PHASE BELOW -150 C",
+            "correct": true
+          },
+          "dangerousGoods": {
+            "expected": true,
+            "actual": true,
+            "confidence": 1.0,
+            "evidence": "DANGEROUS GOODS: YES",
+            "correct": true
+          },
+          "unNumber": {
+            "expected": "UN3373",
+            "actual": "UN3373",
+            "confidence": 1.0,
+            "evidence": "UN NUMBER: UN3373",
+            "correct": true
+          }
+        }
+      },
+      "precision": {
+        "accuracy": 0.9,
+        "correct": 9,
+        "groundTruthFields": 10,
+        "fieldsExtracted": 13,
+        "overallConfidence": 0.91,
+        "needsReview": 1,
+        "verified": 13,
+        "warnings": 4,
+        "elapsedSec": 15.9,
+        "perField": {
+          "shipmentNumber": {
+            "expected": "SHP-2026-1155",
+            "actual": "SHP-2026-1155",
+            "confidence": 1.0,
+            "evidence": "SHIPMENT REF: SHP-2026-1155",
+            "correct": true
+          },
+          "carrier": {
+            "expected": "Cryoport",
+            "actual": null,
+            "confidence": 0.0,
+            "evidence": null,
+            "correct": false
+          },
+          "trackingNumber": {
+            "expected": "CYP-XP-00914471",
+            "actual": "CYP-XP-00914471",
+            "confidence": 1.0,
+            "evidence": "TRACKING : CYP-XP-00914471",
+            "correct": true
+          },
+          "origin": {
+            "expected": "Austin TX, USA",
+            "actual": "1201 Research Blvd, Austin TX, USA",
+            "confidence": 0.9,
+            "evidence": "Austin TX, USA",
+            "correct": true
+          },
+          "destination": {
+            "expected": "Singapore",
+            "actual": "Cryosync Singapore Hub, 22 Biomedical Grove, Singapore 138573",
+            "confidence": 0.9,
+            "evidence": "CryoSync Singapore Hub, 22 Biomedical Grove, Singapore 138573",
+            "correct": true
+          },
+          "priority": {
+            "expected": "critical",
+            "actual": "critical",
+            "confidence": 1.0,
+            "evidence": "PRIORITY: CRITICAL",
+            "correct": true
+          },
+          "category": {
+            "expected": "cellular_therapy_release",
+            "actual": "cellular_therapy_release",
+            "confidence": 1.0,
+            "evidence": "CELLULAR THERAPY PRODUCT (RELEASE) FOR PATIENT INFUSION",
+            "correct": true
+          },
+          "temperatureRegime": {
+            "expected": "liquid_nitrogen",
+            "actual": "liquid_nitrogen",
+            "confidence": 1.0,
+            "evidence": "TEMPERATURE: LIQUID NITROGEN VAPOR PHASE BELOW -150 C",
+            "correct": true
+          },
+          "dangerousGoods": {
+            "expected": true,
+            "actual": true,
+            "confidence": 1.0,
+            "evidence": "DANGEROUS GOODS: YES",
+            "correct": true
+          },
+          "unNumber": {
+            "expected": "UN3373",
+            "actual": "UN3373",
+            "confidence": 1.0,
+            "evidence": "UN NUMBER: UN3373",
+            "correct": true
+          }
+        }
+      }
+    },
+    "07-packing-slip-damaged.png": {
+      "group": "clean scan",
+      "standard": {
+        "accuracy": 0.923,
+        "correct": 12,
+        "groundTruthFields": 13,
+        "fieldsExtracted": 14,
+        "overallConfidence": 1.0,
+        "needsReview": 0,
+        "verified": 0,
+        "warnings": 0,
+        "elapsedSec": 9.5,
+        "perField": {
+          "shipmentNumber": {
+            "expected": "BN-2026-3308",
+            "actual": "BN-2026-3308",
+            "confidence": 1.0,
+            "evidence": "SHIPMENT NUMBER : BN-2026-3308",
+            "correct": true
+          },
+          "carrier": {
+            "expected": "DHL Freight",
+            "actual": "DHL Freight",
+            "confidence": 1.0,
+            "evidence": "CARRIER : DHL Freight",
+            "correct": true
+          },
+          "trackingNumber": {
+            "expected": "JD0146000031",
+            "actual": "JD0146000031",
+            "confidence": 1.0,
+            "evidence": "TRACKING : JD0146000031",
+            "correct": true
+          },
+          "purchaseOrderNumber": {
+            "expected": "PO-66102",
+            "actual": "PO-66102",
+            "confidence": 1.0,
+            "evidence": "PURCHASE ORDER : PO-66102",
+            "correct": true
+          },
+          "supplierName": {
+            "expected": "BioNexus Supply Co.",
+            "actual": "BioNexus Supply Co.",
+            "confidence": 1.0,
+            "evidence": "BioNexus Supply Co.",
+            "correct": true
+          },
+          "origin": {
+            "expected": "Ashford, United Kingdom",
+            "actual": "Ashford, United Kingdom",
+            "confidence": 1.0,
+            "evidence": "ORIGIN : Ashford, United Kingdom",
+            "correct": true
+          },
+          "destination": {
+            "expected": "CryoSync London Clinic Store",
+            "actual": "CryoSync London Clinic Store",
+            "confidence": 1.0,
+            "evidence": "DESTINATION : CryoSync London Clinic Store",
+            "correct": true
+          },
+          "temperatureRegime": {
+            "expected": "ambient",
+            "actual": "ambient",
+            "confidence": 1.0,
+            "evidence": "TEMPERATURE REGIME: AMBIENT (+15 C TO +25 C)",
+            "correct": true
+          },
+          "productCount": {
+            "expected": 8,
+            "actual": 8,
+            "confidence": 1.0,
+            "evidence": "PRODUCT COUNT: 8 CARTONS",
+            "correct": true
+          },
+          "lotCount": {
+            "expected": 2,
+            "actual": 2,
+            "confidence": 1.0,
+            "evidence": "LOT COUNT: 2 (BN-551, BN-552)",
+            "correct": true
+          },
+          "totalValue": {
+            "expected": 6240,
+            "actual": 6240,
+            "confidence": 1.0,
+            "evidence": "VALUE: USD 6,240.00",
+            "correct": true
+          },
+          "condition": {
+            "expected": "damaged",
+            "actual": "damaged",
+            "confidence": 1.0,
+            "evidence": "CONDITION AT RECEIVING: DAMAGED - OUTER CARTON CRUSHED",
+            "correct": true
+          },
+          "notes": {
+            "expected": "crushed",
+            "actual": "Driver signature obtained with damage remark. Photos taken by receiving clerk. Inner packs appear intact, QA inspection due.",
+            "confidence": 1.0,
+            "evidence": "NOTES: Driver signature obtained with damage remark. Photos taken by receiving clerk. Inner packs appear intact, QA inspection due.",
+            "correct": false
+          }
+        }
+      },
+      "precision": {
+        "accuracy": 0.923,
+        "correct": 12,
+        "groundTruthFields": 13,
+        "fieldsExtracted": 14,
+        "overallConfidence": 1.0,
+        "needsReview": 0,
+        "verified": 14,
+        "warnings": 0,
+        "elapsedSec": 15.3,
+        "perField": {
+          "shipmentNumber": {
+            "expected": "BN-2026-3308",
+            "actual": "BN-2026-3308",
+            "confidence": 1.0,
+            "evidence": "BN-2026-3308",
+            "correct": true
+          },
+          "carrier": {
+            "expected": "DHL Freight",
+            "actual": "DHL Freight",
+            "confidence": 1.0,
+            "evidence": "DHL Freight",
+            "correct": true
+          },
+          "trackingNumber": {
+            "expected": "JD0146000031",
+            "actual": "JD0146000031",
+            "confidence": 1.0,
+            "evidence": "JD0146000031",
+            "correct": true
+          },
+          "purchaseOrderNumber": {
+            "expected": "PO-66102",
+            "actual": "PO-66102",
+            "confidence": 1.0,
+            "evidence": "PO-66102",
+            "correct": true
+          },
+          "supplierName": {
+            "expected": "BioNexus Supply Co.",
+            "actual": "BioNexus Supply Co.",
+            "confidence": 1.0,
+            "evidence": "BioNexus Supply Co.",
+            "correct": true
+          },
+          "origin": {
+            "expected": "Ashford, United Kingdom",
+            "actual": "Ashford, United Kingdom",
+            "confidence": 1.0,
+            "evidence": "Ashford, United Kingdom",
+            "correct": true
+          },
+          "destination": {
+            "expected": "CryoSync London Clinic Store",
+            "actual": "CryoSync London Clinic Store",
+            "confidence": 1.0,
+            "evidence": "CryoSync London Clinic Store",
+            "correct": true
+          },
+          "temperatureRegime": {
+            "expected": "ambient",
+            "actual": "ambient",
+            "confidence": 1.0,
+            "evidence": "AMBIENT (+15 C TO +25 C)",
+            "correct": true
+          },
+          "productCount": {
+            "expected": 8,
+            "actual": 8,
+            "confidence": 1.0,
+            "evidence": "8 CARTONS",
+            "correct": true
+          },
+          "lotCount": {
+            "expected": 2,
+            "actual": 2,
+            "confidence": 1.0,
+            "evidence": "2 (BN-551, BN-552)",
+            "correct": true
+          },
+          "totalValue": {
+            "expected": 6240,
+            "actual": 6240,
+            "confidence": 1.0,
+            "evidence": "USD 6,240.00",
+            "correct": true
+          },
+          "condition": {
+            "expected": "damaged",
+            "actual": "damaged",
+            "confidence": 1.0,
+            "evidence": "DAMAGED - OUTER CARTON CRUSHED",
+            "correct": true
+          },
+          "notes": {
+            "expected": "crushed",
+            "actual": "Driver signature obtained with damage remark. Photos taken by receiving clerk. Inner packs appear intact, QA inspection due.",
+            "confidence": 1.0,
+            "evidence": "Driver signature obtained with damage remark. Photos taken by receiving clerk. Inner packs appear intact, QA inspection due.",
+            "correct": false
+          }
+        }
+      }
+    },
+    "08-bill-of-lading-ground.png": {
+      "group": "clean scan",
+      "standard": {
+        "accuracy": 0.9,
+        "correct": 9,
+        "groundTruthFields": 10,
+        "fieldsExtracted": 16,
+        "overallConfidence": 0.99,
+        "needsReview": 0,
+        "verified": 0,
+        "warnings": 0,
+        "elapsedSec": 9.0,
+        "perField": {
+          "billOfLading": {
+            "expected": "BOL-XPO-77120",
+            "actual": "BOL-XP-77120",
+            "confidence": 1.0,
+            "evidence": "BOL NUMBER : BOL-XP-77120",
+            "correct": false
+          },
+          "carrier": {
+            "expected": "XPO Logistics",
+            "actual": "XPO Logistics (Ground)",
+            "confidence": 1.0,
+            "evidence": "CARRIER : XPO Logistics (Ground)",
+            "correct": true
+          },
+          "supplierName": {
+            "expected": "CryoSource Inc",
+            "actual": "CryoSource Inc",
+            "confidence": 1.0,
+            "evidence": "SHIPPER : CryoSource Inc",
+            "correct": true
+          },
+          "origin": {
+            "expected": "Chicago IL, USA",
+            "actual": "Chicago IL, USA",
+            "confidence": 1.0,
+            "evidence": "55 Industrial Way, Chicago IL, USA",
+            "correct": true
+          },
+          "destination": {
+            "expected": "Detroit MI, USA",
+            "actual": "Detroit MI, USA",
+            "confidence": 1.0,
+            "evidence": "CryoSync Midwest Depot, Detroit MI, USA",
+            "correct": true
+          },
+          "temperatureRegime": {
+            "expected": "refrigerated_2_8",
+            "actual": "refrigerated_2_8",
+            "confidence": 1.0,
+            "evidence": "TEMPERATURE: REFRIGERATED 2-8 DEGREES CELSIUS",
+            "correct": true
+          },
+          "dangerousGoods": {
+            "expected": true,
+            "actual": true,
+            "confidence": 1.0,
+            "evidence": "DANGEROUS GOODS: YES",
+            "correct": true
+          },
+          "unNumber": {
+            "expected": "UN1845",
+            "actual": "UN1845",
+            "confidence": 1.0,
+            "evidence": "UN1845 DRY ICE CLASS 9",
+            "correct": true
+          },
+          "sealNumber": {
+            "expected": "XL-2231",
+            "actual": "XL-2231",
+            "confidence": 1.0,
+            "evidence": "SEAL NUMBER: XL-2231",
+            "correct": true
+          },
+          "priority": {
+            "expected": "standard",
+            "actual": "standard",
+            "confidence": 1.0,
+            "evidence": "STANDARD SERVICE",
+            "correct": true
+          }
+        }
+      },
+      "precision": {
+        "accuracy": 0.9,
+        "correct": 9,
+        "groundTruthFields": 10,
+        "fieldsExtracted": 15,
+        "overallConfidence": 0.99,
+        "needsReview": 0,
+        "verified": 15,
+        "warnings": 1,
+        "elapsedSec": 16.7,
+        "perField": {
+          "billOfLading": {
+            "expected": "BOL-XPO-77120",
+            "actual": "BOL-XP-77120",
+            "confidence": 1.0,
+            "evidence": "BOL NUMBER : BOL-XP-77120",
+            "correct": false
+          },
+          "carrier": {
+            "expected": "XPO Logistics",
+            "actual": "XPO Logistics (Ground)",
+            "confidence": 1.0,
+            "evidence": "CARRIER : XPO Logistics (Ground)",
+            "correct": true
+          },
+          "supplierName": {
+            "expected": "CryoSource Inc",
+            "actual": "CryoSource Inc",
+            "confidence": 1.0,
+            "evidence": "SHIPPER : CryoSource Inc",
+            "correct": true
+          },
+          "origin": {
+            "expected": "Chicago IL, USA",
+            "actual": "Chicago IL, USA",
+            "confidence": 1.0,
+            "evidence": "CryoSource Inc, 55 Industrial Way, Chicago IL, USA",
+            "correct": true
+          },
+          "destination": {
+            "expected": "Detroit MI, USA",
+            "actual": "Detroit MI, USA",
+            "confidence": 1.0,
+            "evidence": "CryoSync Midwest Depot, Detroit MI, USA",
+            "correct": true
+          },
+          "temperatureRegime": {
+            "expected": "refrigerated_2_8",
+            "actual": "refrigerated_2_8",
+            "confidence": 1.0,
+            "evidence": "TEMPERATURE: REFRIGERATED 2-8 DEGREES CELSIUS",
+            "correct": true
+          },
+          "dangerousGoods": {
+            "expected": true,
+            "actual": true,
+            "confidence": 1.0,
+            "evidence": "DANGEROUS GOODS: YES - UN1845 DRY ICE",
+            "correct": true
+          },
+          "unNumber": {
+            "expected": "UN1845",
+            "actual": "UN1845",
+            "confidence": 1.0,
+            "evidence": "UN1845 DRY ICE CLASS 9",
+            "correct": true
+          },
+          "sealNumber": {
+            "expected": "XL-2231",
+            "actual": "XL-2231",
+            "confidence": 1.0,
+            "evidence": "SEAL NUMBER: XL-2231",
+            "correct": true
+          },
+          "priority": {
+            "expected": "standard",
+            "actual": "standard",
+            "confidence": 1.0,
+            "evidence": "STANDARD SERVICE",
+            "correct": true
+          }
+        }
+      }
+    },
+    "09-coa-cell-release.png": {
+      "group": "clean scan",
+      "standard": {
+        "accuracy": 1.0,
+        "correct": 7,
+        "groundTruthFields": 7,
+        "fieldsExtracted": 12,
+        "overallConfidence": 1.0,
+        "needsReview": 0,
+        "verified": 0,
+        "warnings": 0,
+        "elapsedSec": 9.1,
+        "perField": {
+          "shipmentNumber": {
+            "expected": "SHP-2026-1155",
+            "actual": "SHP-2026-1155",
+            "confidence": 1.0,
+            "evidence": "SHIPMENT REF : SHP-2026-1155",
+            "correct": true
+          },
+          "category": {
+            "expected": "cellular_therapy_release",
+            "actual": "cellular_therapy_release",
+            "confidence": 1.0,
+            "evidence": "NovaT-cell Autologous T-Cell Therapy",
+            "correct": true
+          },
+          "supplierName": {
+            "expected": "NovaCell Therapy Center",
+            "actual": "NovaCell Therapy Center, Austin TX, USA",
+            "confidence": 1.0,
+            "evidence": "MANUFACTURER : NovaCell Therapy Center, Austin TX, USA",
+            "correct": true
+          },
+          "origin": {
+            "expected": "Austin TX, USA",
+            "actual": "Austin TX, USA",
+            "confidence": 1.0,
+            "evidence": "MANUFACTURER : NovaCell Therapy Center, Austin TX, USA",
+            "correct": true
+          },
+          "destination": {
+            "expected": "Singapore",
+            "actual": "CryoSync Singapore Hub - Transplant Unit",
+            "confidence": 1.0,
+            "evidence": "CONSIGNMENT : CryoSync Singapore Hub - Transplant Unit",
+            "correct": true
+          },
+          "temperatureRegime": {
+            "expected": "liquid_nitrogen",
+            "actual": "liquid_nitrogen",
+            "confidence": 1.0,
+            "evidence": "STORAGE AND TRANSPORT: LN2 VAPOR PHASE BELOW -150 C",
+            "correct": true
+          },
+          "totalValue": {
+            "expected": 210000,
+            "actual": 210000,
+            "confidence": 1.0,
+            "evidence": "DECLARED VALUE: USD 210,000.00",
+            "correct": true
+          }
+        }
+      },
+      "precision": {
+        "accuracy": 1.0,
+        "correct": 7,
+        "groundTruthFields": 7,
+        "fieldsExtracted": 11,
+        "overallConfidence": 1.0,
+        "needsReview": 0,
+        "verified": 11,
+        "warnings": 1,
+        "elapsedSec": 21.1,
+        "perField": {
+          "shipmentNumber": {
+            "expected": "SHP-2026-1155",
+            "actual": "SHP-2026-1155",
+            "confidence": 1.0,
+            "evidence": "SHIPMENT REF : SHP-2026-1155",
+            "correct": true
+          },
+          "category": {
+            "expected": "cellular_therapy_release",
+            "actual": "cellular_therapy_release",
+            "confidence": 1.0,
+            "evidence": "NovaT-cell Autologous T-Cell Therapy",
+            "correct": true
+          },
+          "supplierName": {
+            "expected": "NovaCell Therapy Center",
+            "actual": "NovaCell Therapy Center, Austin TX, USA",
+            "confidence": 1.0,
+            "evidence": "MANUFACTURER : NovaCell Therapy Center, Austin TX, USA",
+            "correct": true
+          },
+          "origin": {
+            "expected": "Austin TX, USA",
+            "actual": "Austin TX, USA",
+            "confidence": 1.0,
+            "evidence": "MANUFACTURER : NovaCell Therapy Center, Austin TX, USA",
+            "correct": true
+          },
+          "destination": {
+            "expected": "Singapore",
+            "actual": "CryoSync Singapore Hub - Transplant Unit",
+            "confidence": 1.0,
+            "evidence": "CONSIGNMENT : CryoSync Singapore Hub - Transplant Unit",
+            "correct": true
+          },
+          "temperatureRegime": {
+            "expected": "liquid_nitrogen",
+            "actual": "liquid_nitrogen",
+            "confidence": 1.0,
+            "evidence": "STORAGE AND TRANSPORT: LN2 VAPOR PHASE BELOW -150 C",
+            "correct": true
+          },
+          "totalValue": {
+            "expected": 210000,
+            "actual": 210000,
+            "confidence": 1.0,
+            "evidence": "DECLARED VALUE: USD 210,000.00",
+            "correct": true
+          }
+        }
+      }
+    },
+    "10-packing-slip-hard-mode.png": {
+      "group": "noisy / rotated scan",
+      "standard": {
+        "accuracy": 1.0,
+        "correct": 12,
+        "groundTruthFields": 12,
+        "fieldsExtracted": 17,
+        "overallConfidence": 0.97,
+        "needsReview": 1,
+        "verified": 0,
+        "warnings": 0,
+        "elapsedSec": 9.0,
+        "perField": {
+          "shipmentNumber": {
+            "expected": "SHP-2026-0813",
+            "actual": "SHP-2026-0813",
+            "confidence": 1.0,
+            "evidence": "SHIPMENT NUMBER : SHP-2026-0813",
+            "correct": true
+          },
+          "carrier": {
+            "expected": "FedEx International",
+            "actual": "FedEx International",
+            "confidence": 1.0,
+            "evidence": "CARRIER : FedEx International",
+            "correct": true
+          },
+          "trackingNumber": {
+            "expected": "7942 3381 0044",
+            "actual": "7942 3381 0044",
+            "confidence": 1.0,
+            "evidence": "TRACKING : 7942 3381 0044",
+            "correct": true
+          },
+          "billOfLading": {
+            "expected": "BL-FX-556299",
+            "actual": "BL-FX-556299",
+            "confidence": 1.0,
+            "evidence": "BILL OF LADING : BL-FX-556299",
+            "correct": true
+          },
+          "purchaseOrderNumber": {
+            "expected": "PO-88413",
+            "actual": "PO-88413",
+            "confidence": 1.0,
+            "evidence": "PURCHASE ORDER : PO-88413",
+            "correct": true
+          },
+          "temperatureRegime": {
+            "expected": "refrigerated_2_8",
+            "actual": "refrigerated_2_8",
+            "confidence": 1.0,
+            "evidence": "REFRIGERATED +2 TO +8 C",
+            "correct": true
+          },
+          "category": {
+            "expected": "cord_blood_unit",
+            "actual": "cord_blood_unit",
+            "confidence": 1.0,
+            "evidence": "CONTENTS: CORD BLOOD UNIT(S)",
+            "correct": true
+          },
+          "productCount": {
+            "expected": 4,
+            "actual": 4,
+            "confidence": 1.0,
+            "evidence": "PRODUCT COUNT : 4",
+            "correct": true
+          },
+          "lotCount": {
+            "expected": 2,
+            "actual": 2,
+            "confidence": 1.0,
+            "evidence": "LOT COUNT : 2 (CLX-4421, CLX-4422)",
+            "correct": true
+          },
+          "totalValue": {
+            "expected": 16200,
+            "actual": 16200,
+            "confidence": 1.0,
+            "evidence": "DECLARED VALUE : USD 16,200.00",
+            "correct": true
+          },
+          "sealNumber": {
+            "expected": "CLX-SEAL-0912",
+            "actual": "CLX-SEAL-0912",
+            "confidence": 1.0,
+            "evidence": "SEAL NUMBER : CLX-SEAL-0912",
+            "correct": true
+          },
+          "dangerousGoods": {
+            "expected": false,
+            "actual": false,
+            "confidence": 1.0,
+            "evidence": "DANGEROUS GOODS : NO",
+            "correct": true
+          }
+        }
+      },
+      "precision": {
+        "accuracy": 1.0,
+        "correct": 12,
+        "groundTruthFields": 12,
+        "fieldsExtracted": 16,
+        "overallConfidence": 1.0,
+        "needsReview": 0,
+        "verified": 16,
+        "warnings": 1,
+        "elapsedSec": 16.9,
+        "perField": {
+          "shipmentNumber": {
+            "expected": "SHP-2026-0813",
+            "actual": "SHP-2026-0813",
+            "confidence": 1.0,
+            "evidence": "SHIPMENT NUMBER : SHP-2026-0813",
+            "correct": true
+          },
+          "carrier": {
+            "expected": "FedEx International",
+            "actual": "FedEx International",
+            "confidence": 1.0,
+            "evidence": "CARRIER : FedEx International",
+            "correct": true
+          },
+          "trackingNumber": {
+            "expected": "7942 3381 0044",
+            "actual": "7942 3381 0044",
+            "confidence": 1.0,
+            "evidence": "TRACKING : 7942 3381 0044",
+            "correct": true
+          },
+          "billOfLading": {
+            "expected": "BL-FX-556299",
+            "actual": "BL-FX-556299",
+            "confidence": 1.0,
+            "evidence": "BILL OF LADING : BL-FX-556299",
+            "correct": true
+          },
+          "purchaseOrderNumber": {
+            "expected": "PO-88413",
+            "actual": "PO-88413",
+            "confidence": 1.0,
+            "evidence": "PURCHASE ORDER : PO-88413",
+            "correct": true
+          },
+          "temperatureRegime": {
+            "expected": "refrigerated_2_8",
+            "actual": "refrigerated_2_8",
+            "confidence": 1.0,
+            "evidence": "REFRIGERATED +2 TO +8 C",
+            "correct": true
+          },
+          "category": {
+            "expected": "cord_blood_unit",
+            "actual": "cord_blood_unit",
+            "confidence": 1.0,
+            "evidence": "CONTENTS: CORD BLOOD UNIT(S)",
+            "correct": true
+          },
+          "productCount": {
+            "expected": 4,
+            "actual": 4,
+            "confidence": 1.0,
+            "evidence": "PRODUCT COUNT : 4",
+            "correct": true
+          },
+          "lotCount": {
+            "expected": 2,
+            "actual": 2,
+            "confidence": 1.0,
+            "evidence": "LOT COUNT : 2 (CLX-4421, CLX-4422)",
+            "correct": true
+          },
+          "totalValue": {
+            "expected": 16200,
+            "actual": 16200,
+            "confidence": 1.0,
+            "evidence": "DECLARED VALUE : USD 16,200.00",
+            "correct": true
+          },
+          "sealNumber": {
+            "expected": "CLX-SEAL-0912",
+            "actual": "CLX-SEAL-0912",
+            "confidence": 1.0,
+            "evidence": "SEAL NUMBER : CLX-SEAL-0912",
+            "correct": true
+          },
+          "dangerousGoods": {
+            "expected": false,
+            "actual": false,
+            "confidence": 1.0,
+            "evidence": "DANGEROUS GOODS : NO",
+            "correct": true
+          }
+        }
+      }
+    },
+    "11-packing-slip-refrigerated-multipage.pdf": {
+      "group": "multi-page PDF",
+      "standard": {
+        "accuracy": 1.0,
+        "correct": 16,
+        "groundTruthFields": 16,
+        "fieldsExtracted": 18,
+        "overallConfidence": 0.99,
+        "needsReview": 0,
+        "verified": 0,
+        "warnings": 0,
+        "elapsedSec": 10.7,
+        "perField": {
+          "shipmentNumber": {
+            "expected": "SHP-2026-1201",
+            "actual": "SHP-2026-1201",
+            "confidence": 1.0,
+            "evidence": "SHIPMENT NUMBER SHP-2026-1201",
+            "correct": true
+          },
+          "carrier": {
+            "expected": "FedEx Priority",
+            "actual": "FedEx Priority",
+            "confidence": 1.0,
+            "evidence": "CARRIER FedEx Priority",
+            "correct": true
+          },
+          "trackingNumber": {
+            "expected": "7942 3381 0107",
+            "actual": "7942 3381 0107",
+            "confidence": 1.0,
+            "evidence": "TRACKING NUMBER 7942 3381 0107",
+            "correct": true
+          },
+          "billOfLading": {
+            "expected": "BL-FX-556310",
+            "actual": "BL-FX-556310",
+            "confidence": 1.0,
+            "evidence": "BILL OF LADING BL-FX-556310",
+            "correct": true
+          },
+          "purchaseOrderNumber": {
+            "expected": "PO-88426",
+            "actual": "PO-88426",
+            "confidence": 1.0,
+            "evidence": "PURCHASE ORDER PO-88426",
+            "correct": true
+          },
+          "sealNumber": {
+            "expected": "CLX-SEAL-1044",
+            "actual": "CLX-SEAL-1044",
+            "confidence": 1.0,
+            "evidence": "SEAL NUMBER CLX-SEAL-1044",
+            "correct": true
+          },
+          "supplierName": {
+            "expected": "CryoLogix Sciences GmbH",
+            "actual": "CryoLogix Sciences GmbH",
+            "confidence": 1.0,
+            "evidence": "CryoLogix Sciences GmbH Alsterufer 21 Hamburg, Germany",
+            "correct": true
+          },
+          "origin": {
+            "expected": "Hamburg, Germany",
+            "actual": "Hamburg, Germany",
+            "confidence": 1.0,
+            "evidence": "Hamburg, Germany",
+            "correct": true
+          },
+          "destination": {
+            "expected": "Boston, MA, United States",
+            "actual": "Boston, MA, United States",
+            "confidence": 1.0,
+            "evidence": "CryoSync Biologistics Center 400 Technology Square, Floor 3 Boston, MA, United States",
+            "correct": true
+          },
+          "priority": {
+            "expected": "expedited",
+            "actual": "expedited",
+            "confidence": 1.0,
+            "evidence": "Priority: EXPEDITED",
+            "correct": true
+          },
+          "temperatureRegime": {
+            "expected": "refrigerated_2_8",
+            "actual": "refrigerated_2_8",
+            "confidence": 1.0,
+            "evidence": "+2 C to +8 C",
+            "correct": true
+          },
+          "category": {
+            "expected": "cord_blood_unit",
+            "actual": "cord_blood_unit",
+            "confidence": 1.0,
+            "evidence": "Cord blood unit, cryovial 2 mL",
+            "correct": true
+          },
+          "productCount": {
+            "expected": 12,
+            "actual": 12,
+            "confidence": 1.0,
+            "evidence": "Total units: 12",
+            "correct": true
+          },
+          "lotCount": {
+            "expected": 3,
+            "actual": 3,
+            "confidence": 1.0,
+            "evidence": "Lots: 3",
+            "correct": true
+          },
+          "totalValue": {
+            "expected": 48600,
+            "actual": 48600.0,
+            "confidence": 1.0,
+            "evidence": "USD 48,600.00",
+            "correct": true
+          },
+          "dangerousGoods": {
+            "expected": false,
+            "actual": false,
+            "confidence": 1.0,
+            "evidence": "Dangerous goods: NONE",
+            "correct": true
+          }
+        }
+      },
+      "precision": {
+        "accuracy": 1.0,
+        "correct": 16,
+        "groundTruthFields": 16,
+        "fieldsExtracted": 18,
+        "overallConfidence": 0.99,
+        "needsReview": 0,
+        "verified": 18,
+        "warnings": 1,
+        "elapsedSec": 20.0,
+        "perField": {
+          "shipmentNumber": {
+            "expected": "SHP-2026-1201",
+            "actual": "SHP-2026-1201",
+            "confidence": 1.0,
+            "evidence": "SHIPMENT NUMBER SHP-2026-1201",
+            "correct": true
+          },
+          "carrier": {
+            "expected": "FedEx Priority",
+            "actual": "FedEx Priority",
+            "confidence": 1.0,
+            "evidence": "CARRIER FedEx Priority",
+            "correct": true
+          },
+          "trackingNumber": {
+            "expected": "7942 3381 0107",
+            "actual": "7942 3381 0107",
+            "confidence": 1.0,
+            "evidence": "TRACKING NUMBER 7942 3381 0107",
+            "correct": true
+          },
+          "billOfLading": {
+            "expected": "BL-FX-556310",
+            "actual": "BL-FX-556310",
+            "confidence": 1.0,
+            "evidence": "BILL OF LADING BL-FX-556310",
+            "correct": true
+          },
+          "purchaseOrderNumber": {
+            "expected": "PO-88426",
+            "actual": "PO-88426",
+            "confidence": 1.0,
+            "evidence": "PURCHASE ORDER PO-88426",
+            "correct": true
+          },
+          "sealNumber": {
+            "expected": "CLX-SEAL-1044",
+            "actual": "CLX-SEAL-1044",
+            "confidence": 1.0,
+            "evidence": "SEAL NUMBER CLX-SEAL-1044",
+            "correct": true
+          },
+          "supplierName": {
+            "expected": "CryoLogix Sciences GmbH",
+            "actual": "CryoLogix Sciences GmbH",
+            "confidence": 1.0,
+            "evidence": "CryoLogix Sciences GmbH Alsterufer 21 Hamburg, Germany",
+            "correct": true
+          },
+          "origin": {
+            "expected": "Hamburg, Germany",
+            "actual": "Hamburg, Germany",
+            "confidence": 1.0,
+            "evidence": "Hamburg, Germany",
+            "correct": true
+          },
+          "destination": {
+            "expected": "Boston, MA, United States",
+            "actual": "CryoSync Biologistics Center, 400 Technology Square, Floor 3, Boston, MA, United States",
+            "confidence": 0.9,
+            "evidence": "Boston, MA, United States",
+            "correct": true
+          },
+          "priority": {
+            "expected": "expedited",
+            "actual": "expedited",
+            "confidence": 1.0,
+            "evidence": "Priority: EXPEDITED",
+            "correct": true
+          },
+          "temperatureRegime": {
+            "expected": "refrigerated_2_8",
+            "actual": "refrigerated_2_8",
+            "confidence": 1.0,
+            "evidence": "+2 C to +8 C",
+            "correct": true
+          },
+          "category": {
+            "expected": "cord_blood_unit",
+            "actual": "cord_blood_unit",
+            "confidence": 1.0,
+            "evidence": "Cord blood unit, cryovial 2 mL",
+            "correct": true
+          },
+          "productCount": {
+            "expected": 12,
+            "actual": 12,
+            "confidence": 1.0,
+            "evidence": "Total units: 12",
+            "correct": true
+          },
+          "lotCount": {
+            "expected": 3,
+            "actual": 3,
+            "confidence": 1.0,
+            "evidence": "Lots: 3",
+            "correct": true
+          },
+          "totalValue": {
+            "expected": 48600,
+            "actual": 48600.0,
+            "confidence": 1.0,
+            "evidence": "USD 48,600.00",
+            "correct": true
+          },
+          "dangerousGoods": {
+            "expected": false,
+            "actual": false,
+            "confidence": 1.0,
+            "evidence": "Dangerous goods: NONE",
+            "correct": true
+          }
+        }
+      },
+      "crossPage": {
+        "productCount": {
+          "found": true,
+          "correct": true
+        },
+        "lotCount": {
+          "found": true,
+          "correct": true
+        },
+        "totalValue": {
+          "found": true,
+          "correct": true
+        }
+      }
+    },
+    "12-bill-of-lading-ocean-multipage.pdf": {
+      "group": "multi-page PDF",
+      "standard": {
+        "accuracy": 1.0,
+        "correct": 11,
+        "groundTruthFields": 11,
+        "fieldsExtracted": 16,
+        "overallConfidence": 0.99,
+        "needsReview": 0,
+        "verified": 0,
+        "warnings": 0,
+        "elapsedSec": 9.1,
+        "perField": {
+          "billOfLading": {
+            "expected": "MAEU-2266-78845",
+            "actual": "MAEU-2266-78845",
+            "confidence": 1.0,
+            "evidence": "MAEU-2266-78845",
+            "correct": true
+          },
+          "purchaseOrderNumber": {
+            "expected": "PO-91227",
+            "actual": "PO-91227",
+            "confidence": 1.0,
+            "evidence": "Said to contain: PO-91227",
+            "correct": true
+          },
+          "carrier": {
+            "expected": "Maersk Line",
+            "actual": "Maersk Line",
+            "confidence": 1.0,
+            "evidence": "MAERSK LINE",
+            "correct": true
+          },
+          "supplierName": {
+            "expected": "NordCell Biologics BV",
+            "actual": "NordCell Biologics BV",
+            "confidence": 1.0,
+            "evidence": "NordCell Biologics BV",
+            "correct": true
+          },
+          "origin": {
+            "expected": "Rotterdam",
+            "actual": "Rotterdam, Netherlands",
+            "confidence": 1.0,
+            "evidence": "Rotterdam, NL",
+            "correct": true
+          },
+          "destination": {
+            "expected": "Newark",
+            "actual": "Newark, NJ, USA",
+            "confidence": 1.0,
+            "evidence": "Newark, NJ, USA",
+            "correct": true
+          },
+          "sealNumber": {
+            "expected": "MSK-88471",
+            "actual": "MSK-88471",
+            "confidence": 1.0,
+            "evidence": "MSK-88471",
+            "correct": true
+          },
+          "temperatureRegime": {
+            "expected": "ultra_frozen_minus_80",
+            "actual": "ultra_frozen_minus_80",
+            "confidence": 1.0,
+            "evidence": "-80 C (ultra-low)",
+            "correct": true
+          },
+          "dangerousGoods": {
+            "expected": true,
+            "actual": true,
+            "confidence": 1.0,
+            "evidence": "UN1845 - Carbon dioxide, solid (dry ice)",
+            "correct": true
+          },
+          "unNumber": {
+            "expected": "UN1845",
+            "actual": "UN1845",
+            "confidence": 1.0,
+            "evidence": "UN1845",
+            "correct": true
+          },
+          "totalValue": {
+            "expected": 96500,
+            "actual": 96500,
+            "confidence": 1.0,
+            "evidence": "USD 96,500.00",
+            "correct": true
+          }
+        }
+      },
+      "precision": {
+        "accuracy": 1.0,
+        "correct": 11,
+        "groundTruthFields": 11,
+        "fieldsExtracted": 16,
+        "overallConfidence": 0.99,
+        "needsReview": 0,
+        "verified": 16,
+        "warnings": 0,
+        "elapsedSec": 19.2,
+        "perField": {
+          "billOfLading": {
+            "expected": "MAEU-2266-78845",
+            "actual": "MAEU-2266-78845",
+            "confidence": 1.0,
+            "evidence": "MAEU-2266-78845",
+            "correct": true
+          },
+          "purchaseOrderNumber": {
+            "expected": "PO-91227",
+            "actual": "PO-91227",
+            "confidence": 1.0,
+            "evidence": "Said to contain: PO-91227",
+            "correct": true
+          },
+          "carrier": {
+            "expected": "Maersk Line",
+            "actual": "Maersk Line",
+            "confidence": 1.0,
+            "evidence": "MAERSK LINE",
+            "correct": true
+          },
+          "supplierName": {
+            "expected": "NordCell Biologics BV",
+            "actual": "NordCell Biologics BV",
+            "confidence": 1.0,
+            "evidence": "NordCell Biologics BV",
+            "correct": true
+          },
+          "origin": {
+            "expected": "Rotterdam",
+            "actual": "Rotterdam, Netherlands",
+            "confidence": 1.0,
+            "evidence": "Rotterdam, NL",
+            "correct": true
+          },
+          "destination": {
+            "expected": "Newark",
+            "actual": "Newark, NJ, USA",
+            "confidence": 1.0,
+            "evidence": "Newark, NJ, USA",
+            "correct": true
+          },
+          "sealNumber": {
+            "expected": "MSK-88471",
+            "actual": "MSK-88471",
+            "confidence": 1.0,
+            "evidence": "MSK-88471",
+            "correct": true
+          },
+          "temperatureRegime": {
+            "expected": "ultra_frozen_minus_80",
+            "actual": "ultra_frozen_minus_80",
+            "confidence": 1.0,
+            "evidence": "-80 C (ultra-low)",
+            "correct": true
+          },
+          "dangerousGoods": {
+            "expected": true,
+            "actual": true,
+            "confidence": 1.0,
+            "evidence": "UN1845 - Carbon dioxide, solid (dry ice)",
+            "correct": true
+          },
+          "unNumber": {
+            "expected": "UN1845",
+            "actual": "UN1845",
+            "confidence": 1.0,
+            "evidence": "UN1845",
+            "correct": true
+          },
+          "totalValue": {
+            "expected": 96500,
+            "actual": 96500,
+            "confidence": 1.0,
+            "evidence": "USD 96,500.00",
+            "correct": true
+          }
+        }
+      }
+    },
+    "13-coa-cord-blood-multipage.pdf": {
+      "group": "multi-page PDF",
+      "standard": {
+        "accuracy": 0.889,
+        "correct": 8,
+        "groundTruthFields": 9,
+        "fieldsExtracted": 12,
+        "overallConfidence": 1.0,
+        "needsReview": 0,
+        "verified": 0,
+        "warnings": 0,
+        "elapsedSec": 8.6,
+        "perField": {
+          "shipmentNumber": {
+            "expected": "SHP-2026-1201",
+            "actual": "SHP-2026-1201",
+            "confidence": 1.0,
+            "evidence": "Shipment: SHP-2026-1201",
+            "correct": true
+          },
+          "supplierName": {
+            "expected": "StemCore Labs",
+            "actual": "StemCore Labs",
+            "confidence": 1.0,
+            "evidence": "StemCore Labs Cell Therapy Quality Control Laboratory 128 Core Street, Austin, TX 78701, USA",
+            "correct": true
+          },
+          "origin": {
+            "expected": "Austin TX, USA",
+            "actual": "Austin, TX, USA",
+            "confidence": 1.0,
+            "evidence": "Manufacturing site: Austin, TX, USA",
+            "correct": true
+          },
+          "destination": {
+            "expected": "Boston MA, USA",
+            "actual": null,
+            "confidence": 0.0,
+            "evidence": null,
+            "correct": false
+          },
+          "category": {
+            "expected": "cord_blood_unit",
+            "actual": "cord_blood_unit",
+            "confidence": 1.0,
+            "evidence": "Category: cord_blood_unit",
+            "correct": true
+          },
+          "temperatureRegime": {
+            "expected": "liquid_nitrogen",
+            "actual": "liquid_nitrogen",
+            "confidence": 1.0,
+            "evidence": "Vapor phase liquid nitrogen, below -150 C",
+            "correct": true
+          },
+          "dangerousGoods": {
+            "expected": true,
+            "actual": true,
+            "confidence": 1.0,
+            "evidence": "Dangerous goods: UN3373, Category B",
+            "correct": true
+          },
+          "unNumber": {
+            "expected": "UN3373",
+            "actual": "UN3373",
+            "confidence": 1.0,
+            "evidence": "Dangerous goods: UN3373, Category B",
+            "correct": true
+          },
+          "totalValue": {
+            "expected": 210000,
+            "actual": 210000,
+            "confidence": 1.0,
+            "evidence": "Declared value: USD 210,000.00",
+            "correct": true
+          }
+        }
+      },
+      "precision": {
+        "accuracy": 0.889,
+        "correct": 8,
+        "groundTruthFields": 9,
+        "fieldsExtracted": 12,
+        "overallConfidence": 1.0,
+        "needsReview": 0,
+        "verified": 12,
+        "warnings": 0,
+        "elapsedSec": 16.1,
+        "perField": {
+          "shipmentNumber": {
+            "expected": "SHP-2026-1201",
+            "actual": "SHP-2026-1201",
+            "confidence": 1.0,
+            "evidence": "Shipment: SHP-2026-1201",
+            "correct": true
+          },
+          "supplierName": {
+            "expected": "StemCore Labs",
+            "actual": "StemCore Labs",
+            "confidence": 1.0,
+            "evidence": "StemCore Labs\nCell Therapy Quality Control Laboratory",
+            "correct": true
+          },
+          "origin": {
+            "expected": "Austin TX, USA",
+            "actual": "Austin, TX, USA",
+            "confidence": 1.0,
+            "evidence": "Manufacturing site: Austin, TX, USA",
+            "correct": true
+          },
+          "destination": {
+            "expected": "Boston MA, USA",
+            "actual": null,
+            "confidence": 0.0,
+            "evidence": null,
+            "correct": false
+          },
+          "category": {
+            "expected": "cord_blood_unit",
+            "actual": "cord_blood_unit",
+            "confidence": 1.0,
+            "evidence": "Category: cord_blood_unit",
+            "correct": true
+          },
+          "temperatureRegime": {
+            "expected": "liquid_nitrogen",
+            "actual": "liquid_nitrogen",
+            "confidence": 1.0,
+            "evidence": "Vapor phase liquid nitrogen, below -150 C",
+            "correct": true
+          },
+          "dangerousGoods": {
+            "expected": true,
+            "actual": true,
+            "confidence": 1.0,
+            "evidence": "Dangerous goods: UN3373, Category B",
+            "correct": true
+          },
+          "unNumber": {
+            "expected": "UN3373",
+            "actual": "UN3373",
+            "confidence": 1.0,
+            "evidence": "Dangerous goods: UN3373, Category B",
+            "correct": true
+          },
+          "totalValue": {
+            "expected": 210000,
+            "actual": 210000,
+            "confidence": 1.0,
+            "evidence": "Declared value: USD 210,000.00",
+            "correct": true
+          }
+        }
+      }
+    },
+    "15-packing-slip-lowres-blurry.jpg": {
+      "group": "degraded scan",
+      "standard": {
+        "accuracy": 0.357,
+        "correct": 5,
+        "groundTruthFields": 14,
+        "fieldsExtracted": 12,
+        "overallConfidence": 1.0,
+        "needsReview": 0,
+        "verified": 0,
+        "warnings": 0,
+        "elapsedSec": 8.2,
+        "perField": {
+          "shipmentNumber": {
+            "expected": "SHP-2026-1441",
+            "actual": "SHP 020 1411",
+            "confidence": 1.0,
+            "evidence": "Shipment number: SHP 020 1411",
+            "correct": false
+          },
+          "carrier": {
+            "expected": "FedEx Priority",
+            "actual": "FedEx",
+            "confidence": 1.0,
+            "evidence": "Carrier: FedEx",
+            "correct": true
+          },
+          "trackingNumber": {
+            "expected": "7942 3381 0077",
+            "actual": "7672 3481 0777",
+            "confidence": 1.0,
+            "evidence": "Tracking number: 7672 3481 0777",
+            "correct": false
+          },
+          "billOfLading": {
+            "expected": "BL-FX-556999",
+            "actual": "BL 452 6659",
+            "confidence": 1.0,
+            "evidence": "Bill of lading (BL): 452 6659",
+            "correct": false
+          },
+          "purchaseOrderNumber": {
+            "expected": "PO-88477",
+            "actual": "PO# 93611",
+            "confidence": 1.0,
+            "evidence": "Purchase order: PO# 93611",
+            "correct": false
+          },
+          "supplierName": {
+            "expected": "CryoLogix Sciences GmbH",
+            "actual": "Cryologic Sciences GmbH",
+            "confidence": 1.0,
+            "evidence": "Supplier: Cryologic Sciences GmbH",
+            "correct": true
+          },
+          "origin": {
+            "expected": "Hamburg, Germany",
+            "actual": "Hamburg, Germany",
+            "confidence": 1.0,
+            "evidence": "Origin: Hamburg, Germany",
+            "correct": true
+          },
+          "destination": {
+            "expected": "Boston, MA, United States",
+            "actual": "Boston, MA, United States",
+            "confidence": 1.0,
+            "evidence": "Destination: Boston, MA, United States",
+            "correct": true
+          },
+          "temperatureRegime": {
+            "expected": "refrigerated_2_8",
+            "actual": "frozen_minus_20",
+            "confidence": 1.0,
+            "evidence": "Temperature regime: -20\u00b0C \u00b1 2\u00b0C",
+            "correct": false
+          },
+          "category": {
+            "expected": "cord_blood_unit",
+            "actual": null,
+            "confidence": 0.0,
+            "evidence": null,
+            "correct": false
+          },
+          "productCount": {
+            "expected": 9,
+            "actual": 9,
+            "confidence": 1.0,
+            "evidence": "Product count: 9",
+            "correct": true
+          },
+          "lotCount": {
+            "expected": 3,
+            "actual": null,
+            "confidence": 0.0,
+            "evidence": null,
+            "correct": false
+          },
+          "totalValue": {
+            "expected": 36450,
+            "actual": 40000,
+            "confidence": 1.0,
+            "evidence": "Total declared value: USD 40,000.00",
+            "correct": false
+          },
+          "dangerousGoods": {
+            "expected": false,
+            "actual": null,
+            "confidence": 0.0,
+            "evidence": null,
+            "correct": false
+          }
+        }
+      },
+      "precision": {
+        "accuracy": 0.357,
+        "correct": 5,
+        "groundTruthFields": 14,
+        "fieldsExtracted": 13,
+        "overallConfidence": 0.85,
+        "needsReview": 2,
+        "verified": 13,
+        "warnings": 3,
+        "elapsedSec": 15.2,
+        "perField": {
+          "shipmentNumber": {
+            "expected": "SHP-2026-1441",
+            "actual": "SHP 020 1411",
+            "confidence": 1.0,
+            "evidence": "Shipment number: SHP 020 1411",
+            "correct": false
+          },
+          "carrier": {
+            "expected": "FedEx Priority",
+            "actual": "FedEx",
+            "confidence": 1.0,
+            "evidence": "Carrier: FedEx",
+            "correct": true
+          },
+          "trackingNumber": {
+            "expected": "7942 3381 0077",
+            "actual": "7862 3481 0777",
+            "confidence": 1.0,
+            "evidence": "Tracking number: 7862 3481 0777",
+            "correct": false
+          },
+          "billOfLading": {
+            "expected": "BL-FX-556999",
+            "actual": "BL 452 6659",
+            "confidence": 1.0,
+            "evidence": "Bill of lading (BL): 452 6659",
+            "correct": false
+          },
+          "purchaseOrderNumber": {
+            "expected": "PO-88477",
+            "actual": "PO# 654321",
+            "confidence": 1.0,
+            "evidence": "Purchase order: PO# 654321",
+            "correct": false
+          },
+          "supplierName": {
+            "expected": "CryoLogix Sciences GmbH",
+            "actual": "Cryologic Sciences GmbH",
+            "confidence": 1.0,
+            "evidence": "Supplier: Cryologic Sciences GmbH",
+            "correct": true
+          },
+          "origin": {
+            "expected": "Hamburg, Germany",
+            "actual": "Hamburg, Germany",
+            "confidence": 1.0,
+            "evidence": "Origin: Hamburg, Germany",
+            "correct": true
+          },
+          "destination": {
+            "expected": "Boston, MA, United States",
+            "actual": "Boston, MA, United States",
+            "confidence": 1.0,
+            "evidence": "Destination: Boston, MA, United States",
+            "correct": true
+          },
+          "temperatureRegime": {
+            "expected": "refrigerated_2_8",
+            "actual": "frozen_minus_20",
+            "confidence": 1.0,
+            "evidence": "Temperature regime: -18 to -22 C",
+            "correct": false
+          },
+          "category": {
+            "expected": "cord_blood_unit",
+            "actual": "Cryogenic vials",
+            "confidence": 0.0,
+            "evidence": null,
+            "correct": false
+          },
+          "productCount": {
+            "expected": 9,
+            "actual": 9,
+            "confidence": 1.0,
+            "evidence": "Product count: 9 Pieces",
+            "correct": true
+          },
+          "lotCount": {
+            "expected": 3,
+            "actual": null,
+            "confidence": 0.0,
+            "evidence": null,
+            "correct": false
+          },
+          "totalValue": {
+            "expected": 36450,
+            "actual": 40000,
+            "confidence": 1.0,
+            "evidence": "Total declared value: USD 40,000.00",
+            "correct": false
+          },
+          "dangerousGoods": {
+            "expected": false,
+            "actual": null,
+            "confidence": 0.0,
+            "evidence": null,
+            "correct": false
+          }
+        }
+      }
+    },
+    "16-shipping-label-faded-skewed.png": {
+      "group": "degraded scan",
+      "standard": {
+        "accuracy": 1.0,
+        "correct": 10,
+        "groundTruthFields": 10,
+        "fieldsExtracted": 11,
+        "overallConfidence": 0.95,
+        "needsReview": 1,
+        "verified": 0,
+        "warnings": 0,
+        "elapsedSec": 7.6,
+        "perField": {
+          "shipmentNumber": {
+            "expected": "SHP-2026-1552",
+            "actual": "SHP-2026-1552",
+            "confidence": 1.0,
+            "evidence": "Shipment number: SHP-2026-1552",
+            "correct": true
+          },
+          "carrier": {
+            "expected": "World Courier",
+            "actual": "World Courier",
+            "confidence": 1.0,
+            "evidence": "Carrier: World Courier",
+            "correct": true
+          },
+          "trackingNumber": {
+            "expected": "WB-441-99214006",
+            "actual": "WB-441-99214006",
+            "confidence": 1.0,
+            "evidence": "Tracking number: WB-441-99214006",
+            "correct": true
+          },
+          "origin": {
+            "expected": "London, UK",
+            "actual": "London, UK",
+            "confidence": 1.0,
+            "evidence": "Origin: London, UK",
+            "correct": true
+          },
+          "destination": {
+            "expected": "Boston MA, USA",
+            "actual": "Boston MA, USA",
+            "confidence": 1.0,
+            "evidence": "Destination: Boston MA, USA",
+            "correct": true
+          },
+          "priority": {
+            "expected": "expedited",
+            "actual": "expedited",
+            "confidence": 1.0,
+            "evidence": "Priority: Expedited",
+            "correct": true
+          },
+          "temperatureRegime": {
+            "expected": "refrigerated_2_8",
+            "actual": "refrigerated_2_8",
+            "confidence": 1.0,
+            "evidence": "Temperature: Refrigerated +2 to +8 C",
+            "correct": true
+          },
+          "dangerousGoods": {
+            "expected": true,
+            "actual": true,
+            "confidence": 1.0,
+            "evidence": "Dangerous goods: YES - UN3373",
+            "correct": true
+          },
+          "unNumber": {
+            "expected": "UN3373",
+            "actual": "UN3373",
+            "confidence": 1.0,
+            "evidence": "Dangerous goods: YES - UN3373",
+            "correct": true
+          },
+          "sealNumber": {
+            "expected": "WC-99451",
+            "actual": "WC-99451",
+            "confidence": 1.0,
+            "evidence": "Seal number: WC-99451",
+            "correct": true
+          }
+        }
+      },
+      "precision": {
+        "accuracy": 1.0,
+        "correct": 10,
+        "groundTruthFields": 10,
+        "fieldsExtracted": 10,
+        "overallConfidence": 1.0,
+        "needsReview": 0,
+        "verified": 10,
+        "warnings": 1,
+        "elapsedSec": 14.4,
+        "perField": {
+          "shipmentNumber": {
+            "expected": "SHP-2026-1552",
+            "actual": "SHP-2026-1552",
+            "confidence": 1.0,
+            "evidence": "Shipment number: SHP-2026-1552",
+            "correct": true
+          },
+          "carrier": {
+            "expected": "World Courier",
+            "actual": "World Courier",
+            "confidence": 1.0,
+            "evidence": "Carrier: World Courier",
+            "correct": true
+          },
+          "trackingNumber": {
+            "expected": "WB-441-99214006",
+            "actual": "WB-441-99214006",
+            "confidence": 1.0,
+            "evidence": "Tracking number: WB-441-99214006",
+            "correct": true
+          },
+          "origin": {
+            "expected": "London, UK",
+            "actual": "London, UK",
+            "confidence": 1.0,
+            "evidence": "Origin: London, UK",
+            "correct": true
+          },
+          "destination": {
+            "expected": "Boston MA, USA",
+            "actual": "Boston MA, USA",
+            "confidence": 1.0,
+            "evidence": "Destination: Boston MA, USA",
+            "correct": true
+          },
+          "priority": {
+            "expected": "expedited",
+            "actual": "expedited",
+            "confidence": 1.0,
+            "evidence": "Priority: Expedited",
+            "correct": true
+          },
+          "temperatureRegime": {
+            "expected": "refrigerated_2_8",
+            "actual": "refrigerated_2_8",
+            "confidence": 1.0,
+            "evidence": "Temperature: Refrigerated +2 to +8 C",
+            "correct": true
+          },
+          "dangerousGoods": {
+            "expected": true,
+            "actual": true,
+            "confidence": 1.0,
+            "evidence": "Dangerous goods: YES - UN3373",
+            "correct": true
+          },
+          "unNumber": {
+            "expected": "UN3373",
+            "actual": "UN3373",
+            "confidence": 1.0,
+            "evidence": "Dangerous goods: YES - UN3373",
+            "correct": true
+          },
+          "sealNumber": {
+            "expected": "WC-99451",
+            "actual": "WC-99451",
+            "confidence": 1.0,
+            "evidence": "Seal number: WC-99451",
+            "correct": true
+          }
+        }
+      }
+    }
+  },
+  "exceptions": [],
+  "amendment": {}
+}

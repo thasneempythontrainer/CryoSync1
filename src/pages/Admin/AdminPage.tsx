@@ -36,9 +36,9 @@ function AdminPage() {
   const overall = data?.overall ?? "healthy"
 
   const statusIndicator = {
-    healthy: { icon: CheckCircle, className: "text-emerald-500" },
-    degraded: { icon: AlertTriangle, className: "text-amber-500" },
-    critical: { icon: AlertTriangle, className: "text-red-500" },
+    healthy: { icon: CheckCircle, className: "text-success" },
+    degraded: { icon: AlertTriangle, className: "text-warning" },
+    critical: { icon: AlertTriangle, className: "text-danger" },
   }[overall]
 
   const StatusIcon = statusIndicator.icon

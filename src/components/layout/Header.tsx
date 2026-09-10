@@ -61,7 +61,7 @@ function Header() {
 
   const role = user?.role
   const initials = user
-    ? user.displayName
+    ? (user.displayName ?? "")
         .replace(/^(Dr\.|Mr\.|Ms\.)\s+/i, "")
         .split(" ")
         .map((p) => p[0])
@@ -95,8 +95,8 @@ function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-30 flex h-14 shrink-0 items-center gap-2 border-b border-border/60 bg-background/75 px-3 shadow-xs backdrop-blur-xl sm:gap-4 sm:px-4">
-        <div className="flex items-center gap-3">
+      <header className="sticky top-0 z-30 flex h-11 shrink-0 items-center gap-2 border-b border-border bg-background/90 px-3 backdrop-blur-sm sm:px-4">
+        <div className="flex items-center gap-2">
           <button
             type="button"
             onClick={() => {
@@ -107,23 +107,17 @@ function Header() {
               }
             }}
             aria-label="Toggle navigation"
-            className="inline-flex size-9 cursor-pointer items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            className="inline-flex size-7 cursor-pointer items-center justify-center rounded text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           >
-            <PanelLeft className="size-5" />
+            <PanelLeft className="size-4" />
           </button>
 
           {breadcrumbs.length > 0 && (
-            <nav className="hidden items-center gap-1.5 text-sm text-muted-foreground sm:flex">
+            <nav className="hidden items-center gap-1 text-xs text-muted-foreground sm:flex">
               {breadcrumbs.map((crumb, i) => (
-                <span key={i} className="flex items-center gap-1.5">
-                  {i > 0 && (
-                    <span className="text-muted-foreground/30">/</span>
-                  )}
-                  <span
-                    className={cn(
-                      i === breadcrumbs.length - 1 && "font-semibold text-foreground",
-                    )}
-                  >
+                <span key={i} className="flex items-center gap-1">
+                  {i > 0 && <span className="text-muted-foreground/30">/</span>}
+                  <span className={cn(i === breadcrumbs.length - 1 && "font-medium text-foreground")}>
                     {crumb.label}
                   </span>
                 </span>
@@ -132,102 +126,87 @@ function Header() {
           )}
         </div>
 
-        <div className="flex flex-1 justify-center px-1 sm:px-4">
+        <div className="flex flex-1 justify-center px-2 sm:px-4">
           <button
             type="button"
             onClick={handleSearchOpen}
-            className="flex h-9 w-full max-w-md min-w-0 cursor-pointer items-center gap-2 rounded-lg border border-border/70 bg-muted/40 px-3 text-sm text-muted-foreground shadow-xs backdrop-blur transition-all hover:border-ring/40 hover:bg-muted/60 hover:shadow-glow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+            className="flex h-7 w-full max-w-sm min-w-0 cursor-pointer items-center gap-1.5 rounded border border-border bg-muted/30 px-2.5 text-xs text-muted-foreground transition-colors hover:bg-muted/50"
           >
-            <Search className="size-4 shrink-0" />
-            <span className="hidden flex-1 truncate text-left sm:inline">Search pages, shipments...</span>
-            <kbd className="hidden items-center gap-0.5 rounded border border-border bg-background px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground shadow-xs sm:inline-flex">
-              <Command className="size-3" />
-              K
+            <Search className="size-3.5 shrink-0" />
+            <span className="hidden flex-1 truncate text-left sm:inline">Search...</span>
+            <kbd className="hidden items-center gap-0.5 rounded border border-border bg-background px-1 py-px text-[9px] font-medium text-muted-foreground sm:inline-flex">
+              <Command className="size-2.5" />K
             </kbd>
           </button>
         </div>
 
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-0.5">
           <DropdownMenu>
-            <DropdownMenuTrigger className={cn(
-              "relative inline-flex size-8 cursor-pointer items-center justify-center rounded-lg text-muted-foreground transition-colors",
-              "hover:bg-muted hover:text-foreground",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-            )}>
-              <Bell className="size-5" />
+            <DropdownMenuTrigger className="relative inline-flex size-7 cursor-pointer items-center justify-center rounded text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
+              <Bell className="size-4" />
               {unreadCount > 0 && (
                 <Badge
                   variant="default"
-                  className="absolute -top-1 -right-1 flex size-4 items-center justify-center rounded-full p-0 text-[10px]"
+                  className="absolute -top-0.5 -right-0.5 flex size-3.5 items-center justify-center rounded-full p-0 text-[8px]"
                 >
                   {unreadCount > 9 ? "9+" : unreadCount}
                 </Badge>
               )}
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-80">
+            <DropdownMenuContent align="end" className="w-72">
               <DropdownMenuGroup>
-              <DropdownMenuLabel>Notifications</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              {notifications.length === 0 ? (
-                <div className="px-1.5 py-6 text-center text-sm text-muted-foreground">
-                  No new notifications
-                </div>
-              ) : (
-                notifications.slice(0, 5).map((n) => (
-                  <DropdownMenuItem key={n.id} className="flex-col items-start gap-0.5">
-                    <span className="text-sm font-medium">{n.title}</span>
-                    <span className="text-xs text-muted-foreground">
-                      {n.description}
-                    </span>
-                  </DropdownMenuItem>
-                ))
-              )}
-            </DropdownMenuGroup>
+                <DropdownMenuLabel>Notifications</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {notifications.length === 0 ? (
+                  <div className="px-1.5 py-6 text-center text-xs text-muted-foreground">
+                    No new notifications
+                  </div>
+                ) : (
+                  notifications.slice(0, 5).map((n) => (
+                    <DropdownMenuItem key={n.id} className="flex-col items-start gap-0.5">
+                      <span className="text-xs font-medium">{n.title}</span>
+                      <span className="text-[11px] text-muted-foreground">{n.description}</span>
+                    </DropdownMenuItem>
+                  ))
+                )}
+              </DropdownMenuGroup>
             </DropdownMenuContent>
           </DropdownMenu>
 
           <button
             type="button"
             onClick={toggleTheme}
-            className="inline-flex size-8 cursor-pointer items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            className="inline-flex size-7 cursor-pointer items-center justify-center rounded text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           >
-            {mode === "dark" ? (
-              <Sun className="size-5" />
-            ) : (
-              <Moon className="size-5" />
-            )}
+            {mode === "dark" ? <Sun className="size-4" /> : <Moon className="size-4" />}
           </button>
 
           <div className="relative">
             <button
               type="button"
               onClick={() => setUserMenuOpen((p) => !p)}
-              className={cn(
-                "inline-flex h-8 cursor-pointer items-center gap-2 rounded-lg px-2 text-muted-foreground transition-colors",
-                "hover:bg-muted hover:text-foreground",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-              )}
+              className="inline-flex h-7 cursor-pointer items-center gap-1.5 rounded px-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
             >
               <Avatar size="sm">
                 <AvatarFallback>{initials}</AvatarFallback>
               </Avatar>
-              <span className="hidden text-sm font-medium text-foreground md:inline">
+              <span className="hidden text-xs font-medium text-foreground md:inline">
                 {user?.displayName ?? "Sign in"}
               </span>
-              <ChevronDown className="hidden size-3.5 text-muted-foreground/60 md:block" />
+              <ChevronDown className="hidden size-3 text-muted-foreground/50 md:block" />
             </button>
 
             {userMenuOpen && user && (
               <>
                 <div className="fixed inset-0 z-40" onClick={() => setUserMenuOpen(false)} />
-                <div className="absolute right-0 z-50 mt-1 w-56 origin-top-right rounded-lg bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10" role="menu">
-                  <div className="px-1.5 py-1.5 text-xs font-medium text-muted-foreground" role="none">
+                <div className="absolute right-0 z-50 mt-1 w-52 origin-top-right rounded border border-border bg-popover p-1 text-popover-foreground shadow-lg" role="menu">
+                  <div className="px-2 py-1.5" role="none">
                     <div className="flex flex-col gap-0.5">
-                      <span className="text-sm font-medium text-foreground">{user.displayName}</span>
-                      <span className="text-xs text-muted-foreground">{user.title}</span>
-                      <span className="text-xs text-muted-foreground">{user.email}</span>
+                      <span className="text-xs font-medium text-foreground">{user.displayName}</span>
+                      <span className="text-[11px] text-muted-foreground">{user.title}</span>
+                      <span className="text-[11px] text-muted-foreground">{user.email}</span>
                     </div>
-                    <span className="mt-1.5 inline-flex rounded-full bg-primary/10 px-2 py-0.5 text-[11px] font-semibold text-primary">
+                    <span className="mt-1.5 inline-flex rounded bg-muted px-1.5 py-px text-[10px] font-medium text-muted-foreground">
                       {ROLE_LABELS[user.role]}
                     </span>
                   </div>
@@ -238,9 +217,9 @@ function Header() {
                         type="button"
                         role="menuitem"
                         onClick={() => { setUserMenuOpen(false); navigate('/admin') }}
-                        className="flex w-full cursor-pointer items-center gap-2 rounded-md px-1.5 py-1 text-sm outline-hidden select-none hover:bg-accent hover:text-accent-foreground"
+                        className="flex w-full cursor-pointer items-center gap-2 rounded px-2 py-1 text-xs outline-hidden select-none hover:bg-muted"
                       >
-                        <Settings className="size-4" />
+                        <Settings className="size-3.5" />
                         Settings
                       </button>
                       <div className="-mx-1 my-1 h-px bg-border" />
@@ -250,9 +229,9 @@ function Header() {
                     type="button"
                     role="menuitem"
                     onClick={handleSignOut}
-                    className="flex w-full cursor-pointer items-center gap-2 rounded-md px-1.5 py-1 text-sm outline-hidden select-none hover:bg-accent hover:text-accent-foreground"
+                    className="flex w-full cursor-pointer items-center gap-2 rounded px-2 py-1 text-xs outline-hidden select-none hover:bg-muted"
                   >
-                    <LogOut className="size-4" />
+                    <LogOut className="size-3.5" />
                     Sign out
                   </button>
                 </div>
@@ -265,44 +244,47 @@ function Header() {
       <Dialog open={searchOpen} onOpenChange={handleSearchClose}>
         <DialogHeader className="sr-only">
           <DialogTitle>Search</DialogTitle>
-          <DialogDescription>Search pages, shipments, and facilities</DialogDescription>
+          <DialogDescription>Search pages, CBUs, and collection sites</DialogDescription>
         </DialogHeader>
         <DialogContent
-          className="top-[15%] translate-y-0 overflow-hidden rounded-xl! p-0 sm:max-w-lg"
+          className="top-[15%] translate-y-0 overflow-hidden rounded-lg! p-0 sm:max-w-lg"
           showCloseButton={false}
         >
           <div className="flex flex-col">
-            <div className="flex items-center gap-2 border-b border-border px-4 py-3">
-              <Search className="size-4 shrink-0 text-muted-foreground" />
+            <div className="flex items-center gap-2 border-b border-border px-3 py-2.5">
+              <Search className="size-3.5 shrink-0 text-muted-foreground" />
               <input
                 type="text"
-                placeholder="Search pages, shipments, facilities..."
+                placeholder="Search pages, CBUs, hospitals..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 autoFocus
-                className="flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground/60"
+                className="flex-1 bg-transparent text-xs text-foreground outline-none placeholder:text-muted-foreground/60"
               />
-              <kbd className="hidden items-center gap-0.5 rounded border border-border bg-muted px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground sm:inline-flex">
+              <kbd className="hidden items-center gap-0.5 rounded border border-border bg-muted px-1 py-px text-[9px] font-medium text-muted-foreground sm:inline-flex">
                 ESC
               </kbd>
             </div>
-            <div className="max-h-72 overflow-y-auto p-2">
+            <div className="max-h-64 overflow-y-auto p-1.5">
               {searchQuery.length > 0 ? (
-                <div className="py-8 text-center text-sm text-muted-foreground">
+                <div className="py-8 text-center text-xs text-muted-foreground">
                   No results found for &ldquo;{searchQuery}&rdquo;
                 </div>
               ) : (
-                <div className="space-y-1">
-                  <p className="px-2 py-1.5 text-xs font-medium text-muted-foreground">
+                <div className="space-y-0.5">
+                  <p className="px-1.5 py-1 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
                     Pages
                   </p>
                   {[
                     { label: "Dashboard", path: "/dashboard" },
-                    { label: "Receiving Intake", path: "/receiving" },
-                    { label: "Compliance & Cold Chain", path: "/compliance" },
-                    { label: "Risk & Stockout", path: "/risk" },
+                    { label: "CBU Tracking", path: "/cbus" },
+                    { label: "Customers", path: "/customers" },
+                    { label: "Storage", path: "/storage" },
+                    { label: "Compliance", path: "/compliance" },
+                    { label: "Transplants", path: "/transplants" },
+                    { label: "Payments", path: "/payments" },
                     { label: AGENT_NAV_LABEL, path: "/genie" },
-                    { label: "Admin & System Health", path: "/admin" },
+                    { label: "Admin", path: "/admin" },
                   ]
                     .filter((page) => canAccessPage(role, page.path))
                     .map((page) => (
@@ -313,7 +295,7 @@ function Header() {
                         handleSearchClose()
                         navigate(page.path)
                       }}
-                      className="flex w-full cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-sm text-foreground transition-colors hover:bg-muted"
+                      className="flex w-full cursor-pointer items-center gap-2 rounded px-2 py-1.5 text-xs text-foreground transition-colors hover:bg-muted"
                     >
                       {page.label}
                     </button>

@@ -1,13 +1,12 @@
-"""Databricks Apps entry point for CryoSync.
+"""Self-hosted entry point for CryoSync.
 
 Serves the FastAPI backend (backend/main.py) and the built React frontend
 (dist/) as a single app so the whole platform is one URL.
 
-The Databricks Apps runtime injects DATABRICKS_APP_PORT (the port to bind),
-DATABRICKS_HOST, DATABRICKS_CLIENT_ID and DATABRICKS_CLIENT_SECRET for the
-app's service principal, which the backend uses for automatic OAuth token
-refresh (see backend/databricks_auth.py). The frontend is built by the
-Databricks Apps deploy pipeline via `npm run build` into ./dist.
+Run locally (each in its own terminal):
+    cd backend && python -m uvicorn main:app --reload --port 8000   # API only
+or the all-in-one server below that also serves the built frontend:
+    python run_server.py
 """
 
 import os
@@ -25,7 +24,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 _BACKEND_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "backend")
 sys.path.insert(0, _BACKEND_DIR)
 
-from main import app
+from main import app  # noqa: E402
 
 
 def _dist_dir() -> str:
@@ -41,7 +40,7 @@ def mount_frontend(application: FastAPI) -> None:
     """
     dist_dir = _dist_dir()
     if not os.path.isdir(dist_dir):
-        print("dist/ not found - skipping frontend static mount (dev mode?)")
+        print("dist/ not found - skipping frontend static mount (run `npm run build`)")
         return
 
     class SPAStaticFiles(StaticFiles):
@@ -67,6 +66,6 @@ mount_frontend(app)
 
 
 if __name__ == "__main__":
-    port = int(os.getenv("DATABRICKS_APP_PORT", "8080"))
-    host = os.getenv("UVICORN_HOST", "0.0.0.0")
+    port = int(os.getenv("CRYOSYNC_PORT", os.getenv("PORT", "8080")))
+    host = os.getenv("CRYOSYNC_HOST", "0.0.0.0")
     uvicorn.run(app, host=host, port=port, log_level="info")

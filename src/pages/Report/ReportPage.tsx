@@ -2,7 +2,6 @@ import { useCallback, useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
-import { motion } from "framer-motion"
 import {
   Siren,
   Thermometer,
@@ -76,10 +75,10 @@ const DEVIATION_OPTIONS: { value: DeviationType; icon: React.ReactNode }[] = [
 ]
 
 const SEVERITY_OPTIONS: { value: ComplianceSeverity; badge: string }[] = [
-  { value: "low", badge: "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300" },
-  { value: "medium", badge: "bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-400" },
-  { value: "high", badge: "bg-orange-100 text-orange-700 dark:bg-orange-950 dark:text-orange-400" },
-  { value: "critical", badge: "bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-400" },
+  { value: "low", badge: "bg-muted text-muted-foreground" },
+  { value: "medium", badge: "bg-warning/10 text-warning" },
+  { value: "high", badge: "bg-orange-500/10 text-orange-500" },
+  { value: "critical", badge: "bg-danger/10 text-danger" },
 ]
 
 const NEXT_STEPS = [
@@ -202,10 +201,7 @@ function ReportPage() {
   )
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.3 }}
+    <div
       className="flex flex-col gap-6 p-4 sm:p-6"
     >
       <PageHeader
@@ -214,14 +210,10 @@ function ReportPage() {
       />
 
       {submittedNumber && (
-        <motion.div
-          initial={{ opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex items-center gap-3 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3"
-        >
-          <CheckCircle2 className="size-5 shrink-0 text-emerald-500" />
+        <div className="flex items-center gap-3 rounded-lg border border-border bg-card px-4 py-3">
+          <CheckCircle2 className="size-5 shrink-0 text-success" />
           <div className="min-w-0 text-sm">
-            <span className="font-medium text-emerald-700 dark:text-emerald-400">
+            <span className="font-medium text-success">
               {submittedNumber}
             </span>
             <span className="text-muted-foreground">
@@ -232,17 +224,17 @@ function ReportPage() {
           <button
             type="button"
             onClick={() => setSubmittedNumber(null)}
-            className="ml-auto shrink-0 rounded-lg px-2 py-1 text-xs font-medium text-emerald-600 hover:bg-emerald-500/10 dark:text-emerald-400"
+            className="ml-auto shrink-0 rounded-lg px-2 py-1 text-xs font-medium text-muted-foreground hover:bg-muted transition-colors"
           >
             Dismiss
           </button>
-        </motion.div>
+        </div>
       )}
 
       <div className="grid gap-6 lg:grid-cols-3">
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col gap-5 rounded-xl border border-border bg-card p-5 shadow-sm lg:col-span-2"
+          className="flex flex-col gap-5 rounded-lg border border-border bg-card p-5 lg:col-span-2"
         >
           <div className="grid gap-5 sm:grid-cols-2">
             <FormField label="Title" error={errors.title?.message}>
@@ -372,7 +364,7 @@ function ReportPage() {
         </form>
 
         <div className="flex flex-col gap-4">
-          <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
+          <div className="rounded-lg border border-border bg-card p-5">
             <h3 className="mb-1 text-sm font-semibold text-foreground">What happens next</h3>
             <p className="mb-4 text-xs text-muted-foreground">
               Every report is logged with an audit trail and assigned for investigation.
@@ -398,9 +390,9 @@ function ReportPage() {
             </div>
           </div>
 
-          <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
+          <div className="rounded-lg border border-border bg-card p-5">
             <h3 className="mb-2 flex items-center gap-2 text-sm font-semibold text-foreground">
-              <AlertTriangle className="size-4 text-amber-500" />
+              <AlertTriangle className="size-4 text-warning" />
               Good to know
             </h3>
             <ul className="flex flex-col gap-2 text-xs leading-relaxed text-muted-foreground">
@@ -420,7 +412,7 @@ function ReportPage() {
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   )
 }
 

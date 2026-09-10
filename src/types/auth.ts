@@ -1,4 +1,4 @@
-export type UserRole = 'dock' | 'qa' | 'supervisor'
+export type UserRole = 'collection' | 'processing' | 'cs' | 'qa' | 'admin'
 
 export interface AuthUser {
   id: string
