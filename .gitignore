@@ -27,6 +27,13 @@ test-documents/
 __pycache__/
 *.py[cod]
 
+# Presentations & documents
+*.pptx
+*.ppt
+*.docx
+*.bak
+docs/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
