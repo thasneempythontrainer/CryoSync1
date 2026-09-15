@@ -32,6 +32,7 @@ __pycache__/
 *.ppt
 *.docx
 *.bak
+*.zip
 docs/
 
 # Editor directories and files
