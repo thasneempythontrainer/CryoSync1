@@ -463,24 +463,67 @@ _RUNTIME_LINK_COLUMNS = {
     "facilities": {"name": "name", "region": "region"},
 }
 
+_table_columns_cache: dict = {}
+
+
+async def table_columns(conn, table: str) -> set:
+    """Return the set of column names that currently exist on the table.
+
+    Databricks keeps the domain tables as `(id, data)` JSON tables, while the
+    SQLite store also carries the additive runtime-link columns, so writers
+    must adapt to whichever columns are actually present.
+    """
+    cached = _table_columns_cache.get(table)
+    if cached is not None:
+        return cached
+    try:
+        rows = await conn.fetch(f"DESCRIBE TABLE {table}")
+        cols = []
+        for r in rows:
+            name = r.get("col_name")
+            if name is None:
+                try:
+                    name = r[0]
+                except Exception:
+                    continue
+            if str(name).strip() == "# col_name":
+                continue
+            cols.append(str(name).strip().strip("`").strip('"'))
+        if cols:
+            _table_columns_cache[table] = set(cols)
+            return set(cols)
+    except Exception:
+        pass
+    try:
+        rows = await conn.fetch(f'PRAGMA table_info("{table}")')
+        cols = {str(r[1]) for r in rows}
+        _table_columns_cache[table] = cols
+        return cols
+    except Exception:
+        return set()
+
 
 async def write_to_table(table: str, record: dict):
     pool = await get_pool()
     rid = record.get("id", generate_id("REC"))
     links = _RUNTIME_LINK_COLUMNS.get(table, {})
-    la = []
-    lb = []
-    params: list = [rid, json.dumps(record)]
-    for col, key in links.items():
-        la.append(col)
-        lb.append(f"?{len(params) + 1}")
-        params.append(record.get(key))
-    cols = "id, data" + ("".join(f", {c}" for c in la))
-    placeholders = "?1, ?2" + ("".join(f", {p}" for p in lb))
-    updates = ", ".join(f"{c} = ?{3 + i}" for i, c in enumerate(la))
-    if not links:
-        updates = "data = ?2"
+    payload = json.dumps(record)
     async with pool.acquire() as conn:
+        existing = await table_columns(conn, table)
+        la = []
+        lb = []
+        params: list = [rid, payload]
+        for col, key in links.items():
+            if col not in existing:
+                continue
+            la.append(col)
+            lb.append(f"?{len(params) + 1}")
+            params.append(record.get(key))
+        cols = "id, data" + ("".join(f", {c}" for c in la))
+        placeholders = "?1, ?2" + ("".join(f", {p}" for p in lb))
+        updates = ", ".join(f"{c} = ?{3 + i}" for i, c in enumerate(la))
+        if not la:
+            updates = "data = ?2"
         await conn.execute(
             f"INSERT INTO {table} ({cols}) VALUES ({placeholders}) "
             f"ON CONFLICT (id) DO UPDATE SET {updates}",
