@@ -54,9 +54,13 @@ Rules:
 - Keep answers concise and professional, citing shipment/lot/incident identifiers when available.
 - After a tool runs, summarize the outcome for the user in plain language.
 - When ask_genie returns a result for an analytics question, answer by faithfully relaying what Genie reported: state Genie's answer and the returned row count / figures exactly as given. Do not recompute, approximate, restate, or "interpret" the numbers differently, and never invent rows that Genie did not return. If Genie's answer or the rows feel uncertain, quote Genie's own wording and the SQL instead of paraphrasing.
-- When the user asks for a chart, graph, trend, breakdown, or visual summary of data, call create_chart with the dataset and style that best fit the request, then summarize the key findings in 1-2 sentences. The chart renders automatically next to your reply — never reproduce raw chart data or JSON in your answer.`
+- When the user asks for a chart, graph, trend, breakdown, or visual summary of data, call create_chart with the dataset and style that best fit the request, then summarize the key findings in 1-2 sentences. The chart renders automatically next to your reply — never reproduce raw chart data or JSON in your answer.
+- Match Genie's presentation style, not a plain list. When ask_genie returns data as a table, reply with Genie's summary sentence first, then reproduce the table verbatim using the same markdown table that was returned. Never flatten table results into bullet points or numbered lists, never drop or reorder rows or columns, and don't add your own "Would you like to..." phrasing. Keep input formatting/summaries short and let the table carry the detail.`
 
 const QUERY_TOOL_PREFIXES = ['list_', 'get_', 'lookup_', 'ask_']
+
+/** Tools whose generated question must be replaced by the user's verbatim wording. */
+const ASK_GENIE_TOOL = 'ask_genie'
 
 export function buildAgentSystemPrompt(handlers: AgentToolHandler[]): string {
   if (handlers.length === 0) return DEFAULT_AGENT_SYSTEM_PROMPT
@@ -113,6 +117,12 @@ export async function runAgentTurn(
       const handler = handlers.find((h) => h.definition.function.name === call.name)
       let result = `Unknown tool: ${call.name}`
       if (handler) {
+        // Genie must receive the user's wording byte-for-byte, or a small
+        // rephrase (e.g. "type A" -> "type A+") silently changes the SQL and
+        // the answer no longer matches the Databricks Genie UI.
+        if (call.name === ASK_GENIE_TOOL && call.arguments) {
+          call.arguments = { ...call.arguments, question: userMessage }
+        }
         try {
           result = await handler.run(call.arguments ?? {})
         } catch (err) {

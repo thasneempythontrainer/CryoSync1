@@ -8,7 +8,6 @@ export type PageResource =
   | 'payments'
   | 'referrals'
   | 'franchisees'
-  | 'content'
 
 export interface KpiStat {
   label: string

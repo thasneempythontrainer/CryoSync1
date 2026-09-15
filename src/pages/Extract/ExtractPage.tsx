@@ -32,7 +32,6 @@ import {
   type ExtractModeComparison,
 } from "@/services"
 import { cn } from "@/lib/utils"
-import { EVALUATION, type EvaluationData } from "./evaluation-data"
 
 const MAX_FILE_BYTES = 12 * 1024 * 1024
 const ACCEPTED_TYPES = "image/png,image/jpeg,image/webp,application/pdf"
@@ -394,179 +393,6 @@ function ComparisonCard({ comparison }: { comparison: ExtractModeComparison }) {
             </div>
           </div>
         )}
-      </CardContent>
-    </Card>
-  )
-}
-
-function EvalBar({ label, value, right }: { label: string; value: number; right?: string }) {
-  return (
-    <div className="flex items-center gap-2">
-      <span className="w-32 shrink-0 truncate text-[11px] text-muted-foreground" title={label}>
-        {label}
-      </span>
-      <div className="h-2 flex-1 overflow-hidden rounded-full bg-muted">
-        <div
-          className={cn(
-            "h-full rounded-full transition-all duration-500",
-            value >= 0.95 ? "bg-success" : value >= 0.85 ? "bg-warning" : "bg-destructive",
-          )}
-          style={{ width: `${Math.max(2, value * 100)}%` }}
-        />
-      </div>
-      <span className="w-10 shrink-0 text-right text-[11px] font-medium tabular-nums">
-        {right ?? `${Math.round(value * 100)}%`}
-      </span>
-    </div>
-  )
-}
-
-function EvalStat({ label, value, tone }: { label: string; value: string; tone?: string }) {
-  return (
-    <div className="rounded-lg border p-3">
-      <p className={cn("text-lg font-semibold tabular-nums", tone ?? "text-foreground")}>{value}</p>
-      <p className="mt-0.5 text-[11px] text-muted-foreground">{label}</p>
-    </div>
-  )
-}
-
-function EvaluationCard({ data }: { data: EvaluationData }) {
-  const { headline } = data
-  const cal = [...data.calibration].filter((c) => c.total > 0)
-  const allCrossOk = data.crossPage.length > 0 && data.crossPage.every((c) => c.correct)
-
-  return (
-    <Card size="sm" className="w-full border-border/60 shadow-sm">
-      <CardHeader>
-        <CardTitle>Extraction quality evaluation</CardTitle>
-        <CardDescription>
-          Measured {data.generatedAt} on a {data.corpusDocs}-document ground-truth corpus against
-          the production endpoint &middot; rerun with{" "}
-          <code className="rounded bg-muted px-1 py-0.5 text-[10px]">
-            python backend/evaluate_extract.py
-          </code>
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="flex flex-col gap-6">
-        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-          <EvalStat
-            label="Standard mode accuracy"
-            value={`${Math.round(headline.standardAccuracy * 100)}%`}
-          />
-          <EvalStat
-            label="Precision mode accuracy"
-            value={`${Math.round(headline.precisionAccuracy * 100)}%`}
-            tone="text-primary"
-          />
-          <EvalStat
-            label="Evidence quotes verified"
-            value={
-              data.citations.rate !== null
-                ? `${data.citations.verified}/${data.citations.withEvidence}`
-                : "n/a"
-            }
-            tone="text-success"
-          />
-          <EvalStat
-            label="Avg latency (std / precision)"
-            value={`${headline.standardLatencySec}s / ${headline.precisionLatencySec}s`}
-          />
-        </div>
-
-        <div className="grid gap-x-10 gap-y-6 lg:grid-cols-2">
-          <div className="flex flex-col gap-1.5">
-            <p className="text-xs font-semibold text-foreground">Accuracy by business-critical field</p>
-            {data.fields.map((f) => (
-              <EvalBar key={f.key} label={f.label} value={f.accuracy} />
-            ))}
-          </div>
-
-          <div className="flex flex-col gap-5">
-            <div className="flex flex-col gap-1.5">
-              <p className="text-xs font-semibold text-foreground">By document type</p>
-              {data.groups.map((g) => (
-                <EvalBar key={g.group} label={`${g.group} (${g.docs})`} value={g.accuracy} />
-              ))}
-            </div>
-
-            <div className="flex flex-col gap-1.5">
-              <p className="text-xs font-semibold text-foreground">Confidence calibration</p>
-              {cal.length ? (
-                cal.map((c) => (
-                  <EvalBar
-                    key={c.bucket}
-                    label={`stated ${c.bucket}`}
-                    value={c.accuracy ?? 0}
-                    right={`${c.total} fields`}
-                  />
-                ))
-              ) : (
-                <p className="text-[11px] text-muted-foreground">No low-confidence fields observed.</p>
-              )}
-            </div>
-
-            {data.failures.length > 0 && (
-              <div className="flex flex-col gap-1.5">
-                <p className="text-xs font-semibold text-foreground">Observed misses (standard mode)</p>
-                <div className="overflow-hidden rounded-lg border">
-                  <table className="w-full text-[11px]">
-                    <tbody>
-                      {data.failures.slice(0, 6).map((f) => (
-                        <tr key={`${f.doc}-${f.field}`} className="border-b last:border-b-0">
-                          <td className="px-2 py-1.5 font-medium text-foreground">{f.label}</td>
-                          <td className="px-2 py-1.5 text-muted-foreground" title={f.doc}>
-                            {f.doc.replace(/^(\d+)-.*$/, "$1")}
-                          </td>
-                          <td className="px-2 py-1.5 text-success">expected &ldquo;{f.expected}&rdquo;</td>
-                          <td className="px-2 py-1.5 text-destructive">
-                            got {f.actual === "None" ? "null" : `&ldquo;${f.actual}&rdquo;`}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-                {data.missCount > data.failures.length && (
-                  <p className="text-[10px] text-muted-foreground">
-                    +{data.missCount - data.failures.length} more in the full report
-                  </p>
-                )}
-              </div>
-            )}
-          </div>
-        </div>
-
-        <div className="flex flex-wrap items-center gap-2 border-t pt-4">
-          {data.missCount > 0 && (
-            <Badge variant="outline" className="text-warning">
-              {data.missCount} field{data.missCount === 1 ? "" : "s"} missed on first pass
-            </Badge>
-          )}
-          {allCrossOk && (
-            <Badge variant="outline" className="gap-1 text-success">
-              <CheckCircle2 className="size-3" />
-              Cross-page fields all resolved
-            </Badge>
-          )}
-          {data.amendment.standardResolved && (
-            <Badge variant="outline" className="gap-1 text-success">
-              <CheckCircle2 className="size-3" />
-              Amendment conflict resolved (standard)
-            </Badge>
-          )}
-          {data.amendment.precisionResolved && (
-            <Badge variant="outline" className="gap-1 text-success">
-              <CheckCircle2 className="size-3" />
-              Amendment conflict resolved (precision)
-            </Badge>
-          )}
-          {data.exceptions.every((x) => x.outcome === "rejected") && (
-            <Badge variant="outline" className="gap-1 text-success">
-              <ShieldCheck className="size-3" />
-              All malformed inputs rejected safely
-            </Badge>
-          )}
-        </div>
       </CardContent>
     </Card>
   )
@@ -1183,8 +1009,6 @@ function ExtractPage() {
       </div>
 
       {comparison && !comparing && <ComparisonCard comparison={comparison} />}
-
-      <EvaluationCard data={EVALUATION} />
     </div>
   )
 }

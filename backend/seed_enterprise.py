@@ -6,12 +6,18 @@ lifecycle is a real, interconnected dataset (and so uploaded lab reports can
 be matched to real cord blood units). Also seeds the operational tables that
 back the Payments, Referrals, Franchisees and Content pages.
 
+Additionally seeds the cold-chain dataset behind the Compliance / Storage /
+Receiving pages: facilities, suppliers, products, storage zones, shipments
+(with temperature logs), inventory lots and compliance incidents.
+
 Idempotent: the core CBU dataset is seeded only when cord_blood_units is empty;
 the newer operational tables use INSERT OR REPLACE so they stay populated on
-every boot.
+every boot, and the cold-chain dataset is seeded only when no facilities exist
+yet (i.e. on a fresh database).
 """
 
 import json
+import math
 import random
 import secrets
 from datetime import datetime, timedelta
@@ -182,6 +188,391 @@ async def _seed_operational_tables(conn, rng, now) -> None:
             "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
             _id("DOC"), doc_no, title, ctype, status, author, ver, upd, views, dl, shares, lang, _now_iso(),
         )
+
+
+# ---------------------------------------------------------------------------
+# Cold-chain dataset (Compliance / Storage / Receiving pages)
+# ---------------------------------------------------------------------------
+
+_REGIME_RANGES = {
+    "refrigerated_2_8": (2, 8),
+    "frozen_minus_20": (-25, -15),
+    "ultra_frozen_minus_80": (-85, -75),
+    "ambient": (15, 25),
+    "liquid_nitrogen": (-200, -180),
+}
+
+_SEED_FACILITIES = [
+    ("FAC-001", "Baldwin Park", "California", "warehouse", "active"),
+    ("FAC-002", "Ahmedabad Lab", "Gujarat", "laboratory", "active"),
+    ("FAC-003", "Taipei Storage", "Taipei", "warehouse", "active"),
+    ("FAC-004", "Tainan Facility", "Tainan", "distribution_center", "active"),
+]
+
+_SEED_SUPPLIERS = [
+    ("SUP-001", "World Courier", "transport", "New York", "USA", "approved", "platinum"),
+    ("SUP-002", "DHL Medical Express", "transport", "Frankfurt", "Germany", "approved", "gold"),
+    ("SUP-003", "FedEx Clinical Logistics", "transport", "Memphis", "USA", "approved", "gold"),
+    ("SUP-004", "Baldwin BioSupplies", "laboratory", "Los Angeles", "USA", "approved", "silver"),
+    ("SUP-005", "MedCold Pharma", "manufacturing", "Ahmedabad", "India", "provisional", "bronze"),
+    ("SUP-006", "Taipei CellWorks", "manufacturing", "Taipei", "Taiwan", "approved", "silver"),
+]
+
+_SEED_PRODUCTS = [
+    ("PRD-001", "Cord Blood Collection Kit", "cord_blood_unit", "refrigerated_2_8", "SUP-004", 730),
+    ("PRD-002", "Maternal Blood Vials (5-pack)", "maternal_sample", "refrigerated_2_8", "SUP-004", 365),
+    ("PRD-003", "CryoBag 50mL", "cord_blood_unit", "ultra_frozen_minus_80", "SUP-005", 1825),
+    ("PRD-004", "Viability Test Reagent", "test_report", "frozen_minus_20", "SUP-005", 450),
+    ("PRD-005", "HLA Typing Panel", "test_report", "refrigerated_2_8", "SUP-006", 540),
+    ("PRD-006", "Liquid Nitrogen Dewar", "hybrid_banking", "liquid_nitrogen", "SUP-006", 3650),
+    ("PRD-007", "Transport Media", "cellular_therapy_release", "refrigerated_2_8", "SUP-001", 365),
+    ("PRD-008", "Cold Storage Probe", "hybrid_banking", "ambient", "SUP-002", 730),
+]
+
+
+def _make_temperature_readings(shipment_id, regime, start, hours, rng, excursion=False):
+    """Generate an hourly logger trace; optionally force a late-transit excursion."""
+    mn, mx = _REGIME_RANGES[regime]
+    base = (mn + mx) / 2
+    readings = []
+    n = int(hours) + 1
+    for i in range(n):
+        ts = start + timedelta(minutes=60 * i)
+        t = base + 1.4 * math.sin(i / 3.0) + rng.uniform(-1.1, 1.1)
+        if excursion and i >= int(n * 0.6):
+            t = mx + rng.uniform(2.5, 6.0)
+        elif excursion and i == int(n * 0.58):
+            t = mx + rng.uniform(7.0, 9.0)
+        readings.append({
+            "id": f"TMP-{shipment_id}-{i:04d}",
+            "shipmentId": shipment_id,
+            "timestamp": ts.isoformat(),
+            "temperature": round(t, 2),
+            "minThreshold": mn,
+            "maxThreshold": mx,
+            "deviceId": f"LB-{rng.randint(1000, 9999)}",
+            "location": "in_transit",
+            "excursion": bool((t < mn) or (t > mx)),
+            "excursionDurationMinutes": None,
+        })
+    return readings
+
+
+_COLD_CHAIN_COLUMNS = {
+    "facilities": ["id", "data", "name", "region"],
+    "suppliers": ["id", "data", "name", "region", "qualification_status"],
+    "products": ["id", "data", "name", "category", "supplier_id"],
+    "storage_zones": ["id", "data", "name", "facility_id", "capacity", "utilized", "zone_type"],
+    "inventory_lots": ["id", "data", "product_id", "lot_number", "quantity", "status", "expiry_date", "storage_zone", "created_at"],
+    "compliance_incidents": ["id", "data", "entity_type", "entity_id", "status", "severity", "deviation_type", "created_at"],
+    "shipments": [
+        "id", "shipment_number", "supplier_id", "supplier_name", "origin", "destination",
+        "facility_id", "facility_name", "status", "category", "temperature_regime",
+        "product_count", "lot_count", "received_date", "scheduled_date", "shipped_date",
+        "estimated_arrival", "actual_arrival", "receiving_technician", "carrier",
+        "tracking_number", "bill_of_lading", "condition", "chain_of_custody", "coa_attached",
+        "priority", "storage_zone", "dock_to_inventory_minutes", "total_value",
+        "purchase_order_number", "purchase_order_item", "incoterm", "transportation_mode",
+        "container_type", "pallet_count", "gross_weight_kg", "net_weight_kg", "volume_cbm",
+        "handling_unit_count", "seal_number", "dangerous_goods", "un_number",
+        "proper_shipping_name", "dg_class", "notes", "created_at", "updated_at",
+        "temperature_readings", "loggers", "receiving_checklist", "disposition",
+    ],
+}
+
+
+async def _existing_columns(conn, table: str):
+    """Return the set of column names that currently exist on the table so the
+    seeder adapts to Databricks's `(id, data)` JSON tables as well as SQLite's
+    wide tables."""
+    try:
+        rows = await conn.fetch(f"DESCRIBE TABLE {table}")
+        cols = []
+        for r in rows:
+            name = r.get("col_name")
+            if name is None:
+                try:
+                    name = r[0]
+                except Exception:
+                    continue
+            if str(name).strip() == "# col_name":
+                continue
+            cols.append(str(name).strip().strip("`").strip('"'))
+        if cols:
+            return set(cols)
+    except Exception:
+        pass
+    try:
+        rows = await conn.fetch(f'PRAGMA table_info("{table}")')
+        return {str(r[1]) for r in rows if len(rows) > 0}
+    except Exception:
+        return set()
+
+
+async def _insert_or_replace(conn, table: str, rows) -> None:
+    """Insert rows into a cold-chain table, using only columns that exist on the
+    active backend (Databricks keeps JSON tables as `id, data` only)."""
+    existing = await _existing_columns(conn, table)
+    cols = [c for c in _COLD_CHAIN_COLUMNS[table] if c in existing]
+    if not cols or not rows:
+        return
+    sql_cols = ", ".join(cols)
+    placeholders = ", ".join(f"?{i}" for i in range(1, len(cols) + 1))
+    await conn.executemany(
+        f"INSERT OR REPLACE INTO {table} ({sql_cols}) VALUES ({placeholders})",
+        [
+            tuple(r[c] if c in r else None for c in cols)
+            for r in rows
+        ],
+    )
+    print(f"  cold-chain: {len(rows)} row(s) -> {table} (cols: {cols})")
+
+
+async def _seed_cold_chain(conn, rng, now) -> None:
+    """Seed the cold-chain operational dataset (idempotent via facilities guard)."""
+    existing = await conn.fetchval("SELECT count(*) FROM facilities")
+    if existing:
+        return
+
+    fac_ids = []
+    fac_rows = []
+    for i, (fid, name, loc, ftype, status) in enumerate(_SEED_FACILITIES):
+        cap = rng.choice([1200, 1800, 2400])
+        util = rng.randint(int(cap * 0.5), int(cap * 0.9))
+        fac_data = {
+            "id": fid, "name": name, "location": loc, "type": ftype, "status": status,
+            "temperatureRegimes": ["refrigerated_2_8", "frozen_minus_20", "ultra_frozen_minus_80"],
+            "storageZones": 2, "totalCapacity": cap, "utilizedCapacity": util,
+            "utilizationPercent": round(util * 100 / cap, 1),
+        }
+        fac_rows.append({"id": fid, "data": json.dumps(fac_data), "name": name, "region": loc})
+        fac_ids.append(fid)
+    await _insert_or_replace(conn, "facilities", fac_rows)
+
+    sup_rows = []
+    for i, (sid, name, cat, loc, country, status, tier) in enumerate(_SEED_SUPPLIERS):
+        score = rng.randint(78, 98)
+        sup_data = {
+            "id": sid, "name": name, "tier": tier, "category": [cat], "location": loc,
+            "country": country, "qualificationStatus": status,
+            "lastAuditDate": _iso(now - timedelta(days=rng.randint(15, 200))).split("T")[0],
+            "nextAuditDate": _iso(now + timedelta(days=rng.randint(20, 300))).split("T")[0],
+            "overallScore": score, "onTimeDelivery": rng.randint(80, 99),
+            "qualityScore": rng.randint(85, 100), "complianceScore": rng.randint(88, 100),
+            "activeContracts": rng.randint(2, 12), "totalShipments": rng.randint(30, 400),
+            "contactName": f"Ops Lead {i + 1}", "contactEmail": f"ops{i + 1}@cryosync.local",
+            "contactPhone": f"+1-555-01{i:02d}",
+        }
+        sup_rows.append({"id": sid, "data": json.dumps(sup_data), "name": name, "region": loc, "qualification_status": status})
+    await _insert_or_replace(conn, "suppliers", sup_rows)
+
+    prd_rows = []
+    for pid, name, category, regime, sup_id, shelf in _SEED_PRODUCTS:
+        prd_data = {
+            "id": pid, "name": name, "category": category, "temperatureRegime": regime,
+            "manufacturer": name.split(" ")[0], "storageRequirements": regime.replace("_", " "),
+            "shelfLifeDays": shelf, "requiresCoa": category in ("cord_blood_unit", "cellular_therapy_release"),
+            "hazardous": False, "controlledSubstance": False, "unitOfMeasure": "units",
+            "listPrice": rng.choice([120, 240, 480, 960, 1900]),
+        }
+        prd_rows.append({"id": pid, "data": json.dumps(prd_data), "name": name, "category": category, "supplier_id": sup_id})
+    await _insert_or_replace(conn, "products", prd_rows)
+
+    zone_rows = []
+    facility_names = {f[0]: f[1] for f in _SEED_FACILITIES}
+    for fac_id in fac_ids:
+        for j, (regime, zname) in enumerate(
+            [
+                ("refrigerated_2_8", f"{facility_names[fac_id]} Cold Room"),
+                ("ultra_frozen_minus_80", f"{facility_names[fac_id]} LN2 Vault"),
+            ]
+        ):
+            cap = rng.choice([400, 600, 800])
+            util = rng.randint(int(cap * 0.3), int(cap * 0.85))
+            zid = f"ZONE-{fac_id[-3:]}-{j + 1}"
+            zone_data = {
+                "id": zid, "name": zname, "facilityId": fac_id, "facilityName": facility_names[fac_id],
+                "temperatureRegime": regime, "capacity": cap, "utilized": util,
+                "utilizationPercent": round(util * 100 / cap, 1),
+                "status": "active", "lastInventoryDate": _iso(now - timedelta(days=rng.randint(0, 14))).split("T")[0],
+                "warehouseNumber": rng.choice(["WH-A", "WH-B", "WH-C", "WH-D"]), "storageType": regime,
+            }
+            zone_rows.append({"id": zid, "data": json.dumps(zone_data), "name": zname, "facility_id": fac_id, "capacity": cap, "utilized": util, "zone_type": regime})
+    await _insert_or_replace(conn, "storage_zones", zone_rows)
+
+    # --- Shipments (with temperature logs) ---
+    STATUSES = ["released", "released", "released", "arrived", "receiving", "in_transit", "quarantined", "rejected", "scheduled"]
+    CATEGORIES = ["cord_blood_unit", "maternal_sample", "test_report", "cellular_therapy_release"]
+    REGIMES = ["refrigerated_2_8", "frozen_minus_20", "ultra_frozen_minus_80", "liquid_nitrogen"]
+    SUPP_NUM = len(_SEED_SUPPLIERS)
+    SHIP_COUNT = 24
+    EXCURSION_SHIPMENTS = {3, 7, 11, 14, 18, 22}
+    shipments = []
+    for i in range(SHIP_COUNT):
+        sid = f"SHP-{1001 + i}"
+        sup = _SEED_SUPPLIERS[i % SUPP_NUM]
+        fac = _SEED_FACILITIES[i % len(_SEED_FACILITIES)]
+        regime = REGIMES[i % len(REGIMES)]
+        status = STATUSES[i % len(STATUSES)]
+        shipped = now - timedelta(days=rng.randint(1, 45))
+        hours = rng.choice([8, 12, 24, 36, 48])
+        readings = _make_temperature_readings(
+            sid, regime, shipped, hours, rng, excursion=(i + 1) in EXCURSION_SHIPMENTS
+        )
+        arrived = shipped + timedelta(hours=hours)
+        quarantined = status == "quarantined"
+        arrival = None if status in ("scheduled", "in_transit") else (arrived if status != "arrived" else arrived)
+        shipment = {
+            "id": sid,
+            "shipment_number": f"SHP-{1001 + i}",
+            "supplier_id": sup[0], "supplier_name": sup[1],
+            "origin": sup[3], "destination": fac[1],
+            "facility_id": fac[0], "facility_name": fac[1],
+            "status": status, "category": CATEGORIES[i % len(CATEGORIES)],
+            "temperature_regime": regime,
+            "product_count": rng.randint(1, 24), "lot_count": rng.randint(1, 6),
+            "received_date": (arrived.isoformat() if arrived else None),
+            "scheduled_date": shipped.isoformat(), "shipped_date": shipped.isoformat(),
+            "estimated_arrival": (shipped + timedelta(hours=hours)).isoformat(),
+            "actual_arrival": (arrived.isoformat() if arrived else None),
+            "receiving_technician": rng.choice(["TL-0412", "TL-0748", "TL-1123"]),
+            "carrier": sup[1], "tracking_number": f"TRK-{rng.randint(100000, 999999)}",
+            "bill_of_lading": f"BOL-{rng.randint(10000, 99999)}",
+            "condition": rng.choice(["excellent", "good", "good", "fair"]),
+            "chain_of_custody": 1, "coa_attached": 1 if status not in ("rejected", "quarantined") else 0,
+            "priority": rng.choice(["standard", "standard", "expedited", "critical"]),
+            "storage_zone": f"ZONE-{fac[0][-3:]}-1",
+            "dock_to_inventory_minutes": rng.randint(30, 240) if arrived else None,
+            "total_value": str(rng.randint(40000, 900000)),
+            "purchase_order_number": f"PO-{rng.randint(10000, 99999)}",
+            "purchase_order_item": f"LINE-{rng.randint(1, 9)}",
+            "incoterm": rng.choice(["EXW", "DDP", "CIP", "FCA"]),
+            "transportation_mode": rng.choice(["air", "ground", "air"]),
+            "container_type": rng.choice(["ISO-40/HR", "ISO-20/HR", "Insulated Carton"]),
+            "pallet_count": rng.randint(1, 8), "gross_weight_kg": str(rng.randint(40, 900)),
+            "net_weight_kg": str(rng.randint(20, 700)), "volume_cbm": str(round(rng.uniform(0.3, 6.5), 2)),
+            "handling_unit_count": rng.randint(2, 40), "seal_number": f"SEAL-{rng.randint(10000, 99999)}",
+            "dangerous_goods": 0, "un_number": "", "proper_shipping_name": "", "dg_class": "",
+            "notes": "Seeded demo shipment",
+            "created_at": shipped.isoformat(), "updated_at": now.isoformat(),
+            "temperature_readings": json.dumps(readings),
+            "loggers": json.dumps([]),
+            "receiving_checklist": json.dumps({"completed": False, "lineItems": [], "documents": {}}),
+            "disposition": json.dumps(
+                {
+                    "decision": "quarantined" if quarantined else ("rejected" if status == "rejected" else "accepted"),
+                    "reasonCode": "temperature_excursion" if quarantined else ("missing_coa" if status == "rejected" else "accepted"),
+                    "reason": "Temperature excursion" if quarantined else ("Missing COA" if status == "rejected" else ""),
+                    "notes": "", "decidedBy": "Seed Scanner", "decidedAt": (arrived.isoformat() if arrived else now.isoformat()),
+                    "notifyQA": bool(quarantined or status == "rejected"), "notifiedQA": False,
+                }
+                if status in ("quarantined", "rejected")
+                else {},
+            ),
+        }
+        shipments.append(shipment)
+    await _insert_or_replace(conn, "shipments", shipments)
+
+    # --- Inventory lots ---
+    lot_rows = []
+    for i in range(12):
+        ship = shipments[i % len(shipments)]
+        prod = _SEED_PRODUCTS[i % len(_SEED_PRODUCTS)]
+        lid = f"LOT-{4001 + i}"
+        qty = rng.randint(5, 120)
+        expiry = now + timedelta(days=rng.randint(60, 700))
+        lot_data = {
+            "id": lid, "lotNumber": lid, "productId": prod[0], "productName": prod[1],
+            "category": prod[2], "supplierId": ship["supplier_id"], "supplierName": ship["supplier_name"],
+            "shipmentId": ship["id"], "quantity": qty, "lowStockThreshold": 10, "lowStock": qty < 15,
+            "unit": "units", "status": rng.choice(["available", "available", "quarantined", "released"]),
+            "temperatureRegime": prod[3], "storageZone": ship["storage_zone"],
+            "storageLocation": ship["storage_zone"], "receivedDate": ship["received_date"],
+            "manufacturedDate": (now - timedelta(days=rng.randint(30, 400))).isoformat(),
+            "expiryDate": expiry.isoformat(), "daysUntilExpiry": max(1, (expiry - now).days),
+            "batchNumber": f"B{rng.randint(1000, 9999)}", "coaReference": f"COA-{rng.randint(10000, 99999)}",
+            "coaAttached": bool(ship["coa_attached"]), "qualityStatus": "approved",
+            "lastVerifiedDate": (now - timedelta(days=rng.randint(0, 10))).isoformat(),
+            "verifiedBy": rng.choice(["QA-Analyst", "Lab-Ops"]), "value": qty * rng.choice([120, 240, 480]),
+            "storageType": prod[3], "storageSection": "A", "storageBin": f"BIN-{rng.randint(1, 99)}",
+            "warehouseNumber": ship.get("storage_zone", ""), "huNumber": f"HU-{rng.randint(1000, 9999)}",
+            "stockType": "unrestricted", "quantId": f"Q-{rng.randint(10000, 99999)}", "notes": "",
+        }
+        lot_rows.append({
+            "id": lid, "data": json.dumps(lot_data), "product_id": prod[0], "lot_number": lid,
+            "quantity": qty, "status": lot_data["status"],
+            "expiry_date": expiry.isoformat().split("T")[0], "storage_zone": ship["storage_zone"],
+            "created_at": now.isoformat(),
+        })
+    await _insert_or_replace(conn, "inventory_lots", lot_rows)
+
+    # --- Compliance incidents ---
+    now_day = now.strftime("%Y%m%d")
+    SEEDS = [
+        ("INC-101", "Temperature excursion during transit - SHP-1008", "temperature_excursion", "critical", "open", "FAC-001", "SHP-1008", "SHP-1008", 6, True, -2, True),
+        ("INC-102", "Temperature excursion during transit - SHP-1012", "temperature_excursion", "high", "investigating", "FAC-002", "SHP-1012", "SHP-1012", 3, False, 1, True),
+        ("INC-103", "Temperature excursion during transit - SHP-1015", "temperature_excursion", "high", "open", "FAC-003", "SHP-1015", "SHP-1015", 2, False, 4, False),
+        ("INC-104", "Temperature excursion during transit - SHP-1019", "temperature_excursion", "medium", "investigating", "FAC-004", "SHP-1019", "SHP-1019", 5, False, 12, False),
+        ("INC-105", "Temperature excursion during transit - SHP-1023", "temperature_excursion", "medium", "resolved", "FAC-001", "SHP-1023", "SHP-1023", 8, False, 26, False),
+        ("INC-106", "Labeling error on collection kit", "labeling_error", "low", "resolved", "FAC-002", None, None, 4, False, 31, False),
+        ("INC-107", "Documentation gap - missing COA", "documentation_gap", "medium", "open", "FAC-001", None, None, 2, False, 7, False),
+        ("INC-108", "Documentation gap - incomplete custody log", "documentation_gap", "low", "resolved", "FAC-003", None, None, 3, False, 22, False),
+        ("INC-109", "Quality deviation in viability test batch", "quality_deviation", "high", "investigating", "FAC-002", None, None, 1, True, 9, True),
+        ("INC-110", "Quality deviation - media shipment damage", "quality_deviation", "medium", "closed", "FAC-004", None, None, 6, False, 41, False),
+        ("INC-111", "Chain of custody break on LN2 dewar", "chain_of_custody_break", "high", "open", "FAC-003", None, None, 0, True, 2, True),
+        ("INC-112", "Storage violation - door left ajar", "storage_violation", "medium", "closed", "FAC-001", None, None, 5, False, 55, False),
+        ("INC-113", "Storage violation - sensor drift", "storage_violation", "low", "resolved", "FAC-004", None, None, 3, False, 18, False),
+        ("INC-114", "Potential contamination in processing lab", "contamination_suspected", "high", "investigating", "FAC-002", None, None, 2, True, 5, True),
+        ("INC-115", "Equipment malfunction - thawing bath", "equipment_malfunction", "medium", "resolved", "FAC-001", None, None, 7, False, 29, False),
+        ("INC-116", "Shipping delay - ambient excursion risk", "quality_deviation", "low", "closed", "FAC-002", None, None, 9, False, 60, False),
+    ]
+    incident_rows = []
+    for seq, (inc_id, title, dev_type, severity, status, fac_id, ship_id, ship_no, days, regulatory, created_days_ago, critical) in enumerate(SEEDS):
+        created = now - timedelta(days=created_days_ago)
+        resolved = None
+        if status in ("resolved", "closed"):
+            resolved = created + timedelta(days=max(0, days))
+        if status == "closed":
+            resolved = created + timedelta(days=days * 2)
+        due = created + timedelta(days=14) if status in ("open", "investigating") else None
+        temperature_data = None
+        if dev_type == "temperature_excursion":
+            temperature_data = {
+                "minTemp": round((_REGIME_RANGES["refrigerated_2_8"][0] - 3), 1),
+                "maxTemp": round((_REGIME_RANGES["refrigerated_2_8"][1] + rng.uniform(3, 8)), 1),
+                "durationMinutes": rng.randint(60, 420),
+                "excursionCount": rng.randint(1, 9),
+            }
+        incident = {
+            "id": inc_id, "incidentNumber": inc_id, "title": title,
+            "description": f"{title}. Recorded during routine tracking on shipment {ship_no or 'N/A'}.",
+            "deviationType": dev_type, "severity": severity, "status": status,
+            "facilityId": fac_id, "facilityName": facility_names[fac_id],
+            "shipmentId": ship_id, "shipmentNumber": ship_no,
+            "supplierId": "SUP-001" if ship_no else None, "supplierName": "World Courier" if ship_no else None,
+            "lotId": None, "lotNumber": None, "productName": "Cord Blood Collection Kit",
+            "temperatureRegime": "refrigerated_2_8" if dev_type == "temperature_excursion" else None,
+            "detectedDate": created.isoformat(), "detectedBy": "AI Scanner" if critical else "QA Analyst",
+            "reportedDate": created.isoformat(), "reportedBy": "AI Scanner" if critical else "QA Analyst",
+            "assignedTo": rng.choice(["Dr. Rivera", "TL-0412", "QA-Ops", None, None, None]),
+            "investigationNotes": "", "rootCause": rng.choice([None, None, "Courier deviation", "Sensor mis-calibration"]),
+            "correctiveAction": (rng.choice(["Re-training conducted", "Probe recalibrated", "Process step added"]) if status in ("resolved", "closed") else None),
+            "preventiveAction": (rng.choice(["Added spot-check cadence", "Alarm threshold tightened"]) if status in ("resolved", "closed") else None),
+            "closureNotes": (rng.choice(["Closed after CAPA review", "Verified with re-test"]) if status in ("resolved", "closed") else None),
+            "resolvedDate": resolved.isoformat() if resolved else None,
+            "regulatoryNotifiable": regulatory,
+            "regulatoryBody": None, "reportedToRegulatory": False, "impactAssessment": "",
+            "temperatureData": temperature_data,
+            "dueDate": due.isoformat() if due else None,
+            "createdAt": created.isoformat(), "updatedAt": now.isoformat(),
+        }
+        incident_rows.append({
+            "id": inc_id, "data": json.dumps(incident),
+            "entity_type": None, "entity_id": None, "status": status,
+            "severity": severity, "deviation_type": dev_type, "created_at": created.isoformat(),
+        })
+    await _insert_or_replace(conn, "compliance_incidents", incident_rows)
+    print(f"Seeded cold-chain demo data ({len(fac_rows)} facilities, {len(shipments)} shipments, {len(incident_rows)} incidents)")
 
 
 async def _seed_core_enterprise(conn, rng, now, base) -> None:
@@ -450,6 +841,7 @@ async def seed_enterprise(pool) -> int:
         if not existing:
             await _seed_core_enterprise(conn, rng, now, base)
         await _seed_operational_tables(conn, rng, now)
+        await _seed_cold_chain(conn, rng, now)
         return 0
 
 

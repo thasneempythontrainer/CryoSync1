@@ -16,7 +16,6 @@ export type Permission =
   | 'view:payments'
   | 'view:referrals'
   | 'view:franchisees'
-  | 'view:content'
   | 'view:report'
   | 'view:genie'
   | 'view:admin'
@@ -29,11 +28,11 @@ export type Permission =
 const ROLE_PERMISSIONS: Record<UserRole, Permission[]> = {
   collection: ['view:cbus', 'view:customers', 'view:report', 'view:genie', 'act:create_cbu', 'act:update_cbu_status'],
   processing: ['view:cbus', 'view:storage', 'view:compliance', 'view:report', 'view:genie', 'act:update_cbu_status'],
-  cs: ['view:cbus', 'view:customers', 'view:payments', 'view:referrals', 'view:content', 'view:genie'],
+  cs: ['view:cbus', 'view:customers', 'view:payments', 'view:referrals', 'view:genie'],
   qa: ['view:cbus', 'view:compliance', 'view:storage', 'view:report', 'view:genie', 'act:resolve_event', 'act:assign_event'],
   admin: [
     'view:cbus', 'view:customers', 'view:storage', 'view:compliance',
-    'view:payments', 'view:referrals', 'view:franchisees', 'view:content',
+    'view:payments', 'view:referrals', 'view:franchisees',
     'view:report', 'view:genie', 'view:admin', 'view:transplants',
     'act:create_cbu', 'act:update_cbu_status', 'act:resolve_event', 'act:assign_event',
   ],
@@ -55,7 +54,6 @@ export const PAGE_PERMISSIONS: Record<string, Permission> = {
   '/payments': 'view:payments',
   '/referrals': 'view:referrals',
   '/franchisees': 'view:franchisees',
-  '/content': 'view:content',
   '/report': 'view:report',
   '/genie': 'view:genie',
   '/admin': 'view:admin',

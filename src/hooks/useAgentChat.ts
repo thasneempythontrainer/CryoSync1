@@ -16,12 +16,16 @@ export interface AgentStep {
   chartData?: Record<string, unknown>[]
   chartType?: 'bar' | 'line' | 'pie' | 'table'
   chartTitle?: string
+  tableColumns?: string[]
+  tableRows?: Record<string, unknown>[]
+  tableTitle?: string
 }
 
 export function agentContextToSteps(history: AgentContextMessage[]): AgentStep[] {
   const steps: AgentStep[] = []
   const toolNames = new Map<string, string>()
   let pendingChart: AgentChartPayload | undefined
+  let pendingTable: { columns: string[]; data: Record<string, unknown>[]; title: string } | undefined
 
   for (const m of history) {
     if (m.role === 'system') continue
@@ -37,12 +41,21 @@ export function agentContextToSteps(history: AgentContextMessage[]): AgentStep[]
         continue
       }
       if (m.content) {
-        const step: AgentStep = { role: 'assistant', content: m.content }
+        const step: AgentStep = {
+          role: 'assistant',
+          content: m.content.replace(/\n*____GENIE_TABLE____\{.*\}\s*$/, ''),
+        }
         if (pendingChart) {
           step.chartData = pendingChart.chartData
           step.chartType = pendingChart.chartType
           step.chartTitle = pendingChart.title
           pendingChart = undefined
+        }
+        if (pendingTable) {
+          step.tableColumns = pendingTable.columns
+          step.tableRows = pendingTable.data
+          step.tableTitle = pendingTable.title
+          pendingTable = undefined
         }
         steps.push(step)
       }
@@ -54,6 +67,23 @@ export function agentContextToSteps(history: AgentContextMessage[]): AgentStep[]
       if (name === AGENT_CHART_TOOL) {
         const chart = parseChartToolResult(m.content)
         if (chart) pendingChart = chart
+        continue
+      }
+      if (name === 'ask_genie') {
+        const envelope = m.content.match(/____GENIE_TABLE____(\{.*\})\s*$/)
+        if (envelope) {
+          try {
+            const parsed = JSON.parse(envelope[1]) as { columns?: string[]; data?: Record<string, unknown>[]; answer?: string }
+            if (parsed.columns && parsed.data) {
+              pendingTable = {
+                columns: parsed.columns,
+                data: parsed.data,
+                title: parsed.answer?.split('\n')[0]?.replace(/^[\s*#]+/, '')?.slice(0, 80) || 'Cord Blood Unit Results',
+              }
+            }
+          } catch { /* malformed envelope, ignore */ }
+        }
+        // Skip pushing a raw tool step – it's not rendered in the chat.
         continue
       }
       steps.push({

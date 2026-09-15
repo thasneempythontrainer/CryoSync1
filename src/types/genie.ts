@@ -8,6 +8,9 @@ export interface GenieMessage {
   chartData?: Record<string, unknown>[]
   chartType?: 'bar' | 'line' | 'table' | 'pie'
   chartTitle?: string
+  tableColumns?: string[]
+  tableRows?: Record<string, unknown>[]
+  tableTitle?: string
   timestamp: string
 }
 

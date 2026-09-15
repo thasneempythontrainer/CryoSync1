@@ -13,7 +13,6 @@ const TransplantsPage = lazy(() => import('@/pages/Transplants/TransplantsPage')
 const PaymentsPage = lazy(() => import('@/pages/Payments/PaymentsPage'))
 const ReferralsPage = lazy(() => import('@/pages/Referrals/ReferralsPage'))
 const FranchiseesPage = lazy(() => import('@/pages/Franchisees/FranchiseesPage'))
-const ContentPage = lazy(() => import('@/pages/Content/ContentPage'))
 const ReportPage = lazy(() => import('@/pages/Report/ReportPage'))
 const GeniePage = lazy(() => import('@/pages/Genie/GeniePage'))
 const ExtractPage = lazy(() => import('@/pages/Extract/ExtractPage'))
@@ -89,10 +88,6 @@ export const routes: RouteObject[] = [
   {
     path: '/franchisees',
     element: <RequireAuth>{withPage(FranchiseesPage)}</RequireAuth>,
-  },
-  {
-    path: '/content',
-    element: <RequireAuth>{withPage(ContentPage)}</RequireAuth>,
   },
   {
     path: '/report',

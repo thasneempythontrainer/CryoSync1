@@ -784,11 +784,22 @@ export function allAgentTools(deps: AgentToolsDeps): AgentToolHandler[] {
           result.columns.length > 0
             ? `\nColumns: ${result.columns.join(', ')}\nRows (${result.data.length}): ${JSON.stringify(result.data)}${result.truncated ? ' (truncated)' : ''}`
             : ''
+        const table =
+          result.columns.length > 0 && result.data.length > 0
+            ? `\nTable:\n| ${result.columns.join(' | ')} |\n| ${result.columns.map(() => '---').join(' | ')} |\n${result.data
+                .slice(0, 50)
+                .map((r) => `| ${result.columns.map((c) => String(r[c] ?? '')).join(' | ')} |`)
+                .join('\n')}`
+            : ''
         const followUps =
           result.suggestedQuestions.length > 0
             ? `\nSuggested follow-ups: ${result.suggestedQuestions.slice(0, 3).join(' | ')}`
             : ''
-        return `Genie answer: ${result.answer}${result.sql ? `\nSQL: ${result.sql}` : ''}${rows}${followUps}`
+        const envelope =
+          result.columns.length > 0 && result.data.length > 0
+            ? `\n____GENIE_TABLE____${JSON.stringify({ columns: result.columns, data: result.data.slice(0, 50) })}`
+            : ''
+        return `Genie answer: ${result.answer}${result.sql ? `\nSQL: ${result.sql}` : ''}${rows}${table}${followUps}${envelope}`
       },
     },
 

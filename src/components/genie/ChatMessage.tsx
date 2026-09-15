@@ -132,6 +132,39 @@ function ChatMessage({ message, onRegenerate }: ChatMessageProps) {
             <SqlViewer sql={message.sql} />
           )}
 
+          {!isUser && message.tableRows && message.tableColumns && (
+            <div className="my-3 overflow-x-auto rounded-lg border border-border/40 bg-background">
+              <table className="w-full text-xs">
+                <thead>
+                  <tr className="border-b border-border/40">
+                    {message.tableColumns.map((col, i) => (
+                      <th
+                        key={i}
+                        className="whitespace-nowrap px-3 py-1.5 text-left font-medium text-muted-foreground capitalize"
+                      >
+                        {col.replace(/_/g, " ")}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {message.tableRows.map((row, i) => (
+                    <tr
+                      key={i}
+                      className="border-b border-border/20 last:border-0 hover:bg-muted/30"
+                    >
+                      {message.tableColumns!.map((col, j) => (
+                        <td key={j} className="whitespace-nowrap px-3 py-1.5">
+                          {String(row[col] ?? "")}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+
           {!isUser && message.chartData && message.chartType && (
             <div className="mt-3 overflow-hidden rounded-lg border border-border/40 bg-background">
               {message.chartTitle && (
@@ -231,8 +264,22 @@ function FormattedContent({ content }: { content: string }) {
   const elements: React.ReactNode[] = []
   let inList = false
 
-  lines.forEach((line, i) => {
-    if (line.startsWith("- ") || line.startsWith("* ")) {
+  const isTableRow = (line: string) => line.trim().startsWith("|")
+  const isSeparator = (line: string) =>
+    /^\s*\|[\s:|]*-+\s*\|(\s*\|[\s:|]*-+\s*\|)*\s*$/.test(line.trim())
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i]
+    if (isTableRow(line)) {
+      const block: string[] = []
+      while (i < lines.length && isTableRow(lines[i])) {
+        if (!isSeparator(lines[i])) block.push(lines[i].trim())
+        i++
+      }
+      i--
+      elements.push(<MarkdownTable key={`table-${elements.length}`} rows={block} />)
+      inList = false
+    } else if (line.startsWith("- ") || line.startsWith("* ")) {
       const text = line.slice(2)
       if (!inList) {
         inList = true
@@ -272,9 +319,51 @@ function FormattedContent({ content }: { content: string }) {
       )
       inList = false
     }
-  })
+  }
 
   return <div className="space-y-0.5">{elements}</div>
+}
+
+function MarkdownTable({ rows }: { rows: string[] }) {
+  const parseRow = (line: string) =>
+    line.replace(/^\|/, "").replace(/\|$/, "").split("|").map((c) => c.trim())
+
+  if (rows.length === 0) return null
+  const headers = parseRow(rows[0])
+  const body = rows.slice(1)
+
+  return (
+    <div className="my-1.5 overflow-x-auto">
+      <table className="w-full text-xs">
+        <thead>
+          <tr className="border-b border-border/40">
+            {headers.map((h, i) => (
+              <th
+                key={i}
+                className="whitespace-nowrap px-3 py-1.5 text-left font-medium text-muted-foreground capitalize"
+              >
+                {h.replace(/_/g, " ")}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {body.map((row, i) => (
+            <tr
+              key={i}
+              className="border-b border-border/20 last:border-0 hover:bg-muted/30"
+            >
+              {parseRow(row).map((cell, j) => (
+                <td key={j} className="whitespace-nowrap px-3 py-1.5">
+                  {parseInline(cell)}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
 }
 
 function parseInline(text: string): React.ReactNode {
